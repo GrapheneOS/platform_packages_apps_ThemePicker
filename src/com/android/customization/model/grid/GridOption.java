@@ -62,7 +62,7 @@ public class GridOption implements CustomizationOption<GridOption>, Parcelable {
         mTitle = title;
         mIsCurrent = isCurrent;
         mIconShapePath = iconShapePath;
-        mTileDrawable = new GridTileDrawable(rows, cols, mIconShapePath);
+        mTileDrawable = new GridTileDrawable(cols, rows, iconShapePath);
         this.name = name;
         this.rows = rows;
         this.cols = cols;

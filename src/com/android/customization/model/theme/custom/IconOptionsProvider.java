@@ -24,6 +24,7 @@ import static com.android.customization.model.ResourceConstants.OVERLAY_CATEGORY
 import static com.android.customization.model.ResourceConstants.OVERLAY_CATEGORY_ICON_THEMEPICKER;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
 import android.content.res.Resources.NotFoundException;
@@ -71,6 +72,7 @@ public class IconOptionsProvider extends ThemeComponentOptionProvider<IconOption
     protected void loadOptions() {
         addDefault();
 
+        PackageManager pm = mContext.getPackageManager();
         Map<String, IconOption> optionsByPrefix = new HashMap<>();
         for (String overlayPackage : mOverlayPackages) {
             IconOption option = addOrUpdateOption(optionsByPrefix, overlayPackage,
@@ -79,6 +81,8 @@ public class IconOptionsProvider extends ThemeComponentOptionProvider<IconOption
                 for (String iconName : ICONS_FOR_PREVIEW) {
                     option.addIcon(loadIconPreviewDrawable(iconName, overlayPackage));
                 }
+
+                option.setLabel(pm.getApplicationInfo(overlayPackage, 0).loadLabel(pm).toString());
             } catch (NotFoundException | NameNotFoundException e) {
                 Log.w(TAG, String.format("Couldn't load icon overlay details for %s, will skip it",
                         overlayPackage), e);
@@ -104,7 +108,6 @@ public class IconOptionsProvider extends ThemeComponentOptionProvider<IconOption
         for (IconOption option : optionsByPrefix.values()) {
             if (option.isValid(mContext)) {
                 mOptions.add(option);
-                option.setLabel(mContext.getString(R.string.icon_component_label, mOptions.size()));
             }
         }
     }

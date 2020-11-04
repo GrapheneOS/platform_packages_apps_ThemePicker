@@ -80,6 +80,7 @@
                         android:layout_gravity="center|top"
                         android:importantForAutofill="no"
                         android:minWidth="300dp"
+                        android:inputType="textCapWords"
                         style="@style/CustomThemeNameEditText"/>
             </LinearLayout>
         </ScrollView>

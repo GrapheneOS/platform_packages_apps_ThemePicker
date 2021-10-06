@@ -120,7 +120,7 @@ android_app {
     additional_manifests: [":WallpaperPicker2_Manifest"],
 
     required: ["privapp_whitelist_com.android.wallpaper.xml"],
-    overrides: ["WallpaperPicker2"],
+    overrides: ["WallpaperPicker2", "WallpaperPicker"],
 }
 
 prebuilt_etc_xml {

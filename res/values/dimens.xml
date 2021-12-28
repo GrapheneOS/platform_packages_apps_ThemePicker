@@ -33,6 +33,7 @@
     <dimen name="options_container_width">0dp</dimen>
     <dimen name="option_bottom_margin">8dp</dimen>
     <dimen name="option_padding_horizontal">2dp</dimen>
+    <dimen name="option_label_width">100dp</dimen>
     <dimen name="option_tile_width">80dp</dimen>
     <dimen name="option_tile_radius">20dp</dimen>
     <dimen name="option_tile_margin_horizontal">6dp</dimen>

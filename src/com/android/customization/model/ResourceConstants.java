@@ -108,8 +108,6 @@ public interface ResourceConstants {
         if (sTargetPackages.isEmpty()) {
             sTargetPackages.addAll(Arrays.asList(ANDROID_PACKAGE, SETTINGS_PACKAGE,
                     SYSUI_PACKAGE));
-            sTargetPackages.add(getLauncherPackage(context));
-            sTargetPackages.add(context.getPackageName());
         }
         return sTargetPackages.toArray(new String[0]);
     }

@@ -11,6 +11,7 @@ import com.android.customization.model.color.ColorSectionController;
 import com.android.customization.model.grid.GridOptionsManager;
 import com.android.customization.model.grid.GridSectionController;
 import com.android.customization.model.mode.DarkModeSectionController;
+import com.android.customization.model.monet.MonetModeSectionController;
 import com.android.customization.model.themedicon.ThemedIconSectionController;
 import com.android.customization.model.themedicon.ThemedIconSwitchProvider;
 import com.android.customization.picker.quickaffordance.domain.interactor.KeyguardQuickAffordancePickerInteractor;
@@ -134,6 +135,10 @@ public final class DefaultCustomizationSections implements CustomizationSections
 
         // Dark/Light theme section.
         sectionControllers.add(new DarkModeSectionController(activity,
+                lifecycleOwner.getLifecycle()));
+
+        // Monet enable/disable section.
+        sectionControllers.add(new MonetModeSectionController(activity,
                 lifecycleOwner.getLifecycle()));
 
         // Themed app icon section.

@@ -25,7 +25,7 @@ public final class MonetModeSectionView extends SectionView {
     protected void onFinishInflate() {
         super.onFinishInflate();
         switchView = findViewById(R.id.monet_mode_toggle);
-        switchView.setChecked(mIsMonetEnabled);
+        setChecked(mIsMonetEnabled);
         switchView.setOnCheckedChangeListener((buttonView, isChecked) ->
                 switchView.setChecked(mIsMonetEnabled)
         );
@@ -40,6 +40,12 @@ public final class MonetModeSectionView extends SectionView {
     private void viewActivated(boolean isChecked) {
         if (mSectionViewListener != null) {
             mSectionViewListener.onViewActivated(getContext(), isChecked);
+        }
+    }
+
+    public void setChecked(boolean isChecked) {
+        if (switchView != null){
+            switchView.setChecked(isChecked);
         }
     }
 

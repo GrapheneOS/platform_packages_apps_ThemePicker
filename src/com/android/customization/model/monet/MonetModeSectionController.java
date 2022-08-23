@@ -36,7 +36,9 @@ public class MonetModeSectionController implements
         @Override
         public void onChange(boolean selfChange) {
             super.onChange(selfChange);
-            mMonetModeSectionView.setChecked(isMonetEnabled(mContext));
+            sExecutorService.execute(() -> {
+                //set is checked ??
+            });
         }
     };
 
@@ -93,6 +95,7 @@ public class MonetModeSectionController implements
         if (context == null) {
             return;
         }
+        Switch switchView = mMonetModeSectionView.findViewById(R.id.monet_mode_toggle);
         int shortDelay = context.getResources().getInteger(android.R.integer.config_shortAnimTime);
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
                     mMonetModeSectionView.announceForAccessibility(

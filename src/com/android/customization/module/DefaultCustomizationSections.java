@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LifecycleOwner;
 
+import com.android.customization.model.color.ColorSectionController;
 import com.android.customization.model.grid.GridOptionsManager;
 import com.android.customization.model.grid.GridSectionController;
 import com.android.customization.model.mode.DarkModeSectionController;
@@ -40,6 +41,12 @@ public final class DefaultCustomizationSections implements CustomizationSections
         sectionControllers.add(new WallpaperSectionController(
                 activity, lifecycleOwner, permissionRequester, wallpaperColorsViewModel,
                 workspaceViewModel, sectionNavigationController, wallpaperPreviewNavigator,
+                savedInstanceState));
+
+        // Color picker section.
+        sectionControllers.add(new ColorSectionController(
+                activity,
+                wallpaperColorsViewModel, lifecycleOwner,
                 savedInstanceState));
 
         // Dark/Light theme section.

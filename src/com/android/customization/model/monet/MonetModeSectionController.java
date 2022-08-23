@@ -36,9 +36,7 @@ public class MonetModeSectionController implements
         @Override
         public void onChange(boolean selfChange) {
             super.onChange(selfChange);
-            if (mContext != null) {
-                mMonetModeSectionView.setChecked(isMonetEnabled(mContext));
-            }
+            mMonetModeSectionView.setChecked(isMonetEnabled(mContext));
         }
     };
 

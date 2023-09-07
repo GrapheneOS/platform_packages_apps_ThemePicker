@@ -16,7 +16,7 @@
     <queries>
         <!-- Specific intents Wallpaper picker query for -->
         <!-- Package for theme stub -->
-        <package android:name="com.android.customization.stub" />
+        <package android:name="com.android.customization.themes" />
         <!-- Intent filter with action SET_WALLPAPER -->
         <intent>
             <action android:name="android.intent.action.SET_WALLPAPER" />

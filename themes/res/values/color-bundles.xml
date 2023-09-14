@@ -16,13 +16,24 @@
   -->
 <resources>
     <array name="color_bundles">
-        <item>monochromatic</item>
-        <item>rainbow1</item>
-        <item>rainbow2</item>
-        <item>rainbow3</item>
-        <item>rainbow4</item>
-        <item>rainbow5</item>
-        <item>rainbow6</item>
-        <item>rainbow7</item>
+        <item>default</item>
+        <item>dark_green</item>
+        <item>brown</item>
+        <item>dark_magenta</item>
+
+        <item>light_cyan</item>
+        <item>light_green</item>
+        <item>light_yellow</item>
+        <item>light_magenta</item>
+
+        <item>pink_red</item>
+        <item>light_brown</item>
+        <item>cyan_blue</item>
+        <item>blue_magenta</item>
+
+        <item>neon_lilac</item>
+        <item>magenta</item>
+        <item>yellow</item>
+        <item>green</item>
     </array>
 </resources>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="color_primary_default">#ffffff</color>
+    <color name="color_secondary_default">#1565C0</color>
+
+    <color name="color_primary_dark_green">#0a8758</color>
+    <color name="color_secondary_dark_green">#0a8758</color>
+
+    <color name="color_primary_dark_magenta">#746bc1</color>
+    <color name="color_secondary_dark_magenta">#746bc1</color>
+
+    <color name="color_primary_brown">#a66800</color>
+    <color name="color_secondary_brown">#a66800</color>
+
+    <color name="color_primary_light_yellow">#ffeeb2</color>
+    <color name="color_secondary_light_yellow">#ffeeb2</color>
+
+    <color name="color_primary_light_green">#ccee99</color>
+    <color name="color_secondary_light_green">#ccee99</color>
+
+    <color name="color_primary_light_cyan">#b1ebff</color>
+    <color name="color_secondary_light_cyan">#b1ebff</color>
+
+    <color name="color_primary_light_magenta">#ebdcff</color>
+    <color name="color_secondary_light_magenta">#ebdcff</color>
+
+    <color name="color_primary_pink_red">#ffb2b5</color>
+    <color name="color_secondary_pink_red">#ffb2b5</color>
+
+    <color name="color_primary_light_brown">#ffb868</color>
+    <color name="color_secondary_light_brown">#ffb868</color>
+
+    <color name="color_primary_yellow">#e9c44a</color>
+    <color name="color_secondary_yellow">#e9c44a</color>
+
+    <color name="color_primary_green">#baf293</color>
+    <color name="color_secondary_green">#baf293</color>
+
+    <color name="color_primary_cyan_blue">#96cbff</color>
+    <color name="color_secondary_cyan_blue">#96cbff</color>
+
+    <color name="color_primary_blue_magenta">#cbbfff</color>
+    <color name="color_secondary_blue_magenta">#cbbfff</color>
+
+    <color name="color_primary_magenta">#f5acfb</color>
+    <color name="color_secondary_magenta">#f5acfb</color>
+
+    <color name="color_primary_neon_lilac">#A264A0</color>
+    <color name="color_secondary_neon_lilac">#533352</color>
+</resources>

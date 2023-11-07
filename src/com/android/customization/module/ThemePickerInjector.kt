@@ -167,10 +167,11 @@ open class ThemePickerInjector : WallpaperPicker2Injector(), CustomizationInject
         viewFullScreen: Boolean,
         testingModeEnabled: Boolean
     ): Fragment {
-        return if (wallpaperInfo is LiveWallpaperInfo) LivePreviewFragment()
-        else
-            ImagePreviewFragment().apply {
-                arguments =
+        val fragment =  if (wallpaperInfo is LiveWallpaperInfo) LivePreviewFragment()
+        else ImagePreviewFragment()
+
+        return fragment.apply {
+            arguments =
                     Bundle().apply {
                         putParcelable(PreviewFragment.ARG_WALLPAPER, wallpaperInfo)
                         putInt(PreviewFragment.ARG_PREVIEW_MODE, mode)

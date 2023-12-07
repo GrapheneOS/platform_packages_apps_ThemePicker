@@ -454,13 +454,10 @@
 
     <!--
     Summary for a setting that lets the user access additional settings related to lock screen
-    behaviour. Please note that "Now Playing" is an entity; it's a name of an existing feature
-    that allows users to see the song that the device is picking up through its microphone on
-    the lock screen; therefore, it should not be translated literally.
-
+    behaviour.
     [CHAR LIMIT=64].
     -->
-    <string name="more_settings_section_description">Privacy, Now Playing, and more</string>
+    <string name="more_settings_section_description">Privacy, shortcuts and more</string>
 
     <!--
     Label for button that lets the user navigate to a full-screen experience of selecting

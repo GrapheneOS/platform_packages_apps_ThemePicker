@@ -15,31 +15,52 @@
   ~ limitations under the License.
   -->
 <resources>
-    <string name="app_name" translatable="false">Themes</string>
-    <string name="rainbow_color_name_red">Red</string>
-    <string name="rainbow_color_name_orange">Orange</string>
-    <string name="rainbow_color_name_yellow">Yellow</string>
-    <string name="rainbow_color_name_green">Green</string>
-    <string name="rainbow_color_name_blue">Blue</string>
-    <string name="rainbow_color_name_purple">Purple</string>
-    <string name="rainbow_color_name_magenta">Magenta</string>
-    <string name="monochromatic_name">Monochromatic</string>
-
-    <string name="bundle_name_rainbow1" translatable="false">@string/rainbow_color_name_red</string>
-    <string name="bundle_name_rainbow2" translatable="false">@string/rainbow_color_name_orange</string>
-    <string name="bundle_name_rainbow3" translatable="false">@string/rainbow_color_name_yellow</string>
-    <string name="bundle_name_rainbow4" translatable="false">@string/rainbow_color_name_green</string>
-    <string name="bundle_name_rainbow5" translatable="false">@string/rainbow_color_name_blue</string>
-    <string name="bundle_name_rainbow6" translatable="false">@string/rainbow_color_name_purple</string>
-    <string name="bundle_name_rainbow7" translatable="false">@string/rainbow_color_name_magenta</string>
-    <string name="bundle_name_monochromatic" translatable="false">@string/monochromatic_name</string>
-
-    <string name="color_style_rainbow1" translatable="false">RAINBOW</string>
-    <string name="color_style_rainbow2" translatable="false">RAINBOW</string>
-    <string name="color_style_rainbow3" translatable="false">RAINBOW</string>
-    <string name="color_style_rainbow4" translatable="false">RAINBOW</string>
-    <string name="color_style_rainbow5" translatable="false">RAINBOW</string>
-    <string name="color_style_rainbow6" translatable="false">RAINBOW</string>
-    <string name="color_style_rainbow7" translatable="false">RAINBOW</string>
-    <string name="color_style_monochromatic" translatable="false">MONOCHROMATIC</string>
+    <string name="app_name">Themes</string>
+    <string name="bundle1_color_name">Carbon</string>
+    <string name="bundle2_color_name">Paper</string>
+    <string name="bundle3_color_name">Sun</string>
+    <string name="bundle_name_bundle1">@string/bundle1_color_name</string>
+    <string name="bundle_name_bundle2">@string/bundle2_color_name</string>
+    <string name="bundle_name_bundle3">@string/bundle3_color_name</string>
+    <string name="bundle_name_default">@string/default_color_name</string>
+    <string name="bundle_name_fruits1">@string/fruit1_color_name</string>
+    <string name="bundle_name_fruits2">@string/fruit2_color_name</string>
+    <string name="bundle_name_fruits3">@string/fruit3_color_name</string>
+    <string name="bundle_name_fruits4">@string/fruit4_color_name</string>
+    <string name="bundle_name_fruits5">@string/fruit5_color_name</string>
+    <string name="bundle_name_monochromatic">@string/color_name_monochromatic</string>
+    <string name="bundle_name_rainbow1">@string/rainbow1_color_name</string>
+    <string name="bundle_name_rainbow2">@string/rainbow2_color_name</string>
+    <string name="bundle_name_rainbow3">@string/rainbow3_color_name</string>
+    <string name="bundle_name_rainbow4">@string/rainbow4_color_name</string>
+    <string name="bundle_name_rainbow5">@string/rainbow5_color_name</string>
+    <string name="bundle_name_rainbow6">@string/rainbow6_color_name</string>
+    <string name="bundle_name_rainbow7">@string/rainbow7_color_name</string>
+    <string name="color_name_monochromatic">Monochromatic</string>
+    <string name="color_style_fruits1">FRUIT_SALAD</string>
+    <string name="color_style_fruits2">FRUIT_SALAD</string>
+    <string name="color_style_fruits3">FRUIT_SALAD</string>
+    <string name="color_style_fruits4">FRUIT_SALAD</string>
+    <string name="color_style_fruits5">FRUIT_SALAD</string>
+    <string name="color_style_monochromatic">MONOCHROMATIC</string>
+    <string name="color_style_rainbow1">RAINBOW</string>
+    <string name="color_style_rainbow2">RAINBOW</string>
+    <string name="color_style_rainbow3">RAINBOW</string>
+    <string name="color_style_rainbow4">RAINBOW</string>
+    <string name="color_style_rainbow5">RAINBOW</string>
+    <string name="color_style_rainbow6">RAINBOW</string>
+    <string name="color_style_rainbow7">RAINBOW</string>
+    <string name="default_color_name">Classic</string>
+    <string name="fruit1_color_name">Yellow and red two-color palette</string>
+    <string name="fruit2_color_name">Green and orange two-color palette</string>
+    <string name="fruit3_color_name">Blue and green two-color palette</string>
+    <string name="fruit4_color_name">Light purple and blue two-color palette</string>
+    <string name="fruit5_color_name">Pink and indigo two-color palette</string>
+    <string name="rainbow1_color_name">Red</string>
+    <string name="rainbow2_color_name">Orange</string>
+    <string name="rainbow3_color_name">Yellow</string>
+    <string name="rainbow4_color_name">Green</string>
+    <string name="rainbow5_color_name">Blue</string>
+    <string name="rainbow6_color_name">Indigo</string>
+    <string name="rainbow7_color_name">Violet</string>
 </resources>

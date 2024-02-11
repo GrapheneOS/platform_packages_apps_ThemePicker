@@ -15,13 +15,38 @@
   ~ limitations under the License.
   -->
 <resources>
-<!--TODO(b/257218629)-->
-    <color name="color_secondary_monochromatic">#FFFF00</color>
-    <color name="color_secondary_rainbow1">#FFB2B5</color>
-    <color name="color_secondary_rainbow2">#FFB868</color>
-    <color name="color_secondary_rainbow3">#E9C44A</color>
-    <color name="color_secondary_rainbow4">#BAF293</color>
-    <color name="color_secondary_rainbow5">#96CBFF</color>
-    <color name="color_secondary_rainbow6">#CBBFFF</color>
-    <color name="color_secondary_rainbow7">#F5ACFB</color>
+    <color name="color_primary_bundle1">#0a8758</color>
+    <color name="color_primary_bundle2">#746bc1</color>
+    <color name="color_primary_bundle3">#a66800</color>
+    <color name="color_primary_default">#ffffff</color>
+    <color name="color_primary_fruits1">#ffeeb2</color>
+    <color name="color_primary_fruits2">#ccee99</color>
+    <color name="color_primary_fruits3">#b1ebff</color>
+    <color name="color_primary_fruits4">#ebdcff</color>
+    <color name="color_primary_fruits5">#ffd8eb</color>
+    <color name="color_primary_monochromatic">#666666</color>
+    <color name="color_primary_rainbow1">#ffb2b5</color>
+    <color name="color_primary_rainbow2">#ffb868</color>
+    <color name="color_primary_rainbow3">#e9c44a</color>
+    <color name="color_primary_rainbow4">#baf293</color>
+    <color name="color_primary_rainbow5">#96cbff</color>
+    <color name="color_primary_rainbow6">#cbbfff</color>
+    <color name="color_primary_rainbow7">#f5acfb</color>
+    <color name="color_secondary_bundle1">#0a8758</color>
+    <color name="color_secondary_bundle2">#746bc1</color>
+    <color name="color_secondary_bundle3">#a66800</color>
+    <color name="color_secondary_default">#1565C0</color>
+    <color name="color_secondary_fruits1">#ffeeb2</color>
+    <color name="color_secondary_fruits2">#ccee99</color>
+    <color name="color_secondary_fruits3">#b1ebff</color>
+    <color name="color_secondary_fruits4">#ebdcff</color>
+    <color name="color_secondary_fruits5">#ffd8eb</color>
+    <color name="color_secondary_monochromatic">#333333</color>
+    <color name="color_secondary_rainbow1">#ffb2b5</color>
+    <color name="color_secondary_rainbow2">#ffb868</color>
+    <color name="color_secondary_rainbow3">#e9c44a</color>
+    <color name="color_secondary_rainbow4">#baf293</color>
+    <color name="color_secondary_rainbow5">#96cbff</color>
+    <color name="color_secondary_rainbow6">#cbbfff</color>
+    <color name="color_secondary_rainbow7">#f5acfb</color>
 </resources>

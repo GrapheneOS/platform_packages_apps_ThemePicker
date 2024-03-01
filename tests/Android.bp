@@ -25,7 +25,7 @@ filegroup {
     name: "ThemePickerTests_srcs",
 
     visibility: [
-        "//visibility:public"
+        "//visibility:public",
     ],
 
     srcs: [
@@ -62,6 +62,7 @@ android_test {
         "junit",
         "kotlinx_coroutines_test",
         "truth",
+        "flag-junit",
     ],
     libs: [
         "android.test.runner",

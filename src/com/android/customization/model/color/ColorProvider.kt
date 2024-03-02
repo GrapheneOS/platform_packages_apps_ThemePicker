@@ -79,7 +79,8 @@ class ColorProvider(private val context: Context, stubPackageName: String) :
         }
 
     private var colorsAvailable = true
-    private var colorBundles: List<ColorOption>? = null
+    private var presetColorBundles: List<ColorOption>? = null
+    private var wallpaperColorBundles: List<ColorOption>? = null
     private var homeWallpaperColors: WallpaperColors? = null
     private var lockWallpaperColors: WallpaperColors? = null
 
@@ -96,31 +97,27 @@ class ColorProvider(private val context: Context, stubPackageName: String) :
         val wallpaperColorsChanged =
             this.homeWallpaperColors != homeWallpaperColors ||
                 this.lockWallpaperColors != lockWallpaperColors
-        if (wallpaperColorsChanged) {
+        if (wallpaperColorsChanged || reload) {
+            loadSeedColors(
+                homeWallpaperColors,
+                lockWallpaperColors,
+            )
             this.homeWallpaperColors = homeWallpaperColors
             this.lockWallpaperColors = lockWallpaperColors
         }
-        if (colorBundles == null || reload || wallpaperColorsChanged) {
+        if (presetColorBundles == null || reload) {
             scope.launch {
                 try {
-                    if (colorBundles == null || reload) {
-                        loadPreset()
-                    }
-                    if (wallpaperColorsChanged || reload) {
-                        loadSeedColors(
-                            homeWallpaperColors,
-                            lockWallpaperColors,
-                        )
-                    }
+                    loadPreset()
                 } catch (e: Throwable) {
                     colorsAvailable = false
                     callback?.onError(e)
                     return@launch
                 }
-                callback?.onOptionsLoaded(colorBundles)
+                callback?.onOptionsLoaded(buildFinalList())
             }
         } else {
-            callback?.onOptionsLoaded(colorBundles)
+            callback?.onOptionsLoaded(buildFinalList())
         }
     }
 
@@ -173,19 +170,7 @@ class ColorProvider(private val context: Context, stubPackageName: String) :
                 bundles,
             )
         }
-
-        // Insert monochrome in the second position if it is enabled and included in preset
-        // colors
-        if (InjectorProvider.getInjector().getFlags().isMonochromaticThemeEnabled(mContext)) {
-            monochromeBundleName?.let {
-                bundles.add(1, buildPreset(it, -1, Style.MONOCHROMATIC, ColorType.WALLPAPER_COLOR))
-            }
-        }
-        bundles.addAll(
-            colorBundles?.filterNot { (it as ColorOptionImpl).type == ColorType.WALLPAPER_COLOR }
-                ?: emptyList()
-        )
-        colorBundles = bundles
+        wallpaperColorBundles = bundles
     }
 
     private fun buildColorSeeds(
@@ -381,7 +366,7 @@ class ColorProvider(private val context: Context, stubPackageName: String) :
                 monochromeBundleName = null
             }
 
-            colorBundles = bundles
+            presetColorBundles = bundles
         }
 
     private fun buildPreset(
@@ -424,5 +409,23 @@ class ColorProvider(private val context: Context, stubPackageName: String) :
         builder.lightColors = lightColors
         builder.darkColors = darkColors
         return builder.build()
+    }
+
+    private fun buildFinalList(): List<ColorOption> {
+        val presetColors = presetColorBundles ?: emptyList()
+        val wallpaperColors = wallpaperColorBundles?.toMutableList() ?: mutableListOf()
+        // Insert monochrome in the second position if it is enabled and included in preset
+        // colors
+        if (InjectorProvider.getInjector().getFlags().isMonochromaticThemeEnabled(mContext)) {
+            monochromeBundleName?.let {
+                if (wallpaperColors.isNotEmpty()) {
+                    wallpaperColors.add(
+                        1,
+                        buildPreset(it, -1, Style.MONOCHROMATIC, ColorType.WALLPAPER_COLOR)
+                    )
+                }
+            }
+        }
+        return wallpaperColors + presetColors
     }
 }

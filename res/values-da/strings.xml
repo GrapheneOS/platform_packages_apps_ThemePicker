@@ -64,7 +64,7 @@
     <string name="preview_name_shape" msgid="5676971146080968721">"Form"</string>
     <string name="preview_name_wallpaper" msgid="1738652462949531828">"Baggrund"</string>
     <string name="font_card_title" msgid="2343292653502548685">"ABC • abc • 123"</string>
-    <string name="font_card_body" msgid="6790525594503904468">"Føj dine foretrukne skrifttyper til alle skærmbilleder"</string>
+    <string name="font_card_body" msgid="6790525594503904468">"Føj dine foretrukne skrifttyper til alle skærme"</string>
     <string name="grid_options_title" msgid="7071930966989877023">"Vælg gitterstørrelse"</string>
     <string name="grid_title_pattern" msgid="9188866567612607806">"<xliff:g id="ID_1">%1$d</xliff:g>x<xliff:g id="ID_2">%2$d</xliff:g>"</string>
     <string name="apply_grid_btn_note" msgid="2966021967355139181">"Når du ændrer gitterstørrelsen genindlæses arbejdsområdet, hvilket kan tage et par sekunder."</string>

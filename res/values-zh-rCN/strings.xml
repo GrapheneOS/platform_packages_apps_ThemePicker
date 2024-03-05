@@ -107,7 +107,7 @@
     <string name="mode_title" msgid="2394873501427436055">"深色主题"</string>
     <string name="mode_disabled_msg" msgid="9196245518435936512">"因省电模式已开启，该功能被暂时停用了"</string>
     <string name="mode_changed" msgid="2243581369395418584">"主题已更改"</string>
-    <string name="themed_icon_title" msgid="7312460430471956558">"主题图标"</string>
+    <string name="themed_icon_title" msgid="7312460430471956558">"图标匹配主题"</string>
     <string name="beta_title" msgid="8703819523760746458">"Beta 版"</string>
     <string name="gird_picker_entry_content_description" msgid="9087651470212293439">"更改应用网格"</string>
     <string name="wallpaper_color_tab" msgid="1447926591721403840">"壁纸颜色"</string>

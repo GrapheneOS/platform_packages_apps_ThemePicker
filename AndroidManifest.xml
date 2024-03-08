@@ -22,6 +22,9 @@
     <uses-permission android:name="android.permission.SET_WALLPAPER"/>
     <uses-permission android:name="android.permission.SET_WALLPAPER_DIM_AMOUNT" />
 
+    <uses-permission android:name="com.android.launcher3.permission.READ_SETTINGS" />
+    <uses-permission android:name="com.android.launcher3.permission.WRITE_SETTINGS" />
+
     <queries>
         <package android:name="android"/>
         <package android:name="com.android.launcher3"/>

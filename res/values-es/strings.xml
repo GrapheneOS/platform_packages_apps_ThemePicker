@@ -122,7 +122,7 @@
     <string name="keyguard_slot_name_bottom_start" msgid="8747677880200629719">"Acceso izquierdo"</string>
     <string name="keyguard_slot_name_bottom_end" msgid="2525487375680217083">"Acceso derecho"</string>
     <string name="keyguard_affordance_none" msgid="1751643933430782312">"Ninguno"</string>
-    <string name="keyguard_affordance_enablement_dialog_headline" msgid="365379085932610314">"No puede añadir el acceso directo"</string>
+    <string name="keyguard_affordance_enablement_dialog_headline" msgid="365379085932610314">"Acceso directo no añadido"</string>
     <string name="keyguard_affordance_enablement_dialog_action_template" msgid="8117011931337357438">"Abrir <xliff:g id="APPNAME">%1$s</xliff:g>"</string>
     <string name="keyguard_affordance_enablement_dialog_message" msgid="6136286758939253570">"Para añadir la aplicación <xliff:g id="APPNAME">%1$s</xliff:g> como acceso directo:"</string>
     <string name="keyguard_affordance_enablement_dialog_dismiss_button" msgid="629754625264422508">"Hecho"</string>

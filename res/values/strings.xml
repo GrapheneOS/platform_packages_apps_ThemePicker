@@ -413,6 +413,32 @@
     <string name="keyguard_quick_affordance_section_title">Shortcuts</string>
 
     <!--
+    Label for a menu item on a settings screen that helps the user open a new screen where they can
+    configure the lock screen shortcut buttons that appear on the device without unlocking.
+    [CHAR LIMIT=16].
+    -->
+    <string name="color_contrast_section_title">Color contrast</string>
+
+    <!--
+    Label for color contrast settings button with default contrast setting.
+    [CHAR LIMIT=16].
+    -->
+    <string name="color_contrast_default_title">Default</string>
+
+    <!--
+    Label for color contrast settings button with medium contrast setting.
+    [CHAR LIMIT=16].
+    -->
+
+    <string name="color_contrast_medium_title">Medium</string>
+
+    <!--
+    Label for color contrast settings button with maximum contrast setting.
+    [CHAR LIMIT=16].
+    -->
+    <string name="color_contrast_high_title">High</string>
+
+    <!--
     Template for text that shows the names of two currently-selected lock screen shortcuts on the
     lock screen. For example, it may say "Camera, Wallet", if the first selected shortcut opens the
     camera app and the second one opens the tap-to-pay wallet experience.

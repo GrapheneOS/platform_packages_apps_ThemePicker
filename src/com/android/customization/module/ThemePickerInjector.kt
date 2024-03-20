@@ -62,6 +62,9 @@ import com.android.customization.picker.quickaffordance.data.repository.Keyguard
 import com.android.customization.picker.quickaffordance.domain.interactor.KeyguardQuickAffordancePickerInteractor
 import com.android.customization.picker.quickaffordance.domain.interactor.KeyguardQuickAffordanceSnapshotRestorer
 import com.android.customization.picker.quickaffordance.ui.viewmodel.KeyguardQuickAffordancePickerViewModel
+import com.android.customization.picker.settings.data.repository.ColorContrastSectionRepository
+import com.android.customization.picker.settings.domain.interactor.ColorContrastSectionInteractor
+import com.android.customization.picker.settings.ui.viewmodel.ColorContrastSectionViewModel
 import com.android.systemui.shared.clocks.ClockRegistry
 import com.android.systemui.shared.customization.data.content.CustomizationProviderClient
 import com.android.systemui.shared.customization.data.content.CustomizationProviderClientImpl
@@ -125,6 +128,9 @@ constructor(
     private var gridSnapshotRestorer: GridSnapshotRestorer? = null
     private var gridScreenViewModelFactory: GridScreenViewModel.Factory? = null
     private var clockRegistryProvider: ClockRegistryProvider? = null
+    private var colorContrastSectionViewModelFactory: ColorContrastSectionViewModel.Factory? = null
+    private var colorContrastSectionInteractor: ColorContrastSectionInteractor? = null
+
     @Inject lateinit var themesUserEventLogger: Lazy<ThemesUserEventLogger>
 
     override fun getCustomizationSections(activity: ComponentActivity): CustomizationSections {
@@ -138,6 +144,7 @@ constructor(
                         wallpaperColorsRepository = getWallpaperColorsRepository(),
                     ),
                     getKeyguardQuickAffordancePickerViewModelFactory(appContext),
+                    getColorContrastSectionViewModelFactory(appContext),
                     getNotificationSectionViewModelFactory(appContext),
                     getFlags(),
                     getClockCarouselViewModelFactory(
@@ -227,6 +234,29 @@ constructor(
                     }
                 )
                 .also { wallpaperInteractor = it }
+    }
+
+    private fun getColorContrastSectionInteractorImpl(
+        context: Context
+    ): ColorContrastSectionInteractor {
+        return ColorContrastSectionInteractor(
+            ColorContrastSectionRepository(context, bgDispatcher),
+        )
+    }
+
+    fun getColorContrastSectionInteractor(context: Context): ColorContrastSectionInteractor {
+        return colorContrastSectionInteractor
+            ?: getColorContrastSectionInteractorImpl(context).also {
+                colorContrastSectionInteractor = it
+            }
+    }
+
+    fun getColorContrastSectionViewModelFactory(
+        context: Context
+    ): ColorContrastSectionViewModel.Factory {
+        return colorContrastSectionViewModelFactory
+            ?: ColorContrastSectionViewModel.Factory(getColorContrastSectionInteractor(context))
+                .also { colorContrastSectionViewModelFactory = it }
     }
 
     override fun getKeyguardQuickAffordancePickerInteractor(

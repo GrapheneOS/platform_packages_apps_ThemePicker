@@ -27,6 +27,8 @@ android_robolectric_test {
         "truth",
         "SystemUICustomizationTestUtils",
         "ThemePickerApplicationLib",
+        "mockito-robolectric-prebuilt",
+        "mockito-kotlin2",
     ],
 
     libs: [

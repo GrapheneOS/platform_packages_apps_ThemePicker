@@ -26,13 +26,13 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 
-class ColorContrastSectionRepository(
+open class ColorContrastSectionRepository(
     private val context: Context,
     private val bgDispatcher: CoroutineDispatcher
 ) {
     var uiModeManager =
         context.applicationContext.getSystemService(UI_MODE_SERVICE) as UiModeManager?
-    var contrast: Flow<Float> = callbackFlow {
+    open var contrast: Flow<Float> = callbackFlow {
         val executor: Executor = bgDispatcher.asExecutor()
         val listener =
             UiModeManager.ContrastChangeListener { contrast ->
@@ -43,10 +43,8 @@ class ColorContrastSectionRepository(
         // Emit the current contrast value immediately
         uiModeManager?.contrast?.let { currentContrast -> trySend(currentContrast) }
 
-        // Register the listener with the UiModeManager
         uiModeManager?.addContrastChangeListener(executor, listener)
 
-        // Await close signals to unregister the listener to prevent memory leaks
         awaitClose {
             // Unregister the listener when the flow collection is cancelled or no longer in use
             uiModeManager?.removeContrastChangeListener(listener)

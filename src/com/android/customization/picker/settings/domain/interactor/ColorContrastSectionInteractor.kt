@@ -19,8 +19,8 @@ package com.android.customization.picker.settings.domain.interactor
 import com.android.customization.picker.settings.data.repository.ColorContrastSectionRepository
 import kotlinx.coroutines.flow.Flow
 
-class ColorContrastSectionInteractor(
+open class ColorContrastSectionInteractor(
     private val colorContrastSectionRepository: ColorContrastSectionRepository
 ) {
-    val contrast: Flow<Float> = colorContrastSectionRepository.contrast
+    open val contrast: Flow<Float> = colorContrastSectionRepository.contrast
 }

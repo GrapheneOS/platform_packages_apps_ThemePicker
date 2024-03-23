@@ -128,6 +128,10 @@
     <string name="keyguard_affordance_enablement_dialog_dismiss_button" msgid="629754625264422508">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‏‎‎‎‎‎‎‎‏‏‏‏‏‏‏‏‎‎‏‎‎‎‏‎‏‏‏‏‎‏‎‏‎‏‎‏‏‎‎‏‏‏‏‏‏‎‏‎‏‏‏‏‏‎‏‎‎‎‏‎‏‏‏‎‎‎‏‏‏‎‎‏‏‎‏‏‎‎‎Done‎‏‎‎‏‎"</string>
     <string name="keyguard_quick_affordance_title" msgid="4242813186995735584">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‏‎‎‎‎‎‎‎‏‏‏‏‏‏‏‏‏‎‏‏‏‎‏‎‏‏‏‎‎‎‎‏‏‎‎‎‎‎‎‎‎‎‎‏‏‏‎‏‎‎‏‏‏‎‏‏‎‎‏‏‏‎‎‏‎‏‎‎‏‏‎‎‎‎‏‎‎‎‎‎‎Shortcuts‎‏‎‎‏‎"</string>
     <string name="keyguard_quick_affordance_section_title" msgid="2806304242671717309">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‏‎‎‎‎‎‎‎‏‏‏‏‏‏‏‏‏‎‏‎‎‏‏‎‏‏‏‏‎‎‎‏‏‏‏‏‏‏‏‎‏‏‎‏‎‏‏‏‎‎‎‏‏‏‎‎‎‎‎‏‏‏‏‎‏‎‎‎‏‎‏‏‏‎‏‏‏‏‎‏‎Shortcuts‎‏‎‎‏‎"</string>
+    <string name="color_contrast_section_title" msgid="7194809124718896091">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‏‎‎‎‎‎‎‎‏‏‏‏‏‏‏‏‏‏‏‏‎‎‎‏‏‏‏‎‏‏‎‎‏‎‎‎‏‏‎‎‎‏‏‎‎‎‏‏‏‎‏‏‏‏‎‎‏‏‎‎‏‏‎‏‏‏‏‏‎‎‎‏‏‏‏‎‏‏‎‏‏‎Color contrast‎‏‎‎‏‎"</string>
+    <string name="color_contrast_default_title" msgid="7954235103549276978">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‏‎‎‎‎‎‎‎‏‏‏‏‏‏‏‏‏‏‏‏‎‏‏‏‎‎‏‏‎‎‎‏‏‎‎‎‏‏‏‏‎‏‎‏‎‏‏‏‎‏‏‏‎‏‏‏‎‏‏‏‏‏‏‏‏‎‏‎‎‎‎‏‏‎‎‏‏‎‎‏‎‎Default‎‏‎‎‏‎"</string>
+    <string name="color_contrast_medium_title" msgid="8071574793250090215">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‏‎‎‎‎‎‎‎‏‏‏‏‏‏‏‏‏‏‏‏‏‎‎‎‎‎‎‎‎‎‎‏‏‏‏‏‏‏‏‏‎‏‎‎‎‎‎‏‎‎‏‏‎‏‎‎‏‏‎‏‎‏‎‏‏‎‎‏‎‏‏‎‎‏‏‏‎‎‏‏‏‎Medium‎‏‎‎‏‎"</string>
+    <string name="color_contrast_high_title" msgid="5554685752479470200">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‏‎‎‎‎‎‎‎‏‏‏‏‏‏‏‏‏‏‏‎‎‏‏‎‏‎‎‎‏‎‏‏‎‎‎‏‏‎‏‎‏‎‏‎‎‎‎‏‏‎‎‎‎‏‎‏‏‎‏‏‏‎‏‏‎‎‏‎‏‎‎‏‎‎‏‏‏‏‎‎‎‎High‎‏‎‎‏‎"</string>
     <string name="keyguard_quick_affordance_two_selected_template" msgid="1757099194522296363">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‏‎‎‎‎‎‎‎‏‏‏‏‏‏‏‏‎‏‏‏‎‎‎‎‏‏‎‎‎‏‎‎‏‏‏‏‎‎‎‎‏‏‎‏‎‎‎‎‏‏‎‏‏‎‎‏‎‏‎‎‎‎‎‎‏‏‎‎‎‎‎‎‎‏‎‏‎‏‏‎‎‏‎‎‏‏‎<xliff:g id="FIRST">%1$s</xliff:g>‎‏‎‎‏‏‏‎, ‎‏‎‎‏‏‎<xliff:g id="SECOND">%2$s</xliff:g>‎‏‎‎‏‏‏‎‎‏‎‎‏‎"</string>
     <string name="keyguard_quick_affordance_none_selected" msgid="8494127020144112003">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‏‎‎‎‎‎‎‎‏‏‏‏‏‏‏‏‏‏‏‏‏‎‏‎‏‏‏‏‎‎‎‎‏‎‎‏‏‎‎‏‏‏‎‎‎‎‏‎‏‎‏‏‎‎‎‎‎‏‎‏‏‏‏‎‎‏‎‏‏‎‎‎‏‏‎‎‎‎‎‏‏‎None‎‏‎‎‏‎"</string>
     <string name="show_notifications_on_lock_screen" msgid="4157744243084646720">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‏‎‎‎‎‎‎‎‏‏‏‏‏‏‏‏‏‎‏‏‏‎‎‏‏‎‏‏‎‎‏‏‎‏‎‎‎‏‏‎‎‏‎‏‏‏‎‎‎‏‎‎‎‎‏‏‏‏‏‏‏‏‎‎‎‏‎‏‏‎‎‏‎‏‎‎‎‎‎‎‎Show notifications on the lock screen‎‏‎‎‏‎"</string>

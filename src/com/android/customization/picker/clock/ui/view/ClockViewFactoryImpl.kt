@@ -46,7 +46,7 @@ class ClockViewFactoryImpl(
 ) : ClockViewFactory {
     private val resources = appContext.resources
     private val timeTickListeners: ConcurrentHashMap<Int, TimeTicker> = ConcurrentHashMap()
-    private val clockControllers: HashMap<String, ClockController> = HashMap()
+    private val clockControllers: ConcurrentHashMap<String, ClockController> = ConcurrentHashMap()
     private val smallClockFrames: HashMap<String, FrameLayout> = HashMap()
 
     override fun getController(clockId: String): ClockController {

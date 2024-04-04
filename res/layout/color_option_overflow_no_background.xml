@@ -24,7 +24,10 @@
     android:layout_gravity="center"
     android:clipChildren="false"
     android:gravity="center"
-    android:padding="@dimen/option_tile_grid_tile_padding_min"
+    android:paddingStart="@dimen/option_tile_grid_tile_padding_min"
+    android:paddingEnd="@dimen/option_tile_grid_tile_padding_min"
+    android:paddingTop="@dimen/option_tile_grid_icon_padding_min"
+    android:paddingBottom="@dimen/option_tile_grid_icon_padding_min"
     android:layout_weight="1"
     app:layout_constraintDimensionRatio="1:1"
     app:layout_constraintWidth_max="@dimen/component_color_chip_small_diameter_default">

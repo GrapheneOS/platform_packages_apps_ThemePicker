@@ -42,6 +42,7 @@ import com.android.themepicker.R
 import com.android.wallpaper.module.InjectorProvider
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -62,6 +63,7 @@ class ColorProvider(private val context: Context, stubPackageName: String) :
         private const val ALPHA_MASK = 0xFF
     }
 
+    private var loaderJob: Job? = null
     private val monetEnabled = ColorUtils.isMonetEnabled(context)
     // TODO(b/202145216): Use style method to fetch the list of style.
     private var styleList =
@@ -105,19 +107,21 @@ class ColorProvider(private val context: Context, stubPackageName: String) :
             this.homeWallpaperColors = homeWallpaperColors
             this.lockWallpaperColors = lockWallpaperColors
         }
-        if (presetColorBundles == null || reload) {
-            scope.launch {
+
+        scope.launch {
+            loaderJob?.join()
+            if (presetColorBundles == null || reload) {
                 try {
-                    loadPreset()
+                    loaderJob = launch { loadPreset() }
                 } catch (e: Throwable) {
                     colorsAvailable = false
                     callback?.onError(e)
                     return@launch
                 }
                 callback?.onOptionsLoaded(buildFinalList())
+            } else {
+                callback?.onOptionsLoaded(buildFinalList())
             }
-        } else {
-            callback?.onOptionsLoaded(buildFinalList())
         }
     }
 
@@ -367,6 +371,7 @@ class ColorProvider(private val context: Context, stubPackageName: String) :
             }
 
             presetColorBundles = bundles
+            loaderJob = null
         }
 
     private fun buildPreset(

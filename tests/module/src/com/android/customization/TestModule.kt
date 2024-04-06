@@ -16,6 +16,8 @@ import com.android.wallpaper.module.logging.TestUserEventLogger
 import com.android.wallpaper.module.logging.UserEventLogger
 import com.android.wallpaper.picker.preview.data.util.DefaultLiveWallpaperDownloader
 import com.android.wallpaper.picker.preview.data.util.LiveWallpaperDownloader
+import com.android.wallpaper.system.UiModeManagerWrapper
+import com.android.wallpaper.testing.FakeUiModeManager
 import com.android.wallpaper.testing.TestInjector
 import com.android.wallpaper.testing.TestWallpaperPreferences
 import com.android.wallpaper.util.converter.DefaultWallpaperModelFactory
@@ -77,6 +79,8 @@ abstract class TestModule {
     abstract fun bindLiveWallpaperDownloader(
         impl: DefaultLiveWallpaperDownloader
     ): LiveWallpaperDownloader
+
+    @Binds @Singleton abstract fun bindUiModeManager(impl: FakeUiModeManager): UiModeManagerWrapper
 
     companion object {
         @Provides

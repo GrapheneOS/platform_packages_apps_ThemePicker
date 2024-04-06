@@ -20,7 +20,6 @@ import static android.Manifest.permission.MODIFY_DAY_NIGHT_MODE;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static android.os.PowerManager.ACTION_POWER_SAVE_MODE_CHANGED;
 
-import android.app.UiModeManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -43,6 +42,7 @@ import com.android.customization.module.logging.ThemesUserEventLogger;
 import com.android.customization.picker.mode.DarkModeSectionView;
 import com.android.themepicker.R;
 import com.android.wallpaper.model.CustomizationSectionController;
+import com.android.wallpaper.system.UiModeManagerWrapper;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -61,18 +61,21 @@ public class DarkModeSectionController implements
     private Context mContext;
     private DarkModeSectionView mDarkModeSectionView;
     private final DarkModeSnapshotRestorer mSnapshotRestorer;
+    private final UiModeManagerWrapper mUiModeManager;
     private final ThemesUserEventLogger mThemesUserEventLogger;
 
     public DarkModeSectionController(
             Context context,
             Lifecycle lifecycle,
             DarkModeSnapshotRestorer snapshotRestorer,
+            UiModeManagerWrapper uiModeManager,
             ThemesUserEventLogger themesUserEventLogger) {
         mContext = context;
         mLifecycle = lifecycle;
         mPowerManager = context.getSystemService(PowerManager.class);
         mLifecycle.addObserver(this);
         mSnapshotRestorer = snapshotRestorer;
+        mUiModeManager = uiModeManager;
         mThemesUserEventLogger = themesUserEventLogger;
     }
 
@@ -134,13 +137,12 @@ public class DarkModeSectionController implements
             disableToast.show();
             return;
         }
-        UiModeManager uiModeManager = context.getSystemService(UiModeManager.class);
         int shortDelay = context.getResources().getInteger(android.R.integer.config_shortAnimTime);
         new Handler(Looper.getMainLooper()).postDelayed(
                 () -> {
                     mDarkModeSectionView.announceForAccessibility(
                             context.getString(R.string.mode_changed));
-                    uiModeManager.setNightModeActivated(viewActivated);
+                    mUiModeManager.setNightModeActivated(viewActivated);
                     mThemesUserEventLogger.logDarkThemeApplied(viewActivated);
                     mSnapshotRestorer.store(viewActivated);
                 },

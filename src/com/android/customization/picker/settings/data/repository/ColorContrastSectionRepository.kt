@@ -17,8 +17,7 @@
 package com.android.customization.picker.settings.data.repository
 
 import android.app.UiModeManager
-import android.content.Context
-import android.content.Context.UI_MODE_SERVICE
+import com.android.wallpaper.system.UiModeManagerWrapper
 import java.util.concurrent.Executor
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.asExecutor
@@ -26,13 +25,11 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 
-open class ColorContrastSectionRepository(
-    private val context: Context,
+class ColorContrastSectionRepository(
+    uiModeManager: UiModeManagerWrapper,
     private val bgDispatcher: CoroutineDispatcher
 ) {
-    var uiModeManager =
-        context.applicationContext.getSystemService(UI_MODE_SERVICE) as UiModeManager?
-    open var contrast: Flow<Float> = callbackFlow {
+    var contrast: Flow<Float> = callbackFlow {
         val executor: Executor = bgDispatcher.asExecutor()
         val listener =
             UiModeManager.ContrastChangeListener { contrast ->
@@ -41,13 +38,13 @@ open class ColorContrastSectionRepository(
             }
 
         // Emit the current contrast value immediately
-        uiModeManager?.contrast?.let { currentContrast -> trySend(currentContrast) }
+        uiModeManager.getContrast()?.let { currentContrast -> trySend(currentContrast) }
 
-        uiModeManager?.addContrastChangeListener(executor, listener)
+        uiModeManager.addContrastChangeListener(executor, listener)
 
         awaitClose {
             // Unregister the listener when the flow collection is cancelled or no longer in use
-            uiModeManager?.removeContrastChangeListener(listener)
+            uiModeManager.removeContrastChangeListener(listener)
         }
     }
 }

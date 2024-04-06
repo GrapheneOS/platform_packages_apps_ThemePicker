@@ -16,7 +16,6 @@
 package com.android.customization.module
 
 import android.app.Activity
-import android.app.UiModeManager
 import android.app.WallpaperColors
 import android.app.WallpaperManager
 import android.content.Context
@@ -144,7 +143,7 @@ constructor(
                         wallpaperColorsRepository = getWallpaperColorsRepository(),
                     ),
                     getKeyguardQuickAffordancePickerViewModelFactory(appContext),
-                    getColorContrastSectionViewModelFactory(appContext),
+                    getColorContrastSectionViewModelFactory(),
                     getNotificationSectionViewModelFactory(appContext),
                     getFlags(),
                     getClockCarouselViewModelFactory(
@@ -236,27 +235,22 @@ constructor(
                 .also { wallpaperInteractor = it }
     }
 
-    private fun getColorContrastSectionInteractorImpl(
-        context: Context
-    ): ColorContrastSectionInteractor {
+    private fun getColorContrastSectionInteractorImpl(): ColorContrastSectionInteractor {
         return ColorContrastSectionInteractor(
-            ColorContrastSectionRepository(context, bgDispatcher),
+            ColorContrastSectionRepository(uiModeManager, bgDispatcher),
         )
     }
 
-    fun getColorContrastSectionInteractor(context: Context): ColorContrastSectionInteractor {
+    fun getColorContrastSectionInteractor(): ColorContrastSectionInteractor {
         return colorContrastSectionInteractor
-            ?: getColorContrastSectionInteractorImpl(context).also {
-                colorContrastSectionInteractor = it
-            }
+            ?: getColorContrastSectionInteractorImpl().also { colorContrastSectionInteractor = it }
     }
 
-    fun getColorContrastSectionViewModelFactory(
-        context: Context
-    ): ColorContrastSectionViewModel.Factory {
+    fun getColorContrastSectionViewModelFactory(): ColorContrastSectionViewModel.Factory {
         return colorContrastSectionViewModelFactory
-            ?: ColorContrastSectionViewModel.Factory(getColorContrastSectionInteractor(context))
-                .also { colorContrastSectionViewModelFactory = it }
+            ?: ColorContrastSectionViewModel.Factory(getColorContrastSectionInteractor()).also {
+                colorContrastSectionViewModelFactory = it
+            }
     }
 
     override fun getKeyguardQuickAffordancePickerInteractor(
@@ -495,7 +489,7 @@ constructor(
         return darkModeSnapshotRestorer
             ?: DarkModeSnapshotRestorer(
                     context = appContext,
-                    manager = appContext.getSystemService(Context.UI_MODE_SERVICE) as UiModeManager,
+                    manager = uiModeManager,
                     backgroundDispatcher = bgDispatcher,
                 )
                 .also { darkModeSnapshotRestorer = it }

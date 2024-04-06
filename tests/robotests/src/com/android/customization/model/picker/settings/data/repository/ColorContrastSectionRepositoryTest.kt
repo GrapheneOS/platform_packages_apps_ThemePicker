@@ -16,11 +16,9 @@
 
 package com.android.customization.model.picker.settings.data.repository
 
-import android.app.UiModeManager
-import android.content.Context
-import androidx.test.core.app.ApplicationProvider
 import androidx.test.filters.SmallTest
 import com.android.customization.picker.settings.data.repository.ColorContrastSectionRepository
+import com.android.wallpaper.testing.FakeUiModeManager
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
@@ -30,26 +28,20 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mockito.mock
-import org.mockito.Mockito.verify
-import org.mockito.Mockito.`when`
-import org.mockito.kotlin.any
-import org.mockito.kotlin.argumentCaptor
 import org.robolectric.RobolectricTestRunner
 
 @SmallTest
 @RunWith(RobolectricTestRunner::class)
 class ColorContrastSectionRepositoryTest {
+    private val uiModeManager = FakeUiModeManager()
     private lateinit var underTest: ColorContrastSectionRepository
 
-    private lateinit var context: Context
     private lateinit var bgDispatcher: TestCoroutineDispatcher
 
     @Before
     fun setUp() {
-        context = ApplicationProvider.getApplicationContext<Context>()
         bgDispatcher = TestCoroutineDispatcher()
-        underTest = ColorContrastSectionRepository(context, bgDispatcher)
+        underTest = ColorContrastSectionRepository(uiModeManager, bgDispatcher)
     }
 
     @Test
@@ -60,35 +52,21 @@ class ColorContrastSectionRepositoryTest {
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun contrastFlowEmitsValues() = runBlockingTest {
-        val mockUiModeManager = mock(UiModeManager::class.java)
-        val contrastValues = listOf(0.5f, 0.7f, 0.8f)
-
-        // Stub the initial contrast value before the flow starts collecting
-        `when`(mockUiModeManager.contrast).thenReturn(contrastValues[0])
-
-        // Assign the mockUiModeManager to the repository's uiModeManager
-        underTest.uiModeManager = mockUiModeManager
-
-        // Create a collector for the flow
+        val nextContrastValues = listOf(0.5f, 0.7f, 0.8f)
+        // Set up a flow to collect all contrast values
         val flowCollector = mutableListOf<Float>()
-
         // Start collecting values from the flow
         val job = launch { underTest.contrast.collect { flowCollector.add(it) } }
 
-        // Capture the ContrastChangeListener
-        val listenerCaptor = argumentCaptor<UiModeManager.ContrastChangeListener>()
-        verify(mockUiModeManager).addContrastChangeListener(any(), listenerCaptor.capture())
+        nextContrastValues.forEach { uiModeManager.setContrast(it) }
 
-        // Simulate contrast changes after the initial value has been emitted
-        contrastValues.drop(1).forEach { newValue ->
-            listenerCaptor.firstValue.onContrastChanged(newValue)
-        }
-
-        assertThat(flowCollector).containsExactlyElementsIn(contrastValues)
-
+        // Ignore the first contrast value from constructing the repository
+        val collectedValues = flowCollector.drop(1)
+        assertThat(collectedValues).containsExactlyElementsIn(nextContrastValues)
         job.cancel()
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     @After
     fun tearDown() {
         bgDispatcher.cleanupTestCoroutines()

@@ -17,13 +17,13 @@
 
 package com.android.customization.model.mode
 
-import android.app.UiModeManager
 import android.content.Context
 import android.content.res.Configuration
 import androidx.annotation.VisibleForTesting
 import com.android.wallpaper.picker.undo.domain.interactor.SnapshotRestorer
 import com.android.wallpaper.picker.undo.domain.interactor.SnapshotStore
 import com.android.wallpaper.picker.undo.shared.model.RestorableSnapshot
+import com.android.wallpaper.system.UiModeManagerWrapper
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 
@@ -37,7 +37,7 @@ class DarkModeSnapshotRestorer : SnapshotRestorer {
 
     constructor(
         context: Context,
-        manager: UiModeManager,
+        manager: UiModeManagerWrapper,
         backgroundDispatcher: CoroutineDispatcher,
     ) : this(
         backgroundDispatcher = backgroundDispatcher,

@@ -16,37 +16,39 @@
 
 package com.android.customization.model.picker.settings.ui.viewmodel
 
-import com.android.customization.picker.settings.data.repository.ColorContrastSectionRepository
-import com.android.customization.picker.settings.domain.interactor.ColorContrastSectionInteractor
 import com.android.customization.picker.settings.ui.viewmodel.ColorContrastSectionDataViewModel
 import com.android.customization.picker.settings.ui.viewmodel.ColorContrastSectionViewModel
 import com.android.themepicker.R
 import com.android.wallpaper.picker.common.icon.ui.viewmodel.Icon
 import com.android.wallpaper.picker.common.text.ui.viewmodel.Text
 import com.android.wallpaper.testing.FakeUiModeManager
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
+import javax.inject.Inject
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 
+@HiltAndroidTest
 @RunWith(RobolectricTestRunner::class)
 class ColorContrastSectionViewModelTest {
-    private val uiModeManager = FakeUiModeManager()
-    private val bgDispatcher = TestCoroutineDispatcher()
+    @get:Rule var hiltRule = HiltAndroidRule(this)
 
     private lateinit var viewModel: ColorContrastSectionViewModel
 
+    @Inject lateinit var uiModeManager: FakeUiModeManager
+    @Inject lateinit var viewModelFactory: ColorContrastSectionViewModel.Factory
+
     @Before
     fun setUp() {
-        val repository = ColorContrastSectionRepository(uiModeManager, bgDispatcher)
-        val factory =
-            ColorContrastSectionViewModel.Factory(ColorContrastSectionInteractor(repository))
-        viewModel = factory.create(ColorContrastSectionViewModel::class.java)
+        hiltRule.inject()
+        viewModel = viewModelFactory.create(ColorContrastSectionViewModel::class.java)
     }
 
     @Test

@@ -20,28 +20,30 @@ import androidx.test.filters.SmallTest
 import com.android.customization.picker.settings.data.repository.ColorContrastSectionRepository
 import com.android.wallpaper.testing.FakeUiModeManager
 import com.google.common.truth.Truth.assertThat
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
+import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.After
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 
+@HiltAndroidTest
 @SmallTest
 @RunWith(RobolectricTestRunner::class)
 class ColorContrastSectionRepositoryTest {
-    private val uiModeManager = FakeUiModeManager()
-    private lateinit var underTest: ColorContrastSectionRepository
+    @get:Rule var hiltRule = HiltAndroidRule(this)
 
-    private lateinit var bgDispatcher: TestCoroutineDispatcher
+    @Inject lateinit var uiModeManager: FakeUiModeManager
+    @Inject lateinit var underTest: ColorContrastSectionRepository
 
     @Before
     fun setUp() {
-        bgDispatcher = TestCoroutineDispatcher()
-        underTest = ColorContrastSectionRepository(uiModeManager, bgDispatcher)
+        hiltRule.inject()
     }
 
     @Test
@@ -64,11 +66,5 @@ class ColorContrastSectionRepositoryTest {
         val collectedValues = flowCollector.drop(1)
         assertThat(collectedValues).containsExactlyElementsIn(nextContrastValues)
         job.cancel()
-    }
-
-    @OptIn(ExperimentalCoroutinesApi::class)
-    @After
-    fun tearDown() {
-        bgDispatcher.cleanupTestCoroutines()
     }
 }

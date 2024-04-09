@@ -17,10 +17,13 @@
 package com.android.customization.picker.settings.domain.interactor
 
 import com.android.customization.picker.settings.data.repository.ColorContrastSectionRepository
+import javax.inject.Inject
+import javax.inject.Singleton
 import kotlinx.coroutines.flow.Flow
 
-class ColorContrastSectionInteractor(
-    colorContrastSectionRepository: ColorContrastSectionRepository
-) {
+@Singleton
+class ColorContrastSectionInteractor
+@Inject
+constructor(colorContrastSectionRepository: ColorContrastSectionRepository) {
     val contrast: Flow<Float> = colorContrastSectionRepository.contrast
 }

@@ -22,6 +22,8 @@ import com.android.customization.picker.settings.domain.interactor.ColorContrast
 import com.android.themepicker.R
 import com.android.wallpaper.picker.common.icon.ui.viewmodel.Icon
 import com.android.wallpaper.picker.common.text.ui.viewmodel.Text
+import javax.inject.Inject
+import javax.inject.Singleton
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -70,7 +72,10 @@ private constructor(
         HIGH(1f)
     }
 
-    class Factory(
+    @Singleton
+    class Factory
+    @Inject
+    constructor(
         private val colorContrastSectionInteractor: ColorContrastSectionInteractor,
     ) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {

@@ -1,4 +1,4 @@
-// Copyright (C) 2023 The Android Open Source Project
+// Copyright (C) 2024 The Android Open Source Project
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -13,27 +13,17 @@
 // limitations under the License.
 //
 
-//
-// Build rule for WallpaperPicker2 tests
-//
 package {
     default_applicable_licenses: ["Android-Apache-2.0"],
 }
 
 android_library {
-    name: "ThemePickerTestLib",
-
-    defaults: ["ThemePicker_defaults"],
-    srcs: [
-        "src/**/*.java",
-        "src/**/*.kt",
-    ],
+    name: "ThemePickerTestModule",
+    srcs: ["src/com/android/customization/TestModule.kt"],
     static_libs: [
-        "ThemePickerLib",
-        "WallpaperPicker2TestLib",
-        "androidx.annotation_annotation",
-        "kotlinx_coroutines_test",
-        "truth",
+        "ThemePickerTestLib",
+        "hilt_android",
+        "hilt_android_testing",
     ],
 
     platform_apis: true,

@@ -17,17 +17,23 @@
 package com.android.customization.picker.settings.data.repository
 
 import android.app.UiModeManager
+import com.android.wallpaper.picker.di.modules.BackgroundDispatcher
 import com.android.wallpaper.system.UiModeManagerWrapper
 import java.util.concurrent.Executor
+import javax.inject.Inject
+import javax.inject.Singleton
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.asExecutor
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 
-class ColorContrastSectionRepository(
+@Singleton
+class ColorContrastSectionRepository
+@Inject
+constructor(
     uiModeManager: UiModeManagerWrapper,
-    private val bgDispatcher: CoroutineDispatcher
+    @BackgroundDispatcher bgDispatcher: CoroutineDispatcher,
 ) {
     var contrast: Flow<Float> = callbackFlow {
         val executor: Executor = bgDispatcher.asExecutor()

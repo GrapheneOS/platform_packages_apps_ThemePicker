@@ -42,7 +42,7 @@
     <string name="clock_size_large" msgid="3143248715744138979">"Үлкен"</string>
     <string name="clock_size_small" msgid="2280449912094164133">"Кішi"</string>
     <string name="clock_size_small_description" msgid="4089511196955732480">"Экранның бұрышында шағын сағат көрсетіледі."</string>
-    <string name="grid_title" msgid="1688173478777254123">"Қолданба торы"</string>
+    <string name="grid_title" msgid="1688173478777254123">"Қолданбалар торы"</string>
     <string name="apply_theme_btn" msgid="6293081192321303991">"Қолдану"</string>
     <string name="edit_custom_theme_lbl" msgid="5211377705710775224">"Өзгерту үшін түртіңіз"</string>
     <string name="keep_my_wallpaper" msgid="8012385376769568517">"Қазіргі тұсқағазды қалдыру"</string>

@@ -111,7 +111,7 @@
     <string name="beta_title" msgid="8703819523760746458">"စမ်းသပ်"</string>
     <string name="gird_picker_entry_content_description" msgid="9087651470212293439">"အက်ပ်ဇယား ပြောင်းရန်"</string>
     <string name="wallpaper_color_tab" msgid="1447926591721403840">"နောက်ခံအရောင်များ"</string>
-    <string name="wallpaper_color_subheader" msgid="4044464573669965670">"သင်္ကေတ၊ စာသားစသည်တို့သည် သင့်နောက်ခံအရောင်များနှင့် ကိုက်ညီသည်"</string>
+    <string name="wallpaper_color_subheader" msgid="4044464573669965670">"သင်္ကေတ၊ စာသားစသည်တို့သည် သင့်နောက်ခံအရောင်များနှင့် လိုက်ဖက်သည်"</string>
     <string name="wallpaper_color_title" msgid="5687965239180986458">"နောက်ခံအရောင်"</string>
     <string name="preset_color_tab" msgid="3133391839341329314">"အခြေခံအရောင်များ"</string>
     <string name="preset_color_tab_2" msgid="1444107326712562538">"အခြားအရောင်"</string>
@@ -135,7 +135,7 @@
     <string name="keyguard_quick_affordance_two_selected_template" msgid="1757099194522296363">"<xliff:g id="FIRST">%1$s</xliff:g>၊ <xliff:g id="SECOND">%2$s</xliff:g>"</string>
     <string name="keyguard_quick_affordance_none_selected" msgid="8494127020144112003">"မရှိ"</string>
     <string name="show_notifications_on_lock_screen" msgid="4157744243084646720">"အကြောင်းကြားချက်များကို လော့ခ်မျက်နှာပြင်တွင် ပြပါ"</string>
-    <string name="more_settings_section_title" msgid="1331425454775815958">"နောက်ထပ် လော့ခ်မျက်နှာပြင် နည်းလမ်းများ"</string>
+    <string name="more_settings_section_title" msgid="1331425454775815958">"လော့ခ်မျက်နှာပြင် ရွေးစရာများ"</string>
     <string name="more_settings_section_description" msgid="1860115709122398325">"ကိုယ်ရေးအချက်အလက်လုံခြုံမှု၊ Now Playing နှင့်အခြား"</string>
     <string name="more_colors" msgid="3191071655353004591">"နောက်ထပ်အရောင်များ"</string>
     <string name="content_description_dynamic_color_option" msgid="2191721655642529886">"မူလ ပြောင်းလဲနိုင်သော အပြင်အဆင်"</string>

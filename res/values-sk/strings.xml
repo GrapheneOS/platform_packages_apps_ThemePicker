@@ -42,7 +42,7 @@
     <string name="clock_size_large" msgid="3143248715744138979">"Veľké"</string>
     <string name="clock_size_small" msgid="2280449912094164133">"Malé"</string>
     <string name="clock_size_small_description" msgid="4089511196955732480">"V rohu obrazovky sa zobrazujú malé hodiny"</string>
-    <string name="grid_title" msgid="1688173478777254123">"Mriežka aplik."</string>
+    <string name="grid_title" msgid="1688173478777254123">"Mriežka aplikácií"</string>
     <string name="apply_theme_btn" msgid="6293081192321303991">"Použiť"</string>
     <string name="edit_custom_theme_lbl" msgid="5211377705710775224">"Klepnutím upravte"</string>
     <string name="keep_my_wallpaper" msgid="8012385376769568517">"Ponechať aktuálnu tapetu"</string>

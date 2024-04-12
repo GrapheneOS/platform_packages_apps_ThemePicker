@@ -41,7 +41,7 @@
     <string name="clock_size_dynamic_description" msgid="2776620745774561662">"Velikost ure se spremeni glede na vsebino zaklenjenega zaslona."</string>
     <string name="clock_size_large" msgid="3143248715744138979">"Velika"</string>
     <string name="clock_size_small" msgid="2280449912094164133">"Majhna"</string>
-    <string name="clock_size_small_description" msgid="4089511196955732480">"V kotu zaslona je prikazana majhna ura"</string>
+    <string name="clock_size_small_description" msgid="4089511196955732480">"V kotu zaslona je prikazana majhna ura."</string>
     <string name="grid_title" msgid="1688173478777254123">"Mreža aplikacij"</string>
     <string name="apply_theme_btn" msgid="6293081192321303991">"Uporabi"</string>
     <string name="edit_custom_theme_lbl" msgid="5211377705710775224">"Dotaknite se za urejanje"</string>

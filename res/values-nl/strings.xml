@@ -41,7 +41,7 @@
     <string name="clock_size_dynamic_description" msgid="2776620745774561662">"Het formaat van de klok past zich aan de content van het vergrendelscherm aan"</string>
     <string name="clock_size_large" msgid="3143248715744138979">"Groot"</string>
     <string name="clock_size_small" msgid="2280449912094164133">"Klein"</string>
-    <string name="clock_size_small_description" msgid="4089511196955732480">"Er staat een kleine klok in de hoek van je scherm"</string>
+    <string name="clock_size_small_description" msgid="4089511196955732480">"Er wordt een kleine klok weergegeven in de hoek van het scherm"</string>
     <string name="grid_title" msgid="1688173478777254123">"App-raster"</string>
     <string name="apply_theme_btn" msgid="6293081192321303991">"Toepassen"</string>
     <string name="edit_custom_theme_lbl" msgid="5211377705710775224">"Tik om te bewerken"</string>

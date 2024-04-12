@@ -38,10 +38,10 @@
     <string name="clock_color_teal" msgid="7499223425741344251">"أزرق مخضرّ"</string>
     <string name="clock_size" msgid="5028923902364418263">"الحجم"</string>
     <string name="clock_size_dynamic" msgid="1023930312455061642">"ديناميكي"</string>
-    <string name="clock_size_dynamic_description" msgid="2776620745774561662">"يتغير حجم الساعة وفقًا للمحتوى على شاشة القفل."</string>
+    <string name="clock_size_dynamic_description" msgid="2776620745774561662">"يتغير حجم الساعة وفقًا للمحتوى على شاشة القفل"</string>
     <string name="clock_size_large" msgid="3143248715744138979">"كبير"</string>
     <string name="clock_size_small" msgid="2280449912094164133">"صغير"</string>
-    <string name="clock_size_small_description" msgid="4089511196955732480">"تظهر ساعة صغيرة في زاوية الشاشة."</string>
+    <string name="clock_size_small_description" msgid="4089511196955732480">"تظهر ساعة صغيرة في زاوية الشاشة"</string>
     <string name="grid_title" msgid="1688173478777254123">"شبكة التطبيقات"</string>
     <string name="apply_theme_btn" msgid="6293081192321303991">"تطبيق"</string>
     <string name="edit_custom_theme_lbl" msgid="5211377705710775224">"انقُر للتعديل."</string>
@@ -111,17 +111,17 @@
     <string name="beta_title" msgid="8703819523760746458">"تجريبي"</string>
     <string name="gird_picker_entry_content_description" msgid="9087651470212293439">"تغيير شبكة التطبيقات"</string>
     <string name="wallpaper_color_tab" msgid="1447926591721403840">"ألوان الخلفية"</string>
-    <string name="wallpaper_color_subheader" msgid="4044464573669965670">"تتطابق الأيقونات والنصوص والمزيد مع الألوان في الخلفية."</string>
+    <string name="wallpaper_color_subheader" msgid="4044464573669965670">"تتطابق الأيقونات والنصوص والمزيد مع الألوان في الخلفية"</string>
     <string name="wallpaper_color_title" msgid="5687965239180986458">"لون الخلفية"</string>
     <string name="preset_color_tab" msgid="3133391839341329314">"الألوان الأساسية"</string>
     <string name="preset_color_tab_2" msgid="1444107326712562538">"ألوان أخرى"</string>
-    <string name="preset_color_subheader" msgid="8230588536141279371">"اختَر أي لون للرموز والساعة وغير ذلك."</string>
+    <string name="preset_color_subheader" msgid="8230588536141279371">"اختَر أي لون للرموز والساعة وغير ذلك"</string>
     <string name="color_changed" msgid="7029571720331641235">"تم تغيير اللون."</string>
     <string name="adaptive_color_title" msgid="1336508599235896205">"ألوان ديناميكية"</string>
     <string name="color_picker_title" msgid="6666830057938082864">"ألوان النظام"</string>
     <string name="keyguard_slot_name_bottom_start" msgid="8747677880200629719">"اختصار اليمين"</string>
     <string name="keyguard_slot_name_bottom_end" msgid="2525487375680217083">"اختصار اليسار"</string>
-    <string name="keyguard_affordance_none" msgid="1751643933430782312">"بدون أزرار"</string>
+    <string name="keyguard_affordance_none" msgid="1751643933430782312">"لا يوجد"</string>
     <string name="keyguard_affordance_enablement_dialog_headline" msgid="365379085932610314">"تعذُّر إضافة الاختصار"</string>
     <string name="keyguard_affordance_enablement_dialog_action_template" msgid="8117011931337357438">"فتح <xliff:g id="APPNAME">%1$s</xliff:g>"</string>
     <string name="keyguard_affordance_enablement_dialog_message" msgid="6136286758939253570">"لإضافة تطبيق \"<xliff:g id="APPNAME">%1$s</xliff:g>\" كاختصار، تأكَّد من"</string>

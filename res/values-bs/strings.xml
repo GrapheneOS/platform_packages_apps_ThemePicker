@@ -111,7 +111,7 @@
     <string name="beta_title" msgid="8703819523760746458">"Beta"</string>
     <string name="gird_picker_entry_content_description" msgid="9087651470212293439">"Promjena mreže aplikacije"</string>
     <string name="wallpaper_color_tab" msgid="1447926591721403840">"Boje pozadinske slike"</string>
-    <string name="wallpaper_color_subheader" msgid="4044464573669965670">"Ikone, tekst i drugo odgovaraju bojama pozadinske slike"</string>
+    <string name="wallpaper_color_subheader" msgid="4044464573669965670">"Ikone, tekst i drugo odgovara bojama pozadinske slike"</string>
     <string name="wallpaper_color_title" msgid="5687965239180986458">"Boja pozadinske slike"</string>
     <string name="preset_color_tab" msgid="3133391839341329314">"Osnovne boje"</string>
     <string name="preset_color_tab_2" msgid="1444107326712562538">"Druge boje"</string>

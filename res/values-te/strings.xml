@@ -123,7 +123,7 @@
     <string name="keyguard_slot_name_bottom_end" msgid="2525487375680217083">"కుడి షార్ట్‌కట్"</string>
     <string name="keyguard_affordance_none" msgid="1751643933430782312">"ఏదీ లేదు"</string>
     <string name="keyguard_affordance_enablement_dialog_headline" msgid="365379085932610314">"షార్ట్‌కట్‌ను జోడించడం సాధ్యపడదు"</string>
-    <string name="keyguard_affordance_enablement_dialog_action_template" msgid="8117011931337357438">"<xliff:g id="APPNAME">%1$s</xliff:g>ను తెరవండి"</string>
+    <string name="keyguard_affordance_enablement_dialog_action_template" msgid="8117011931337357438">"\'<xliff:g id="APPNAME">%1$s</xliff:g>\'ను తెరవండి"</string>
     <string name="keyguard_affordance_enablement_dialog_message" msgid="6136286758939253570">"<xliff:g id="APPNAME">%1$s</xliff:g> యాప్‌ను షార్ట్‌కట్‌గా జోడించడానికి, వీటిని నిర్ధారించుకోండి"</string>
     <string name="keyguard_affordance_enablement_dialog_dismiss_button" msgid="629754625264422508">"పూర్తయింది"</string>
     <string name="keyguard_quick_affordance_title" msgid="4242813186995735584">"షార్ట్‌కట్‌లు"</string>

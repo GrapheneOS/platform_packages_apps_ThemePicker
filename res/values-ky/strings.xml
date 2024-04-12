@@ -42,7 +42,7 @@
     <string name="clock_size_large" msgid="3143248715744138979">"Чоң"</string>
     <string name="clock_size_small" msgid="2280449912094164133">"Кичине"</string>
     <string name="clock_size_small_description" msgid="4089511196955732480">"Кичинекей саат экрандын бурчунда көрүнүп турат"</string>
-    <string name="grid_title" msgid="1688173478777254123">"Колдонмонун торчосу"</string>
+    <string name="grid_title" msgid="1688173478777254123">"Колдонмолор торчосу"</string>
     <string name="apply_theme_btn" msgid="6293081192321303991">"Колдонуу"</string>
     <string name="edit_custom_theme_lbl" msgid="5211377705710775224">"Өзгөртүү үчүн таптап коюңуз"</string>
     <string name="keep_my_wallpaper" msgid="8012385376769568517">"Учурдагы тушкагаз калсын"</string>

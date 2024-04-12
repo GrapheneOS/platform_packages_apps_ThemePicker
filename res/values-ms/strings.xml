@@ -41,7 +41,7 @@
     <string name="clock_size_dynamic_description" msgid="2776620745774561662">"Saiz jam berubah mengikut kandungan skrin kunci"</string>
     <string name="clock_size_large" msgid="3143248715744138979">"Besar"</string>
     <string name="clock_size_small" msgid="2280449912094164133">"Kecil"</string>
-    <string name="clock_size_small_description" msgid="4089511196955732480">"Jam kecil yang dipaparkan pada penjuru skrin anda"</string>
+    <string name="clock_size_small_description" msgid="4089511196955732480">"Jam kecil dipaparkan di penjuru skrin"</string>
     <string name="grid_title" msgid="1688173478777254123">"Grid apl"</string>
     <string name="apply_theme_btn" msgid="6293081192321303991">"Gunakan"</string>
     <string name="edit_custom_theme_lbl" msgid="5211377705710775224">"Ketik untuk edit"</string>
@@ -62,7 +62,7 @@
     <string name="preview_name_icon" msgid="6818927315316316440">"Ikon"</string>
     <string name="preview_name_color" msgid="8776203144994416172">"Warna"</string>
     <string name="preview_name_shape" msgid="5676971146080968721">"Bentuk"</string>
-    <string name="preview_name_wallpaper" msgid="1738652462949531828">"Kertas dinding"</string>
+    <string name="preview_name_wallpaper" msgid="1738652462949531828">"Hiasan latar"</string>
     <string name="font_card_title" msgid="2343292653502548685">"ABC • abc • 123"</string>
     <string name="font_card_body" msgid="6790525594503904468">"Tambahkan fon kegemaran anda pada setiap skrin"</string>
     <string name="grid_options_title" msgid="7071930966989877023">"Pilih saiz grid"</string>

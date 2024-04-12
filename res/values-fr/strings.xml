@@ -41,7 +41,7 @@
     <string name="clock_size_dynamic_description" msgid="2776620745774561662">"La taille de l\'horloge change selon le contenu de l\'écran de verrouillage"</string>
     <string name="clock_size_large" msgid="3143248715744138979">"Grande"</string>
     <string name="clock_size_small" msgid="2280449912094164133">"Petite"</string>
-    <string name="clock_size_small_description" msgid="4089511196955732480">"Une petite horloge s\'affiche dans le coin de votre écran."</string>
+    <string name="clock_size_small_description" msgid="4089511196955732480">"Une petite horloge s\'affiche dans le coin de votre écran"</string>
     <string name="grid_title" msgid="1688173478777254123">"Grille d\'applis"</string>
     <string name="apply_theme_btn" msgid="6293081192321303991">"Appliquer"</string>
     <string name="edit_custom_theme_lbl" msgid="5211377705710775224">"Appuyer pour modifier"</string>

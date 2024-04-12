@@ -41,7 +41,7 @@
     <string name="clock_size_dynamic_description" msgid="2776620745774561662">"Ukuran jam berubah menurut konten layar kunci"</string>
     <string name="clock_size_large" msgid="3143248715744138979">"Besar"</string>
     <string name="clock_size_small" msgid="2280449912094164133">"Kecil"</string>
-    <string name="clock_size_small_description" msgid="4089511196955732480">"Jam kecil ditampilkan di sudut layar Anda"</string>
+    <string name="clock_size_small_description" msgid="4089511196955732480">"Jam kecil ditampilkan di sudut layar"</string>
     <string name="grid_title" msgid="1688173478777254123">"Petak aplikasi"</string>
     <string name="apply_theme_btn" msgid="6293081192321303991">"Terapkan"</string>
     <string name="edit_custom_theme_lbl" msgid="5211377705710775224">"Ketuk untuk mengedit"</string>
@@ -114,7 +114,7 @@
     <string name="wallpaper_color_subheader" msgid="4044464573669965670">"Ikon, teks, dan lain-lain serasi dengan warna wallpaper"</string>
     <string name="wallpaper_color_title" msgid="5687965239180986458">"Warna wallpaper"</string>
     <string name="preset_color_tab" msgid="3133391839341329314">"Warna dasar"</string>
-    <string name="preset_color_tab_2" msgid="1444107326712562538">"Warna lainnya"</string>
+    <string name="preset_color_tab_2" msgid="1444107326712562538">"Warna lain"</string>
     <string name="preset_color_subheader" msgid="8230588536141279371">"Pilih warna untuk ikon, jam, dan lain-lain"</string>
     <string name="color_changed" msgid="7029571720331641235">"Warna diubah"</string>
     <string name="adaptive_color_title" msgid="1336508599235896205">"Dinamis"</string>
@@ -135,9 +135,9 @@
     <string name="keyguard_quick_affordance_two_selected_template" msgid="1757099194522296363">"<xliff:g id="FIRST">%1$s</xliff:g>, <xliff:g id="SECOND">%2$s</xliff:g>"</string>
     <string name="keyguard_quick_affordance_none_selected" msgid="8494127020144112003">"Tidak ada"</string>
     <string name="show_notifications_on_lock_screen" msgid="4157744243084646720">"Tampilkan notifikasi di layar kunci"</string>
-    <string name="more_settings_section_title" msgid="1331425454775815958">"Opsi layar kunci lainnya"</string>
-    <string name="more_settings_section_description" msgid="1860115709122398325">"Privasi, Now Playing, dan lainnya"</string>
-    <string name="more_colors" msgid="3191071655353004591">"Warna Lainnya"</string>
+    <string name="more_settings_section_title" msgid="1331425454775815958">"Opsi lain layar kunci"</string>
+    <string name="more_settings_section_description" msgid="1860115709122398325">"Privasi, Now Playing, dan lain-lain"</string>
+    <string name="more_colors" msgid="3191071655353004591">"Warna lain"</string>
     <string name="content_description_dynamic_color_option" msgid="2191721655642529886">"Tema dinamis utama"</string>
     <string name="content_description_neutral_color_option" msgid="3385443834001275301">"Tema netral utama"</string>
     <string name="content_description_vibrant_color_option" msgid="2230249305878632821">"Tema cerah utama"</string>

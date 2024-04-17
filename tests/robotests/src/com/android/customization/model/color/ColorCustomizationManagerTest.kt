@@ -32,6 +32,7 @@ import com.android.customization.model.theme.OverlayManagerCompat
 import com.android.customization.picker.color.shared.model.ColorType
 import com.android.systemui.monet.Style
 import com.google.common.truth.Truth.assertThat
+import com.google.common.util.concurrent.MoreExecutors
 import org.json.JSONObject
 import org.junit.Before
 import org.junit.Rule
@@ -58,7 +59,13 @@ class ColorCustomizationManagerTest {
     fun setUp() {
         MockitoAnnotations.initMocks(this)
         val application = ApplicationProvider.getApplicationContext<Context>()
-        manager = ColorCustomizationManager(provider, application.contentResolver, mockOM)
+        manager =
+            ColorCustomizationManager(
+                provider,
+                application.contentResolver,
+                mockOM,
+                MoreExecutors.newDirectExecutorService()
+            )
     }
 
     @Test
@@ -103,8 +110,6 @@ class ColorCustomizationManagerTest {
             }
         )
 
-        Thread.sleep(100)
-
         val overlaysJson = JSONObject(manager.storedOverlays)
 
         assertThat(overlaysJson.getString(OVERLAY_COLOR_INDEX)).isEqualTo(value)
@@ -125,8 +130,6 @@ class ColorCustomizationManagerTest {
                 override fun onError(throwable: Throwable?) {}
             }
         )
-
-        Thread.sleep(100)
 
         val overlaysJson = JSONObject(manager.storedOverlays)
         assertThat(overlaysJson.getString(OVERLAY_COLOR_INDEX)).isEqualTo(value)
@@ -171,8 +174,6 @@ class ColorCustomizationManagerTest {
             }
         )
 
-        Thread.sleep(100)
-
         val overlaysJson = JSONObject(manager.storedOverlays)
         assertThat(overlaysJson.getString(OVERLAY_COLOR_BOTH)).isEqualTo("1")
     }
@@ -190,8 +191,6 @@ class ColorCustomizationManagerTest {
                 override fun onError(throwable: Throwable?) {}
             }
         )
-
-        Thread.sleep(100)
 
         val overlaysJson = JSONObject(manager.storedOverlays)
         assertThat(overlaysJson.getString(OVERLAY_COLOR_BOTH)).isEqualTo("0")

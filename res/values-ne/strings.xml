@@ -134,7 +134,7 @@
     <string name="color_contrast_high_title" msgid="5554685752479470200">"उच्च"</string>
     <string name="keyguard_quick_affordance_two_selected_template" msgid="1757099194522296363">"<xliff:g id="FIRST">%1$s</xliff:g>, <xliff:g id="SECOND">%2$s</xliff:g>"</string>
     <string name="keyguard_quick_affordance_none_selected" msgid="8494127020144112003">"कुनै पनि होइन"</string>
-    <string name="show_notifications_on_lock_screen" msgid="4157744243084646720">"लक स्क्रिनमा सूचनाहरू देखाइऊन्"</string>
+    <string name="show_notifications_on_lock_screen" msgid="4157744243084646720">"लक स्क्रिनमा सूचनाहरू देखाउनुहोस्"</string>
     <string name="more_settings_section_title" msgid="1331425454775815958">"लक स्क्रिनसम्बन्धी थप विकल्पहरू"</string>
     <string name="more_settings_section_description" msgid="1860115709122398325">"गोपनीयता, Now Playing र अन्य कुराहरू"</string>
     <string name="more_colors" msgid="3191071655353004591">"थप रङहरू"</string>

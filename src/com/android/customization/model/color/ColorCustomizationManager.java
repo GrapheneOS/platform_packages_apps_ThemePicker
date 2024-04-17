@@ -66,7 +66,6 @@ import java.util.concurrent.Executors;
 public class ColorCustomizationManager implements CustomizationManager<ColorOption> {
 
     private static final String TAG = "ColorCustomizationManager";
-    private static final ExecutorService sExecutorService = Executors.newSingleThreadExecutor();
 
     private static final Set<String> COLOR_OVERLAY_SETTINGS = new HashSet<>();
     static {
@@ -80,8 +79,8 @@ public class ColorCustomizationManager implements CustomizationManager<ColorOpti
 
     private final ColorOptionsProvider mProvider;
     private final OverlayManagerCompat mOverlayManagerCompat;
+    private final ExecutorService mExecutorService;
     private final ContentResolver mContentResolver;
-    private final ContentObserver mObserver;
 
     private Map<String, String> mCurrentOverlays;
     @ColorSource private String mCurrentSource;
@@ -92,22 +91,31 @@ public class ColorCustomizationManager implements CustomizationManager<ColorOpti
     /** Returns the {@link ColorCustomizationManager} instance. */
     public static ColorCustomizationManager getInstance(Context context,
             OverlayManagerCompat overlayManagerCompat) {
+        return getInstance(context, overlayManagerCompat, Executors.newSingleThreadExecutor());
+    }
+
+    /** Returns the {@link ColorCustomizationManager} instance. */
+    @VisibleForTesting
+    static ColorCustomizationManager getInstance(Context context,
+            OverlayManagerCompat overlayManagerCompat, ExecutorService executorService) {
         if (sColorCustomizationManager == null) {
             Context appContext = context.getApplicationContext();
             sColorCustomizationManager = new ColorCustomizationManager(
                     new ColorProvider(appContext,
                             appContext.getString(R.string.themes_stub_package)),
-                    appContext.getContentResolver(), overlayManagerCompat);
+                    appContext.getContentResolver(), overlayManagerCompat,
+                    executorService);
         }
         return sColorCustomizationManager;
     }
 
     @VisibleForTesting
     ColorCustomizationManager(ColorOptionsProvider provider, ContentResolver contentResolver,
-            OverlayManagerCompat overlayManagerCompat) {
+            OverlayManagerCompat overlayManagerCompat, ExecutorService executorService) {
         mProvider = provider;
         mContentResolver = contentResolver;
-        mObserver = new ContentObserver(/* handler= */ null) {
+        mExecutorService = executorService;
+        ContentObserver observer = new ContentObserver(/* handler= */ null) {
             @Override
             public void onChange(boolean selfChange, Uri uri) {
                 super.onChange(selfChange, uri);
@@ -122,7 +130,7 @@ public class ColorCustomizationManager implements CustomizationManager<ColorOpti
             }
         };
         mContentResolver.registerContentObserver(
-                Settings.Secure.CONTENT_URI, /* notifyForDescendants= */ true, mObserver);
+                Settings.Secure.CONTENT_URI, /* notifyForDescendants= */ true, observer);
         mOverlayManagerCompat = overlayManagerCompat;
     }
 
@@ -137,7 +145,7 @@ public class ColorCustomizationManager implements CustomizationManager<ColorOpti
     }
 
     private void applyOverlays(ColorOption colorOption, Callback callback) {
-        sExecutorService.submit(() -> {
+        mExecutorService.submit(() -> {
             String currentStoredOverlays = getStoredOverlays();
             if (TextUtils.isEmpty(currentStoredOverlays)) {
                 currentStoredOverlays = "{}";

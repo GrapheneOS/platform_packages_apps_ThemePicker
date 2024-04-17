@@ -40,7 +40,7 @@
     <string name="clock_size_dynamic" msgid="1023930312455061642">"Dynamická"</string>
     <string name="clock_size_dynamic_description" msgid="2776620745774561662">"Velikost hodin se mění podle obsahu obrazovky uzamčení"</string>
     <string name="clock_size_large" msgid="3143248715744138979">"Velká"</string>
-    <string name="clock_size_small" msgid="2280449912094164133">"Malé"</string>
+    <string name="clock_size_small" msgid="2280449912094164133">"Malá"</string>
     <string name="clock_size_small_description" msgid="4089511196955732480">"V rohu obrazovky se zobrazují malé hodiny"</string>
     <string name="grid_title" msgid="1688173478777254123">"Mřížka aplikací"</string>
     <string name="apply_theme_btn" msgid="6293081192321303991">"Použít"</string>

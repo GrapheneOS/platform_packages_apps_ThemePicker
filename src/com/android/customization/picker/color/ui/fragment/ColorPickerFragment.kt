@@ -204,7 +204,7 @@ class ColorPickerFragment : AppbarFragment() {
                     context,
                     lifecycle,
                     injector.getDarkModeSnapshotRestorer(requireContext()),
-                    injector.uiModeManager,
+                    injector.uiModeManager.get(),
                     injector.getUserEventLogger(),
                 )
                 .createView(requireContext())

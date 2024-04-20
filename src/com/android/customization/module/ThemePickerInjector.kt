@@ -126,9 +126,10 @@ constructor(
     private var gridScreenViewModelFactory: GridScreenViewModel.Factory? = null
     private var clockRegistryProvider: ClockRegistryProvider? = null
 
-    @Inject lateinit var themesUserEventLogger: Lazy<ThemesUserEventLogger>
+    // Injected objects, sorted by type
     @Inject
     lateinit var colorContrastSectionViewModelFactory: Lazy<ColorContrastSectionViewModel.Factory>
+    @Inject lateinit var themesUserEventLogger: Lazy<ThemesUserEventLogger>
 
     override fun getCustomizationSections(activity: ComponentActivity): CustomizationSections {
         val appContext = activity.applicationContext
@@ -469,7 +470,7 @@ constructor(
         return darkModeSnapshotRestorer
             ?: DarkModeSnapshotRestorer(
                     context = appContext,
-                    manager = uiModeManager,
+                    manager = uiModeManager.get(),
                     backgroundDispatcher = bgDispatcher,
                 )
                 .also { darkModeSnapshotRestorer = it }

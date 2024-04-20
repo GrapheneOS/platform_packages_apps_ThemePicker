@@ -37,10 +37,10 @@
     <string name="clock_color_gray" msgid="9221530636948859231">"Siva"</string>
     <string name="clock_color_teal" msgid="7499223425741344251">"Tirkiznoplava"</string>
     <string name="clock_size" msgid="5028923902364418263">"Veličina"</string>
-    <string name="clock_size_dynamic" msgid="1023930312455061642">"Dinamičan"</string>
+    <string name="clock_size_dynamic" msgid="1023930312455061642">"Dinamičan sat"</string>
     <string name="clock_size_dynamic_description" msgid="2776620745774561662">"Veličina sata mijenja se u skladu sa sadržajem na zaključanom zaslonu"</string>
     <string name="clock_size_large" msgid="3143248715744138979">"Velik"</string>
-    <string name="clock_size_small" msgid="2280449912094164133">"Mali"</string>
+    <string name="clock_size_small" msgid="2280449912094164133">"Mali sat"</string>
     <string name="clock_size_small_description" msgid="4089511196955732480">"U kutu zaslona prikazuje se mali sat"</string>
     <string name="grid_title" msgid="1688173478777254123">"Rešetka aplikacija"</string>
     <string name="apply_theme_btn" msgid="6293081192321303991">"Primijeni"</string>

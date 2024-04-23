@@ -16,7 +16,6 @@
 package com.android.customization.model.grid;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -30,7 +29,6 @@ import com.android.customization.module.CustomizationInjector;
 import com.android.customization.module.logging.ThemesUserEventLogger;
 import com.android.wallpaper.R;
 import com.android.wallpaper.module.InjectorProvider;
-import com.android.wallpaper.util.PreviewUtils;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -124,11 +122,5 @@ public class GridOptionsManager implements CustomizationManager<GridOption> {
      */
     public LiveData<Object> getOptionChangeObservable(@Nullable Handler handler) {
         return mProvider.getOptionChangeObservable(handler);
-    }
-
-    /** Call through content provider API to render preview */
-    public void renderPreview(Bundle bundle, String gridName,
-            PreviewUtils.WorkspacePreviewCallback callback) {
-        mProvider.renderPreview(gridName, bundle, callback);
     }
 }

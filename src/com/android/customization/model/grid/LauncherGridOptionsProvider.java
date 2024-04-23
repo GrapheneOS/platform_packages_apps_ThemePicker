@@ -22,9 +22,7 @@ import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Bundle;
 import android.os.Handler;
-import android.view.SurfaceView;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.WorkerThread;
@@ -105,19 +103,6 @@ public class LauncherGridOptionsProvider {
             mOptions = null;
         }
         return mOptions;
-    }
-
-    /**
-     * Request rendering of home screen preview via Launcher to Wallpaper using SurfaceView
-     * @param name      the grid option name
-     * @param bundle    surface view request bundle generated from
-     *    {@link com.android.wallpaper.util.SurfaceViewUtils#createSurfaceViewRequest(SurfaceView)}.
-     * @param callback To receive the result (will be called on the main thread)
-     */
-    void renderPreview(String name, Bundle bundle,
-            PreviewUtils.WorkspacePreviewCallback callback) {
-        bundle.putString("name", name);
-        mPreviewUtils.renderPreview(bundle, callback);
     }
 
     void updateView() {

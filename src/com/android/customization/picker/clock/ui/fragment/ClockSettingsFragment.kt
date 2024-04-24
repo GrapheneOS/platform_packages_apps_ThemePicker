@@ -144,10 +144,6 @@ class ClockSettingsFragment : AppbarFragment() {
         return requireContext().getString(R.string.clock_color_and_size_title)
     }
 
-    override fun getToolbarColorId(): Int {
-        return android.R.color.transparent
-    }
-
     override fun getToolbarTextColor(): Int {
         return ContextCompat.getColor(
             requireContext(),

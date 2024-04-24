@@ -252,10 +252,6 @@ class ColorPickerFragment : AppbarFragment() {
         return requireContext().getString(R.string.color_picker_title)
     }
 
-    override fun getToolbarColorId(): Int {
-        return android.R.color.transparent
-    }
-
     override fun getToolbarTextColor(): Int {
         return ContextCompat.getColor(
             requireContext(),

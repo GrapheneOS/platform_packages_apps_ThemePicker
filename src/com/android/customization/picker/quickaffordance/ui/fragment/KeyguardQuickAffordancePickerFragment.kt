@@ -92,10 +92,6 @@ class KeyguardQuickAffordancePickerFragment : AppbarFragment() {
         return requireContext().getString(R.string.keyguard_quick_affordance_title)
     }
 
-    override fun getToolbarColorId(): Int {
-        return android.R.color.transparent
-    }
-
     override fun getToolbarTextColor(): Int {
         return ContextCompat.getColor(
             requireContext(),

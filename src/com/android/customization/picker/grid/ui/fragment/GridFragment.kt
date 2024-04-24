@@ -149,10 +149,6 @@ class GridFragment : AppbarFragment() {
         return getString(R.string.grid_title)
     }
 
-    override fun getToolbarColorId(): Int {
-        return android.R.color.transparent
-    }
-
     override fun getToolbarTextColor(): Int {
         return ContextCompat.getColor(
             requireContext(),

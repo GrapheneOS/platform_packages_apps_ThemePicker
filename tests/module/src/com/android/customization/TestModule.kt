@@ -11,12 +11,14 @@ import com.android.customization.testing.TestCustomizationInjector
 import com.android.customization.testing.TestDefaultCustomizationPreferences
 import com.android.wallpaper.module.AppModule
 import com.android.wallpaper.module.Injector
+import com.android.wallpaper.module.PartnerProvider
 import com.android.wallpaper.module.WallpaperPreferences
 import com.android.wallpaper.module.logging.TestUserEventLogger
 import com.android.wallpaper.module.logging.UserEventLogger
 import com.android.wallpaper.picker.preview.data.util.DefaultLiveWallpaperDownloader
 import com.android.wallpaper.picker.preview.data.util.LiveWallpaperDownloader
 import com.android.wallpaper.testing.TestInjector
+import com.android.wallpaper.testing.TestPartnerProvider
 import com.android.wallpaper.testing.TestWallpaperPreferences
 import com.android.wallpaper.util.converter.DefaultWallpaperModelFactory
 import com.android.wallpaper.util.converter.WallpaperModelFactory
@@ -77,6 +79,10 @@ abstract class TestModule {
     abstract fun bindLiveWallpaperDownloader(
         impl: DefaultLiveWallpaperDownloader
     ): LiveWallpaperDownloader
+
+    @Binds
+    @Singleton
+    abstract fun providePartnerProvider(impl: TestPartnerProvider): PartnerProvider
 
     companion object {
         @Provides

@@ -61,6 +61,10 @@ abstract class AppModule {
         impl: DefaultLiveWallpaperDownloader
     ): LiveWallpaperDownloader
 
+    @Binds
+    @Singleton
+    abstract fun bindPartnerProvider(impl: DefaultPartnerProvider): PartnerProvider
+
     companion object {
         @Provides
         @Singleton

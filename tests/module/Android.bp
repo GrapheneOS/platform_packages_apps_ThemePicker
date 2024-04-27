@@ -19,7 +19,8 @@ package {
 
 android_library {
     name: "ThemePickerTestModule",
-    srcs: ["src/com/android/customization/TestModule.kt"],
+    defaults: ["ThemePicker_defaults_with_overrides"],
+    srcs: ["src/com/android/wallpaper/ThemePickerTestModule.kt"],
     static_libs: [
         "ThemePickerTestLib",
         "hilt_android",

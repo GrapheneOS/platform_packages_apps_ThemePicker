@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.android.wallpaper.module
+package com.android.wallpaper.modules
 
 import android.content.Context
 import com.android.customization.model.color.ColorCustomizationManager
@@ -23,6 +23,9 @@ import com.android.customization.module.DefaultCustomizationPreferences
 import com.android.customization.module.ThemePickerInjector
 import com.android.customization.module.logging.ThemesUserEventLogger
 import com.android.customization.module.logging.ThemesUserEventLoggerImpl
+import com.android.wallpaper.module.DefaultPartnerProvider
+import com.android.wallpaper.module.PartnerProvider
+import com.android.wallpaper.module.WallpaperPreferences
 import com.android.wallpaper.module.logging.UserEventLogger
 import com.android.wallpaper.picker.preview.data.util.DefaultLiveWallpaperDownloader
 import com.android.wallpaper.picker.preview.data.util.LiveWallpaperDownloader
@@ -38,7 +41,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class AppModule {
+abstract class ThemePickerAppModule {
     @Binds @Singleton abstract fun bindInjector(impl: ThemePickerInjector): CustomizationInjector
 
     @Binds

@@ -93,7 +93,6 @@ java_defaults {
     name: "ThemePicker_defaults",
     static_libs: [
         "ThemePickerLib",
-        "ThemePickerOverridesLib",
         "hilt_android",
     ],
 
@@ -113,6 +112,14 @@ java_defaults {
 
     privileged: true,
     system_ext_specific: true,
+}
+
+java_defaults {
+    name: "ThemePicker_defaults_with_overrides",
+    defaults: ["ThemePicker_defaults"],
+    static_libs: [
+        "ThemePickerOverridesLib",
+    ],
 }
 
 prebuilt_etc {

@@ -41,13 +41,13 @@ android_test {
     srcs: [
         ":ThemePickerTests_srcs",
         ":WallpaperPicker2Tests_srcs",
-        "module/src/com/android/customization/TestModule.kt",
     ],
     exclude_srcs: [":ThemePicker_src_prod"],
     static_libs: [
         "WallpaperPicker2TestLib",
         "WallpaperPicker2TestRunner",
         "ThemePickerTestLib",
+        "ThemePickerTestModule",
         "SystemUICustomizationTestUtils",
         "androidx.test.espresso.core",
         "androidx.test.espresso.contrib",

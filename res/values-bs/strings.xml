@@ -135,7 +135,7 @@
     <string name="keyguard_quick_affordance_two_selected_template" msgid="1757099194522296363">"<xliff:g id="FIRST">%1$s</xliff:g>, <xliff:g id="SECOND">%2$s</xliff:g>"</string>
     <string name="keyguard_quick_affordance_none_selected" msgid="8494127020144112003">"Ništa"</string>
     <string name="show_notifications_on_lock_screen" msgid="4157744243084646720">"Prikaz obavještenja na zaključanom ekranu"</string>
-    <string name="more_settings_section_title" msgid="1331425454775815958">"Više opcija zaključavanja ekrana"</string>
+    <string name="more_settings_section_title" msgid="1331425454775815958">"Više opcija zaključanog ekrana"</string>
     <string name="more_settings_section_description" msgid="1860115709122398325">"Privatnost, Trenutno se reproducira i drugo"</string>
     <string name="more_colors" msgid="3191071655353004591">"Više boja"</string>
     <string name="content_description_dynamic_color_option" msgid="2191721655642529886">"Primarna dinamična tema"</string>

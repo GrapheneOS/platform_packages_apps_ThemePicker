@@ -32,6 +32,8 @@ import com.android.wallpaper.module.logging.UserEventLogger
 import com.android.wallpaper.modules.ThemePickerAppModule
 import com.android.wallpaper.picker.preview.data.util.DefaultLiveWallpaperDownloader
 import com.android.wallpaper.picker.preview.data.util.LiveWallpaperDownloader
+import com.android.wallpaper.picker.preview.ui.util.DefaultImageEffectDialogUtil
+import com.android.wallpaper.picker.preview.ui.util.ImageEffectDialogUtil
 import com.android.wallpaper.testing.TestInjector
 import com.android.wallpaper.testing.TestPartnerProvider
 import com.android.wallpaper.testing.TestWallpaperPreferences
@@ -98,6 +100,12 @@ abstract class ThemePickerTestModule {
     @Binds
     @Singleton
     abstract fun providePartnerProvider(impl: TestPartnerProvider): PartnerProvider
+
+    @Binds
+    @Singleton
+    abstract fun bindEffectsWallpaperDialogUtil(
+        impl: DefaultImageEffectDialogUtil
+    ): ImageEffectDialogUtil
 
     companion object {
         @Provides

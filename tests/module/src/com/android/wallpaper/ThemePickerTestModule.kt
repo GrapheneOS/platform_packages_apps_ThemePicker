@@ -34,9 +34,7 @@ import com.android.wallpaper.picker.preview.data.util.DefaultLiveWallpaperDownlo
 import com.android.wallpaper.picker.preview.data.util.LiveWallpaperDownloader
 import com.android.wallpaper.picker.preview.ui.util.DefaultImageEffectDialogUtil
 import com.android.wallpaper.picker.preview.ui.util.ImageEffectDialogUtil
-import com.android.wallpaper.testing.TestInjector
 import com.android.wallpaper.testing.TestPartnerProvider
-import com.android.wallpaper.testing.TestWallpaperPreferences
 import com.android.wallpaper.util.converter.DefaultWallpaperModelFactory
 import com.android.wallpaper.util.converter.WallpaperModelFactory
 import dagger.Binds
@@ -62,16 +60,6 @@ abstract class ThemePickerTestModule {
     @Binds
     @Singleton
     abstract fun bindWallpaperPrefs(impl: TestDefaultCustomizationPreferences): WallpaperPreferences
-
-    //// WallpaperPicker2 test
-
-    @Binds @Singleton abstract fun bindTestInjector(impl: TestCustomizationInjector): TestInjector
-
-    @Binds
-    @Singleton
-    abstract fun bindTestWallpaperPrefs(
-        impl: TestDefaultCustomizationPreferences
-    ): TestWallpaperPreferences
 
     //// ThemePicker prod
 

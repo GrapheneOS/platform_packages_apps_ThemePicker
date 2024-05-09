@@ -128,7 +128,7 @@
     <string name="keyguard_affordance_enablement_dialog_dismiss_button" msgid="629754625264422508">"រួចរាល់"</string>
     <string name="keyguard_quick_affordance_title" msgid="4242813186995735584">"ផ្លូវកាត់"</string>
     <string name="keyguard_quick_affordance_section_title" msgid="2806304242671717309">"ផ្លូវកាត់"</string>
-    <string name="color_contrast_section_title" msgid="7194809124718896091">"កម្រិតពណ៌"</string>
+    <string name="color_contrast_section_title" msgid="7194809124718896091">"កម្រិតរំលេចពណ៌"</string>
     <string name="color_contrast_default_title" msgid="7954235103549276978">"លំនាំដើម"</string>
     <string name="color_contrast_medium_title" msgid="8071574793250090215">"មធ្យម"</string>
     <string name="color_contrast_high_title" msgid="5554685752479470200">"ខ្ពស់"</string>

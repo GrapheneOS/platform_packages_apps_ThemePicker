@@ -19,12 +19,12 @@ package com.android.customization.model.picker.settings.domain.interactor
 import androidx.test.filters.SmallTest
 import com.android.customization.picker.settings.domain.interactor.ColorContrastSectionInteractor
 import com.android.wallpaper.testing.FakeUiModeManager
+import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Assert.assertEquals
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -46,12 +46,12 @@ class ColorContrastSectionInteractorTest {
     }
 
     @Test
-    fun contrastEmitCorrectValuesFromRepository() = runBlockingTest {
+    fun contrastEmitCorrectValuesFromRepository() = runTest {
         val expectedContrast = 1.5f
         uiModeManager.setContrast(expectedContrast)
 
         val result = interactor.contrast.first()
 
-        assertEquals(expectedContrast, result)
+        assertThat(result).isEqualTo(expectedContrast)
     }
 }

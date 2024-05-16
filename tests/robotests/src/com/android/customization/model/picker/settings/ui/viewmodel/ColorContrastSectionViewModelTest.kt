@@ -27,7 +27,7 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
@@ -52,7 +52,7 @@ class ColorContrastSectionViewModelTest {
     }
 
     @Test
-    fun summaryEmitsCorrectDataValueForStandard() = runBlockingTest {
+    fun summaryEmitsCorrectDataValueForStandard() = runTest {
         uiModeManager.setContrast(ColorContrastSectionViewModel.ContrastValue.STANDARD.value)
         val expected =
             ColorContrastSectionDataViewModel(
@@ -66,7 +66,7 @@ class ColorContrastSectionViewModelTest {
     }
 
     @Test
-    fun summaryEmitsCorrectDataValueForMedium() = runBlockingTest {
+    fun summaryEmitsCorrectDataValueForMedium() = runTest {
         uiModeManager.setContrast(ColorContrastSectionViewModel.ContrastValue.MEDIUM.value)
         val expected =
             ColorContrastSectionDataViewModel(
@@ -80,7 +80,7 @@ class ColorContrastSectionViewModelTest {
     }
 
     @Test
-    fun summaryEmitsCorrectDataValueForHigh() = runBlockingTest {
+    fun summaryEmitsCorrectDataValueForHigh() = runTest {
         uiModeManager.setContrast(ColorContrastSectionViewModel.ContrastValue.HIGH.value)
         val expected =
             ColorContrastSectionDataViewModel(
@@ -94,7 +94,7 @@ class ColorContrastSectionViewModelTest {
     }
 
     @Test(expected = IllegalArgumentException::class)
-    fun summaryThrowsIllegalArgumentExceptionForInvalidValue() = runBlockingTest {
+    fun summaryThrowsIllegalArgumentExceptionForInvalidValue() = runTest {
         uiModeManager.setContrast(999f)
 
         viewModel.summary.collect() // This should throw an IllegalArgumentException

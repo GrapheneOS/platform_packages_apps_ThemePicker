@@ -24,12 +24,15 @@ import com.android.customization.module.logging.TestThemesUserEventLogger
 import com.android.customization.module.logging.ThemesUserEventLogger
 import com.android.customization.testing.TestCustomizationInjector
 import com.android.customization.testing.TestDefaultCustomizationPreferences
+import com.android.wallpaper.effects.EffectsController
+import com.android.wallpaper.effects.FakeEffectsController
 import com.android.wallpaper.module.Injector
 import com.android.wallpaper.module.PartnerProvider
 import com.android.wallpaper.module.WallpaperPreferences
 import com.android.wallpaper.module.logging.TestUserEventLogger
 import com.android.wallpaper.module.logging.UserEventLogger
 import com.android.wallpaper.modules.ThemePickerAppModule
+import com.android.wallpaper.picker.di.modules.EffectsModule
 import com.android.wallpaper.picker.preview.data.util.DefaultLiveWallpaperDownloader
 import com.android.wallpaper.picker.preview.data.util.LiveWallpaperDownloader
 import com.android.wallpaper.picker.preview.ui.util.DefaultImageEffectDialogUtil
@@ -45,7 +48,10 @@ import dagger.hilt.testing.TestInstallIn
 import javax.inject.Singleton
 
 @Module
-@TestInstallIn(components = [SingletonComponent::class], replaces = [ThemePickerAppModule::class])
+@TestInstallIn(
+    components = [SingletonComponent::class],
+    replaces = [EffectsModule::class, ThemePickerAppModule::class]
+)
 abstract class ThemePickerTestModule {
     //// WallpaperPicker2 prod
 
@@ -94,6 +100,10 @@ abstract class ThemePickerTestModule {
     abstract fun bindEffectsWallpaperDialogUtil(
         impl: DefaultImageEffectDialogUtil
     ): ImageEffectDialogUtil
+
+    @Binds
+    @Singleton
+    abstract fun bindEffectsController(impl: FakeEffectsController): EffectsController
 
     companion object {
         @Provides

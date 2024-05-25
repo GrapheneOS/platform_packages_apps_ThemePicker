@@ -34,7 +34,7 @@ import com.android.wallpaper.module.logging.UserEventLogger
 import com.android.wallpaper.modules.ThemePickerAppModule
 import com.android.wallpaper.network.Requester
 import com.android.wallpaper.picker.di.modules.EffectsModule
-import com.android.wallpaper.picker.preview.data.util.DefaultLiveWallpaperDownloader
+import com.android.wallpaper.picker.preview.data.util.FakeLiveWallpaperDownloader
 import com.android.wallpaper.picker.preview.data.util.LiveWallpaperDownloader
 import com.android.wallpaper.picker.preview.ui.util.DefaultImageEffectDialogUtil
 import com.android.wallpaper.picker.preview.ui.util.ImageEffectDialogUtil
@@ -92,7 +92,7 @@ abstract class ThemePickerTestModule {
     @Binds
     @Singleton
     abstract fun bindLiveWallpaperDownloader(
-        impl: DefaultLiveWallpaperDownloader
+        impl: FakeLiveWallpaperDownloader
     ): LiveWallpaperDownloader
 
     @Binds

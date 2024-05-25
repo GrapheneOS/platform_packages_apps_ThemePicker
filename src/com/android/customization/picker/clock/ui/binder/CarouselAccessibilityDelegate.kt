@@ -37,6 +37,11 @@ class CarouselAccessibilityDelegate(
     override fun onInitializeAccessibilityNodeInfo(host: View, info: AccessibilityNodeInfo) {
         super.onInitializeAccessibilityNodeInfo(host, info)
         info.isScrollable = true
+
+        // for some reason this action is needed for the subsequent two action to appear in the
+        // accessibility action menu (this action doesn't show)
+        info.addAction(AccessibilityNodeInfo.ACTION_CLICK) // Standard click action
+
         info.addAction(
             AccessibilityNodeInfo.AccessibilityAction(
                 ACTION_SCROLL_FORWARD,

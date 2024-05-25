@@ -71,7 +71,7 @@ object ClockCarouselViewBinder {
                             },
                             isTwoPaneAndSmallWidth = isTwoPaneAndSmallWidth,
                         )
-                        screenPreviewClickView.accessibilityDelegate = carouselAccessibilityDelegate
+                        carouselView.accessibilityDelegate = carouselAccessibilityDelegate
                         screenPreviewClickView.setOnSideClickedListener { isStart ->
                             if (isStart) carouselView.scrollToPrevious()
                             else carouselView.scrollToNext()

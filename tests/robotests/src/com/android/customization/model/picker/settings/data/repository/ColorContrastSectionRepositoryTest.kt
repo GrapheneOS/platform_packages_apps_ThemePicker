@@ -26,6 +26,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
@@ -37,11 +38,13 @@ import org.robolectric.RobolectricTestRunner
 @HiltAndroidTest
 @SmallTest
 @RunWith(RobolectricTestRunner::class)
+@OptIn(ExperimentalCoroutinesApi::class)
 class ColorContrastSectionRepositoryTest {
     @get:Rule var hiltRule = HiltAndroidRule(this)
 
     @Inject lateinit var uiModeManager: FakeUiModeManager
     @Inject lateinit var underTest: ColorContrastSectionRepository
+    @Inject lateinit var testScope: TestScope
 
     @Before
     fun setUp() {
@@ -55,21 +58,22 @@ class ColorContrastSectionRepositoryTest {
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun contrastFlowEmitsValues() = runTest {
-        val nextContrastValues = listOf(0.5f, 0.7f, 0.8f)
-        // Set up a flow to collect all contrast values
-        val flowCollector = mutableListOf<Float>()
-        // Start collecting values from the flow, using an unconfined dispatcher to start collecting
-        // from the flow right away (rather than explicitly calling `runCurrent`)
-        // See https://developer.android.com/kotlin/flow/test#continuous-collection
-        backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) {
-            underTest.contrast.toList(flowCollector)
+    fun contrastFlowEmitsValues() =
+        testScope.runTest {
+            val nextContrastValues = listOf(0.5f, 0.7f, 0.8f)
+            // Set up a flow to collect all contrast values
+            val flowCollector = mutableListOf<Float>()
+            // Start collecting values from the flow, using an unconfined dispatcher to start
+            // collecting from the flow right away (rather than explicitly calling `runCurrent`)
+            // See https://developer.android.com/kotlin/flow/test#continuous-collection
+            backgroundScope.launch(UnconfinedTestDispatcher()) {
+                underTest.contrast.toList(flowCollector)
+            }
+
+            nextContrastValues.forEach { uiModeManager.setContrast(it) }
+
+            // Ignore the first contrast value from constructing the repository
+            val collectedValues = flowCollector.drop(1)
+            assertThat(collectedValues).containsExactlyElementsIn(nextContrastValues)
         }
-
-        nextContrastValues.forEach { uiModeManager.setContrast(it) }
-
-        // Ignore the first contrast value from constructing the repository
-        val collectedValues = flowCollector.drop(1)
-        assertThat(collectedValues).containsExactlyElementsIn(nextContrastValues)
-    }
 }

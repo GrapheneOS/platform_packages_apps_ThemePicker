@@ -25,9 +25,13 @@ import com.android.wallpaper.testing.FakeUiModeManager
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
@@ -42,12 +46,15 @@ class ColorContrastSectionViewModelTest {
 
     private lateinit var viewModel: ColorContrastSectionViewModel
 
+    @Inject lateinit var testDispatcher: TestDispatcher
     @Inject lateinit var uiModeManager: FakeUiModeManager
     @Inject lateinit var viewModelFactory: ColorContrastSectionViewModel.Factory
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Before
     fun setUp() {
         hiltRule.inject()
+        Dispatchers.setMain(testDispatcher)
         viewModel = viewModelFactory.create(ColorContrastSectionViewModel::class.java)
     }
 

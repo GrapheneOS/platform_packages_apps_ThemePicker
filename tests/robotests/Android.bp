@@ -1,3 +1,4 @@
+
 package {
     default_team: "trendy_team_android_kernel",
     default_applicable_licenses: ["Android-Apache-2.0"],
@@ -45,4 +46,6 @@ android_robolectric_test {
     upstream: true,
 
     instrumentation_for: "ThemePickerShell",
+
+    strict_mode: false,
 }

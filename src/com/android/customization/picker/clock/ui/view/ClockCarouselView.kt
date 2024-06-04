@@ -33,6 +33,7 @@ import com.android.customization.picker.clock.shared.ClockSize
 import com.android.customization.picker.clock.ui.viewmodel.ClockCarouselItemViewModel
 import com.android.systemui.plugins.clocks.ClockController
 import com.android.themepicker.R
+import com.android.wallpaper.config.BaseFlags
 import com.android.wallpaper.picker.FixedWidthDisplayRatioFrameLayout
 import java.lang.Float.max
 
@@ -408,8 +409,11 @@ class ClockCarouselView(
                     ?: return
             val clockId = clocks[index].clockId
 
-            // Add the clock view to the cloc host view
+            // Add the clock view to the clock host view
             clockHostView.removeAllViews()
+            if (BaseFlags.get().isClockReactiveVariantsEnabled()) {
+                clockViewFactory.setReactiveTouchInteractionEnabled(clockId, false)
+            }
             val clockView =
                 when (clockSize) {
                     ClockSize.DYNAMIC -> clockViewFactory.getLargeView(clockId)
@@ -454,22 +458,16 @@ class ClockCarouselView(
                 it.pivotX = it.width / 2F
                 it.pivotY = it.height / 2F
             }
+
+            val controller = clockViewFactory.getController(clockId)
             if (isMiddleView) {
                 clockScaleView.scaleX = 1f
                 clockScaleView.scaleY = 1f
-                clockViewFactory
-                    .getController(clockId)
-                    .largeClock
-                    .animations
-                    .onPickerCarouselSwiping(1F)
+                controller.largeClock.animations.onPickerCarouselSwiping(1F)
             } else {
                 clockScaleView.scaleX = CLOCK_CAROUSEL_VIEW_SCALE
                 clockScaleView.scaleY = CLOCK_CAROUSEL_VIEW_SCALE
-                clockViewFactory
-                    .getController(clockId)
-                    .largeClock
-                    .animations
-                    .onPickerCarouselSwiping(0F)
+                controller.largeClock.animations.onPickerCarouselSwiping(0F)
             }
         }
 

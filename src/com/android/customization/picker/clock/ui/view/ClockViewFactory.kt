@@ -36,6 +36,9 @@ interface ClockViewFactory {
      */
     fun getSmallView(clockId: String): View
 
+    /** Enables or disables the reactive swipe interaction */
+    fun setReactiveTouchInteractionEnabled(clockId: String, enable: Boolean)
+
     fun updateColorForAllClocks(@ColorInt seedColor: Int?)
 
     fun updateColor(clockId: String, @ColorInt seedColor: Int?)

@@ -17,15 +17,15 @@
 package com.android.wallpaper.customization.ui.binder
 
 import android.view.View
-import android.widget.TextView
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.android.wallpaper.R
+import com.android.wallpaper.customization.ui.util.ThemePickerCustomizationOptionUtil.ThemePickerLockCustomizationOption
 import com.android.wallpaper.customization.ui.viewmodel.ThemePickerCustomizationOptionsViewModel
 import com.android.wallpaper.picker.customization.ui.binder.CustomizationOptionsBinder
 import com.android.wallpaper.picker.customization.ui.binder.DefaultCustomizationOptionsBinder
+import com.android.wallpaper.picker.customization.ui.util.CustomizationOptionUtil.CustomizationOption
 import com.android.wallpaper.picker.customization.ui.viewmodel.CustomizationOptionsViewModel
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -39,26 +39,38 @@ constructor(private val defaultCustomizationOptionsBinder: DefaultCustomizationO
 
     override fun bind(
         view: View,
+        lockScreenCustomizationOptionEntries: List<Pair<CustomizationOption, View>>,
         viewModel: CustomizationOptionsViewModel,
         lifecycleOwner: LifecycleOwner
     ) {
-        defaultCustomizationOptionsBinder.bind(view, viewModel, lifecycleOwner)
+        defaultCustomizationOptionsBinder.bind(
+            view,
+            lockScreenCustomizationOptionEntries,
+            viewModel,
+            lifecycleOwner
+        )
 
-        val optionClock = view.requireViewById<TextView>(R.id.option_clock)
-        val optionShortcut = view.requireViewById<TextView>(R.id.option_shortcut)
+        val optionClock =
+            lockScreenCustomizationOptionEntries
+                .find { it.first == ThemePickerLockCustomizationOption.CLOCK }
+                ?.second
+        val optionShortcut =
+            lockScreenCustomizationOptionEntries
+                .find { it.first == ThemePickerLockCustomizationOption.SHORTCUTS }
+                ?.second
         viewModel as ThemePickerCustomizationOptionsViewModel
 
         lifecycleOwner.lifecycleScope.launch {
             lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     viewModel.onCustomizeClockClicked.collect {
-                        optionClock.setOnClickListener { _ -> it?.invoke() }
+                        optionClock?.setOnClickListener { _ -> it?.invoke() }
                     }
                 }
 
                 launch {
                     viewModel.onCustomizeShortcutClicked.collect {
-                        optionShortcut.setOnClickListener { _ -> it?.invoke() }
+                        optionShortcut?.setOnClickListener { _ -> it?.invoke() }
                     }
                 }
             }

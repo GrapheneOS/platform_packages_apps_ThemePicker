@@ -19,7 +19,8 @@ package com.android.wallpaper.customization.ui.util
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
-import com.android.wallpaper.R
+import android.widget.LinearLayout
+import com.android.themepicker.R
 import com.android.wallpaper.picker.customization.ui.util.CustomizationOptionUtil
 import com.android.wallpaper.picker.customization.ui.util.DefaultCustomizationOptionUtil
 import dagger.hilt.android.scopes.ActivityScoped
@@ -46,6 +47,52 @@ constructor(private val defaultCustomizationOptionUtil: DefaultCustomizationOpti
     }
 
     private var viewMap: Map<CustomizationOptionUtil.CustomizationOption, View>? = null
+
+    override fun getLockOptionEntryViews(
+        optionContainer: LinearLayout,
+        layoutInflater: LayoutInflater
+    ): List<Pair<CustomizationOptionUtil.CustomizationOption, View>> {
+        return buildList {
+            addAll(
+                defaultCustomizationOptionUtil.getLockOptionEntryViews(
+                    optionContainer,
+                    layoutInflater
+                )
+            )
+            add(
+                ThemePickerLockCustomizationOption.CLOCK to
+                    layoutInflater.inflate(
+                        R.layout.customization_option_entry_clock,
+                        optionContainer,
+                        false
+                    )
+            )
+            add(
+                ThemePickerLockCustomizationOption.SHORTCUTS to
+                    layoutInflater.inflate(
+                        R.layout.customization_option_entry_keyguard_quick_affordance,
+                        optionContainer,
+                        false
+                    )
+            )
+            add(
+                ThemePickerLockCustomizationOption.SHOW_NOTIFICATIONS to
+                    layoutInflater.inflate(
+                        R.layout.customization_option_entry_show_notifications,
+                        optionContainer,
+                        false
+                    )
+            )
+            add(
+                ThemePickerLockCustomizationOption.MORE_LOCK_SCREEN_SETTINGS to
+                    layoutInflater.inflate(
+                        R.layout.customization_option_entry_more_lock_settings,
+                        optionContainer,
+                        false
+                    )
+            )
+        }
+    }
 
     override fun initBottomSheetContent(
         bottomSheetContainer: FrameLayout,

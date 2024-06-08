@@ -36,8 +36,8 @@ import com.android.customization.picker.grid.ui.binder.GridScreenBinder
 import com.android.customization.picker.grid.ui.viewmodel.GridScreenViewModel
 import com.android.themepicker.R
 import com.android.wallpaper.config.BaseFlags
+import com.android.wallpaper.model.Screen
 import com.android.wallpaper.module.CurrentWallpaperInfoFactory
-import com.android.wallpaper.module.CustomizationSections
 import com.android.wallpaper.module.InjectorProvider
 import com.android.wallpaper.picker.AppbarFragment
 import com.android.wallpaper.picker.customization.domain.interactor.WallpaperInteractor
@@ -192,7 +192,7 @@ class GridFragment : AppbarFragment() {
                         }
                     },
                     wallpaperInteractor = wallpaperInteractor,
-                    screen = CustomizationSections.Screen.HOME_SCREEN,
+                    screen = Screen.HOME_SCREEN,
                 ),
             lifecycleOwner = viewLifecycleOwner,
             offsetToStart = false,

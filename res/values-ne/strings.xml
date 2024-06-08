@@ -128,7 +128,7 @@
     <string name="keyguard_affordance_enablement_dialog_dismiss_button" msgid="629754625264422508">"पूरा भयो"</string>
     <string name="keyguard_quick_affordance_title" msgid="4242813186995735584">"सर्टकटहरू"</string>
     <string name="keyguard_quick_affordance_section_title" msgid="2806304242671717309">"सर्टकटहरू"</string>
-    <string name="color_contrast_section_title" msgid="7194809124718896091">"रङको कन्ट्रास्ट"</string>
+    <string name="color_contrast_section_title" msgid="7194809124718896091">"कलर कन्ट्रास्ट"</string>
     <string name="color_contrast_default_title" msgid="7954235103549276978">"डिफल्ट"</string>
     <string name="color_contrast_medium_title" msgid="8071574793250090215">"मध्यम"</string>
     <string name="color_contrast_high_title" msgid="5554685752479470200">"उच्च"</string>

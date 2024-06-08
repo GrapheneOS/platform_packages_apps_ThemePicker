@@ -33,7 +33,7 @@ import com.android.customization.model.mode.DarkModeSectionController
 import com.android.customization.module.ThemePickerInjector
 import com.android.customization.picker.color.ui.binder.ColorPickerBinder
 import com.android.themepicker.R
-import com.android.wallpaper.module.CustomizationSections
+import com.android.wallpaper.model.Screen
 import com.android.wallpaper.module.InjectorProvider
 import com.android.wallpaper.picker.AppbarFragment
 import com.android.wallpaper.picker.customization.data.repository.WallpaperColorsRepository
@@ -126,7 +126,7 @@ class ColorPickerFragment : AppbarFragment() {
                                             loadInitialColors(
                                                 wallpaperManager,
                                                 wallpaperColorsRepository,
-                                                CustomizationSections.Screen.LOCK_SCREEN
+                                                Screen.LOCK_SCREEN
                                             )
                                         }
                                     }
@@ -138,7 +138,7 @@ class ColorPickerFragment : AppbarFragment() {
                             wallpaperColorsRepository.setLockWallpaperColors(colors)
                         },
                         wallpaperInteractor = injector.getWallpaperInteractor(requireContext()),
-                        screen = CustomizationSections.Screen.LOCK_SCREEN,
+                        screen = Screen.LOCK_SCREEN,
                     ),
                 lifecycleOwner = this,
                 offsetToStart =
@@ -177,7 +177,7 @@ class ColorPickerFragment : AppbarFragment() {
                                         loadInitialColors(
                                             wallpaperManager,
                                             wallpaperColorsRepository,
-                                            CustomizationSections.Screen.HOME_SCREEN
+                                            Screen.HOME_SCREEN
                                         )
                                     }
                                 }
@@ -189,7 +189,7 @@ class ColorPickerFragment : AppbarFragment() {
                         wallpaperColorsRepository.setHomeWallpaperColors(colors)
                     },
                     wallpaperInteractor = injector.getWallpaperInteractor(requireContext()),
-                    screen = CustomizationSections.Screen.HOME_SCREEN,
+                    screen = Screen.HOME_SCREEN,
                 ),
             lifecycleOwner = this,
             offsetToStart =
@@ -222,19 +222,19 @@ class ColorPickerFragment : AppbarFragment() {
     private suspend fun loadInitialColors(
         wallpaperManager: WallpaperManager,
         colorViewModel: WallpaperColorsRepository,
-        screen: CustomizationSections.Screen,
+        screen: Screen,
     ) {
         withContext(Dispatchers.IO) {
             val colors =
                 wallpaperManager.getWallpaperColors(
-                    if (screen == CustomizationSections.Screen.LOCK_SCREEN) {
+                    if (screen == Screen.LOCK_SCREEN) {
                         WallpaperManager.FLAG_LOCK
                     } else {
                         WallpaperManager.FLAG_SYSTEM
                     }
                 )
             withContext(Dispatchers.Main) {
-                if (screen == CustomizationSections.Screen.LOCK_SCREEN) {
+                if (screen == Screen.LOCK_SCREEN) {
                     colorViewModel.setLockWallpaperColors(colors)
                 } else {
                     colorViewModel.setHomeWallpaperColors(colors)

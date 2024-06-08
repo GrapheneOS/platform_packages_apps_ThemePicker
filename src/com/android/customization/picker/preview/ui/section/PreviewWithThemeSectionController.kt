@@ -25,9 +25,9 @@ import com.android.customization.model.themedicon.domain.interactor.ThemedIconIn
 import com.android.customization.picker.color.domain.interactor.ColorPickerInteractor
 import com.android.customization.picker.preview.ui.viewmodel.PreviewWithThemeViewModel
 import com.android.wallpaper.R
+import com.android.wallpaper.model.Screen
 import com.android.wallpaper.model.WallpaperPreviewNavigator
 import com.android.wallpaper.module.CurrentWallpaperInfoFactory
-import com.android.wallpaper.module.CustomizationSections
 import com.android.wallpaper.picker.customization.data.repository.WallpaperColorsRepository
 import com.android.wallpaper.picker.customization.domain.interactor.WallpaperInteractor
 import com.android.wallpaper.picker.customization.ui.section.ScreenPreviewSectionController
@@ -45,7 +45,7 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 open class PreviewWithThemeSectionController(
     activity: Activity,
     lifecycleOwner: LifecycleOwner,
-    private val screen: CustomizationSections.Screen,
+    private val screen: Screen,
     private val wallpaperInfoFactory: CurrentWallpaperInfoFactory,
     private val wallpaperColorsRepository: WallpaperColorsRepository,
     displayUtils: DisplayUtils,

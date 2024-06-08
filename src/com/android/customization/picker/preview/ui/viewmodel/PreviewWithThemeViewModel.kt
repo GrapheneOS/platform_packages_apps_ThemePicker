@@ -21,8 +21,8 @@ import android.app.WallpaperColors
 import android.os.Bundle
 import com.android.customization.model.themedicon.domain.interactor.ThemedIconInteractor
 import com.android.customization.picker.color.domain.interactor.ColorPickerInteractor
+import com.android.wallpaper.model.Screen
 import com.android.wallpaper.model.WallpaperInfo
-import com.android.wallpaper.module.CustomizationSections
 import com.android.wallpaper.picker.customization.domain.interactor.WallpaperInteractor
 import com.android.wallpaper.picker.customization.ui.viewmodel.ScreenPreviewViewModel
 import com.android.wallpaper.util.PreviewUtils
@@ -38,7 +38,7 @@ class PreviewWithThemeViewModel(
     wallpaperInteractor: WallpaperInteractor,
     private val themedIconInteractor: ThemedIconInteractor? = null,
     colorPickerInteractor: ColorPickerInteractor? = null,
-    screen: CustomizationSections.Screen,
+    screen: Screen,
 ) :
     ScreenPreviewViewModel(
         previewUtils,
@@ -59,6 +59,5 @@ class PreviewWithThemeViewModel(
                 colorIsLoading ->
                 wallpaperIsLoading || colorIsLoading
             }
-        }
-            ?: wallpaperIsLoading
+        } ?: wallpaperIsLoading
 }

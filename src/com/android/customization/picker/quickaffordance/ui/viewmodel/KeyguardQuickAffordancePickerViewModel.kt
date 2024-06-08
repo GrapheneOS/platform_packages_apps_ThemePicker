@@ -31,8 +31,8 @@ import com.android.customization.picker.quickaffordance.domain.interactor.Keygua
 import com.android.systemui.shared.keyguard.shared.model.KeyguardQuickAffordanceSlots
 import com.android.systemui.shared.quickaffordance.shared.model.KeyguardPreviewConstants
 import com.android.themepicker.R
+import com.android.wallpaper.model.Screen
 import com.android.wallpaper.module.CurrentWallpaperInfoFactory
-import com.android.wallpaper.module.CustomizationSections
 import com.android.wallpaper.picker.common.button.ui.viewmodel.ButtonStyle
 import com.android.wallpaper.picker.common.button.ui.viewmodel.ButtonViewModel
 import com.android.wallpaper.picker.common.dialog.ui.viewmodel.DialogViewModel
@@ -102,7 +102,7 @@ private constructor(
                 }
             },
             wallpaperInteractor = wallpaperInteractor,
-            screen = CustomizationSections.Screen.LOCK_SCREEN,
+            screen = Screen.LOCK_SCREEN,
         )
 
     /** A locally-selected slot, if the user ever switched from the original one. */
@@ -307,7 +307,8 @@ private constructor(
 
             KeyguardQuickAffordanceSummaryViewModel(
                 description = toDescriptionText(context, slots),
-                icon1 = icon1
+                icon1 =
+                    icon1
                         ?: if (icon2 == null) {
                             Icon.Resource(
                                 res = R.drawable.link_off,

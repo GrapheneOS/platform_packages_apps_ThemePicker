@@ -21,6 +21,9 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import com.android.themepicker.R
+import com.android.wallpaper.model.Screen
+import com.android.wallpaper.model.Screen.HOME_SCREEN
+import com.android.wallpaper.model.Screen.LOCK_SCREEN
 import com.android.wallpaper.picker.customization.ui.util.CustomizationOptionUtil
 import com.android.wallpaper.picker.customization.ui.util.DefaultCustomizationOptionUtil
 import dagger.hilt.android.scopes.ActivityScoped
@@ -48,49 +51,90 @@ constructor(private val defaultCustomizationOptionUtil: DefaultCustomizationOpti
 
     private var viewMap: Map<CustomizationOptionUtil.CustomizationOption, View>? = null
 
-    override fun getLockOptionEntryViews(
+    override fun getOptionEntries(
+        screen: Screen,
         optionContainer: LinearLayout,
-        layoutInflater: LayoutInflater
+        layoutInflater: LayoutInflater,
     ): List<Pair<CustomizationOptionUtil.CustomizationOption, View>> {
-        return buildList {
-            addAll(
-                defaultCustomizationOptionUtil.getLockOptionEntryViews(
-                    optionContainer,
-                    layoutInflater
-                )
+        val defaultOptionEntries =
+            defaultCustomizationOptionUtil.getOptionEntries(
+                screen,
+                optionContainer,
+                layoutInflater,
             )
-            add(
-                ThemePickerLockCustomizationOption.CLOCK to
-                    layoutInflater.inflate(
-                        R.layout.customization_option_entry_clock,
-                        optionContainer,
-                        false
+        return when (screen) {
+            LOCK_SCREEN ->
+                buildList {
+                    addAll(defaultOptionEntries)
+                    add(
+                        ThemePickerLockCustomizationOption.CLOCK to
+                            layoutInflater.inflate(
+                                R.layout.customization_option_entry_clock,
+                                optionContainer,
+                                false,
+                            )
                     )
-            )
-            add(
-                ThemePickerLockCustomizationOption.SHORTCUTS to
-                    layoutInflater.inflate(
-                        R.layout.customization_option_entry_keyguard_quick_affordance,
-                        optionContainer,
-                        false
+                    add(
+                        ThemePickerLockCustomizationOption.SHORTCUTS to
+                            layoutInflater.inflate(
+                                R.layout.customization_option_entry_keyguard_quick_affordance,
+                                optionContainer,
+                                false
+                            )
                     )
-            )
-            add(
-                ThemePickerLockCustomizationOption.SHOW_NOTIFICATIONS to
-                    layoutInflater.inflate(
-                        R.layout.customization_option_entry_show_notifications,
-                        optionContainer,
-                        false
+                    add(
+                        ThemePickerLockCustomizationOption.SHOW_NOTIFICATIONS to
+                            layoutInflater.inflate(
+                                R.layout.customization_option_entry_show_notifications,
+                                optionContainer,
+                                false,
+                            )
                     )
-            )
-            add(
-                ThemePickerLockCustomizationOption.MORE_LOCK_SCREEN_SETTINGS to
-                    layoutInflater.inflate(
-                        R.layout.customization_option_entry_more_lock_settings,
-                        optionContainer,
-                        false
+                    add(
+                        ThemePickerLockCustomizationOption.MORE_LOCK_SCREEN_SETTINGS to
+                            layoutInflater.inflate(
+                                R.layout.customization_option_entry_more_lock_settings,
+                                optionContainer,
+                                false,
+                            )
                     )
-            )
+                }
+            HOME_SCREEN ->
+                buildList {
+                    addAll(defaultOptionEntries)
+                    add(
+                        ThemePickerHomeCustomizationOption.COLORS to
+                            layoutInflater.inflate(
+                                R.layout.customization_option_entry_colors,
+                                optionContainer,
+                                false,
+                            )
+                    )
+                    add(
+                        ThemePickerHomeCustomizationOption.APP_GRID to
+                            layoutInflater.inflate(
+                                R.layout.customization_option_entry_app_grid,
+                                optionContainer,
+                                false,
+                            )
+                    )
+                    add(
+                        ThemePickerHomeCustomizationOption.APP_SHAPE to
+                            layoutInflater.inflate(
+                                R.layout.customization_option_entry_app_shape,
+                                optionContainer,
+                                false,
+                            )
+                    )
+                    add(
+                        ThemePickerHomeCustomizationOption.THEMED_ICONS to
+                            layoutInflater.inflate(
+                                R.layout.customization_option_entry_themed_icons,
+                                optionContainer,
+                                false,
+                            )
+                    )
+                }
         }
     }
 

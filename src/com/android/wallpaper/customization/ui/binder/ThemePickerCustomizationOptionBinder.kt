@@ -40,12 +40,14 @@ constructor(private val defaultCustomizationOptionsBinder: DefaultCustomizationO
     override fun bind(
         view: View,
         lockScreenCustomizationOptionEntries: List<Pair<CustomizationOption, View>>,
+        homeScreenCustomizationOptionEntries: List<Pair<CustomizationOption, View>>,
         viewModel: CustomizationOptionsViewModel,
         lifecycleOwner: LifecycleOwner
     ) {
         defaultCustomizationOptionsBinder.bind(
             view,
             lockScreenCustomizationOptionEntries,
+            homeScreenCustomizationOptionEntries,
             viewModel,
             lifecycleOwner
         )

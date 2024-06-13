@@ -19,6 +19,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:paddingHorizontal="@dimen/customization_option_entry_horizontal_padding"
+    android:paddingVertical="@dimen/customization_option_entry_vertical_padding"
     android:clickable="true">
 
     <TextView

@@ -20,6 +20,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:paddingHorizontal="@dimen/customization_option_entry_horizontal_padding"
+    android:paddingVertical="@dimen/customization_option_entry_vertical_padding"
     android:clickable="true">
 
     <TextView
@@ -28,7 +30,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/keyguard_quick_affordance_title"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="@dimen/customization_option_entry_text_margin_end"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/option_entry_keyguard_quick_affordance_icon"
         app:layout_constraintBottom_toTopOf="@+id/option_entry_keyguard_quick_affordance_description"
@@ -40,7 +42,7 @@
         style="@style/SectionSubtitleTextStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="@dimen/customization_option_entry_text_margin_end"
         android:text="None"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/option_entry_keyguard_quick_affordance_icon"
@@ -50,8 +52,8 @@
 
     <LinearLayout
         android:id="@+id/option_entry_keyguard_quick_affordance_icon"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="@dimen/customization_option_entry_icon_size"
+        android:layout_height="@dimen/customization_option_entry_icon_size"
         android:orientation="horizontal"
         android:background="@drawable/customization_option_entry_icon_background"
         android:divider="@drawable/horizontal_divider_14dp"

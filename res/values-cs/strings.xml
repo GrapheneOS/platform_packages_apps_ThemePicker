@@ -131,7 +131,7 @@
     <string name="color_contrast_section_title" msgid="7194809124718896091">"Barevný kontrast"</string>
     <string name="color_contrast_default_title" msgid="7954235103549276978">"Výchozí"</string>
     <string name="color_contrast_medium_title" msgid="8071574793250090215">"Střední"</string>
-    <string name="color_contrast_high_title" msgid="5554685752479470200">"Vysoká"</string>
+    <string name="color_contrast_high_title" msgid="5554685752479470200">"Vysoký"</string>
     <string name="keyguard_quick_affordance_two_selected_template" msgid="1757099194522296363">"<xliff:g id="FIRST">%1$s</xliff:g>, <xliff:g id="SECOND">%2$s</xliff:g>"</string>
     <string name="keyguard_quick_affordance_none_selected" msgid="8494127020144112003">"Žádné"</string>
     <string name="show_notifications_on_lock_screen" msgid="4157744243084646720">"Zobrazovat oznámení na obrazovce uzamčení"</string>

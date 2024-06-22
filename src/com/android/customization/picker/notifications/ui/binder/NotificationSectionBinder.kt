@@ -44,7 +44,7 @@ object NotificationSectionBinder {
 
         lifecycleOwner.lifecycleScope.launch {
             lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch { viewModel.isSwitchOn.collect { switch.isChecked = it } }
+                launch { viewModel.isSwitchOn().collect { switch.isChecked = it } }
             }
         }
     }

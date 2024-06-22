@@ -130,6 +130,18 @@
         <item name="android:lineHeight">16sp</item>
     </style>
 
+    <style name="CustomizationOptionEntryTitleTextStyle">
+        <item name="android:fontFamily">@*android:string/config_headlineFontFamily</item>
+        <item name="android:textColor">@color/system_on_surface</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="CustomizationOptionEntrySubtitleTextStyle">
+        <item name="android:fontFamily">@*android:string/config_bodyFontFamily</item>
+        <item name="android:textColor">@color/system_on_surface_variant</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
     <style name="BetaTagTextStyle" parent="SectionTitleTextStyle">
         <item name="android:textSize">12sp</item>
         <item name="android:lineHeight">15dp</item>

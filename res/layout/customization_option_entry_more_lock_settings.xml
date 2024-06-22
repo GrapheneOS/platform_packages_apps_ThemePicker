@@ -20,12 +20,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingHorizontal="@dimen/customization_option_entry_horizontal_padding"
-    android:paddingVertical="@dimen/customization_option_entry_vertical_padding"
+    android:paddingVertical="@dimen/customization_option_entry_vertical_padding_large"
     android:clickable="true">
 
     <TextView
         android:id="@+id/option_entry_more_lock_settings_title"
-        style="@style/SectionTitleTextStyle"
+        style="@style/CustomizationOptionEntryTitleTextStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/more_settings_section_title"
@@ -37,7 +37,7 @@
 
     <TextView
         android:id="@+id/option_entry_more_lock_settings_description"
-        style="@style/SectionSubtitleTextStyle"
+        style="@style/CustomizationOptionEntrySubtitleTextStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/more_settings_section_description"

@@ -80,7 +80,7 @@ class NotificationSectionViewModelTest {
     @Test
     fun `toggles back and forth`() =
         testScope.runTest {
-            val isSwitchOn = collectLastValue(underTest.isSwitchOn)
+            val isSwitchOn = collectLastValue(underTest.isSwitchOn())
 
             val initialIsSwitchOn = isSwitchOn()
 

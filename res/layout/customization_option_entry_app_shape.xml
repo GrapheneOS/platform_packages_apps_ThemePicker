@@ -24,7 +24,7 @@
     android:clickable="true">
 
     <TextView
-        style="@style/SectionTitleTextStyle"
+        style="@style/CustomizationOptionEntryTitleTextStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/preview_name_shape"

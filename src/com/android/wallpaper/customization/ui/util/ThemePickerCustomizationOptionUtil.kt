@@ -49,8 +49,6 @@ constructor(private val defaultCustomizationOptionUtil: DefaultCustomizationOpti
         THEMED_ICONS,
     }
 
-    private var viewMap: Map<CustomizationOptionUtil.CustomizationOption, View>? = null
-
     override fun getOptionEntries(
         screen: Screen,
         optionContainer: LinearLayout,
@@ -141,9 +139,14 @@ constructor(private val defaultCustomizationOptionUtil: DefaultCustomizationOpti
     override fun initBottomSheetContent(
         bottomSheetContainer: FrameLayout,
         layoutInflater: LayoutInflater
-    ) {
-        defaultCustomizationOptionUtil.initBottomSheetContent(bottomSheetContainer, layoutInflater)
-        viewMap = buildMap {
+    ): Map<CustomizationOptionUtil.CustomizationOption, View> {
+        val map =
+            defaultCustomizationOptionUtil.initBottomSheetContent(
+                bottomSheetContainer,
+                layoutInflater
+            )
+        return buildMap {
+            putAll(map)
             put(
                 ThemePickerLockCustomizationOption.CLOCK,
                 createCustomizationPickerBottomSheetView(
@@ -163,14 +166,6 @@ constructor(private val defaultCustomizationOptionUtil: DefaultCustomizationOpti
                     .also { bottomSheetContainer.addView(it) }
             )
         }
-    }
-
-    override fun getBottomSheetContent(option: CustomizationOptionUtil.CustomizationOption): View? {
-        return defaultCustomizationOptionUtil.getBottomSheetContent(option) ?: viewMap?.get(option)
-    }
-
-    override fun onDestroy() {
-        viewMap = null
     }
 
     private fun createCustomizationPickerBottomSheetView(

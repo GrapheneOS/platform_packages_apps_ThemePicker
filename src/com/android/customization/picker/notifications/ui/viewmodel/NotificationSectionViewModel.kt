@@ -35,14 +35,14 @@ constructor(
 ) : ViewModel() {
 
     /** Whether the switch should be on. */
-    val isSwitchOn: Flow<Boolean> = interactor.isShowNotificationsOnLockScreenEnabled
+    suspend fun isSwitchOn(): Flow<Boolean> = interactor.isShowNotificationsOnLockScreenEnabled()
 
     /** Notifies that the section has been clicked. */
     fun onClicked() {
         viewModelScope.launch {
             interactor.toggleShowNotificationsOnLockscreenEnabled()
             logger.logLockScreenNotificationApplied(
-                interactor.isShowNotificationsOnLockScreenEnabled.value
+                interactor.isShowNotificationsOnLockScreenEnabled().value
             )
         }
     }

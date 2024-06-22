@@ -26,7 +26,7 @@
 
     <TextView
         android:id="@+id/option_entry_keyguard_quick_affordance_title"
-        style="@style/SectionTitleTextStyle"
+        style="@style/CustomizationOptionEntryTitleTextStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/keyguard_quick_affordance_title"
@@ -39,7 +39,7 @@
 
     <TextView
         android:id="@+id/option_entry_keyguard_quick_affordance_description"
-        style="@style/SectionSubtitleTextStyle"
+        style="@style/CustomizationOptionEntrySubtitleTextStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/customization_option_entry_text_margin_end"

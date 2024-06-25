@@ -57,14 +57,11 @@ import com.android.customization.picker.grid.domain.interactor.GridSnapshotResto
 import com.android.customization.picker.grid.ui.viewmodel.GridScreenViewModel
 import com.android.customization.picker.notifications.domain.interactor.NotificationsSnapshotRestorer
 import com.android.customization.picker.notifications.ui.viewmodel.NotificationSectionViewModel
-import com.android.customization.picker.quickaffordance.data.repository.KeyguardQuickAffordancePickerRepository
 import com.android.customization.picker.quickaffordance.domain.interactor.KeyguardQuickAffordancePickerInteractor
 import com.android.customization.picker.quickaffordance.domain.interactor.KeyguardQuickAffordanceSnapshotRestorer
 import com.android.customization.picker.quickaffordance.ui.viewmodel.KeyguardQuickAffordancePickerViewModel
 import com.android.customization.picker.settings.ui.viewmodel.ColorContrastSectionViewModel
 import com.android.systemui.shared.clocks.ClockRegistry
-import com.android.systemui.shared.customization.data.content.CustomizationProviderClient
-import com.android.systemui.shared.customization.data.content.CustomizationProviderClientImpl
 import com.android.systemui.shared.notifications.data.repository.NotificationSettingsRepository
 import com.android.systemui.shared.notifications.domain.interactor.NotificationSettingsInteractor
 import com.android.wallpaper.config.BaseFlags
@@ -97,15 +94,10 @@ constructor(
 ) : WallpaperPicker2Injector(mainScope, bgDispatcher), CustomizationInjector {
     private var customizationSections: CustomizationSections? = null
     private var wallpaperInteractor: WallpaperInteractor? = null
-    private var keyguardQuickAffordancePickerInteractor: KeyguardQuickAffordancePickerInteractor? =
-        null
     private var keyguardQuickAffordancePickerViewModelFactory:
         KeyguardQuickAffordancePickerViewModel.Factory? =
         null
-    private var customizationProviderClient: CustomizationProviderClient? = null
     private var fragmentFactory: FragmentFactory? = null
-    private var keyguardQuickAffordanceSnapshotRestorer: KeyguardQuickAffordanceSnapshotRestorer? =
-        null
     private var notificationsSnapshotRestorer: NotificationsSnapshotRestorer? = null
     private var clockPickerInteractor: ClockPickerInteractor? = null
     private var clockCarouselViewModelFactory: ClockCarouselViewModel.Factory? = null
@@ -129,6 +121,12 @@ constructor(
     // Injected objects, sorted by type
     @Inject
     lateinit var colorContrastSectionViewModelFactory: Lazy<ColorContrastSectionViewModel.Factory>
+    @Inject
+    lateinit var keyguardQuickAffordancePickerInteractor:
+        Lazy<KeyguardQuickAffordancePickerInteractor>
+    @Inject
+    lateinit var keyguardQuickAffordanceSnapshotRestorer:
+        Lazy<KeyguardQuickAffordanceSnapshotRestorer>
     @Inject lateinit var themesUserEventLogger: Lazy<ThemesUserEventLogger>
 
     override fun getCustomizationSections(activity: ComponentActivity): CustomizationSections {
@@ -185,7 +183,7 @@ constructor(
     ): Map<Int, SnapshotRestorer> {
         return super<WallpaperPicker2Injector>.getSnapshotRestorers(context).toMutableMap().apply {
             this[KEY_QUICK_AFFORDANCE_SNAPSHOT_RESTORER] =
-                getKeyguardQuickAffordanceSnapshotRestorer(context)
+                keyguardQuickAffordanceSnapshotRestorer.get()
             // TODO(b/285047815): Enable after adding wallpaper id for default static wallpaper
             if (getFlags().isWallpaperRestorerEnabled()) {
                 this[KEY_WALLPAPER_SNAPSHOT_RESTORER] = getWallpaperSnapshotRestorer(context)
@@ -237,10 +235,7 @@ constructor(
     override fun getKeyguardQuickAffordancePickerInteractor(
         context: Context
     ): KeyguardQuickAffordancePickerInteractor {
-        return keyguardQuickAffordancePickerInteractor
-            ?: getKeyguardQuickAffordancePickerInteractorImpl(context).also {
-                keyguardQuickAffordancePickerInteractor = it
-            }
+        return keyguardQuickAffordancePickerInteractor.get()
     }
 
     fun getKeyguardQuickAffordancePickerViewModelFactory(
@@ -255,39 +250,6 @@ constructor(
                     getUserEventLogger(),
                 )
                 .also { keyguardQuickAffordancePickerViewModelFactory = it }
-    }
-
-    private fun getKeyguardQuickAffordancePickerInteractorImpl(
-        context: Context
-    ): KeyguardQuickAffordancePickerInteractor {
-        val client = getKeyguardQuickAffordancePickerProviderClient(context)
-        val appContext = context.applicationContext
-        return KeyguardQuickAffordancePickerInteractor(
-            KeyguardQuickAffordancePickerRepository(client, getApplicationCoroutineScope()),
-            client
-        ) {
-            getKeyguardQuickAffordanceSnapshotRestorer(appContext)
-        }
-    }
-
-    private fun getKeyguardQuickAffordancePickerProviderClient(
-        context: Context
-    ): CustomizationProviderClient {
-        return customizationProviderClient
-            ?: CustomizationProviderClientImpl(context.applicationContext, bgDispatcher).also {
-                customizationProviderClient = it
-            }
-    }
-
-    private fun getKeyguardQuickAffordanceSnapshotRestorer(
-        context: Context
-    ): KeyguardQuickAffordanceSnapshotRestorer {
-        return keyguardQuickAffordanceSnapshotRestorer
-            ?: KeyguardQuickAffordanceSnapshotRestorer(
-                    getKeyguardQuickAffordancePickerInteractor(context),
-                    getKeyguardQuickAffordancePickerProviderClient(context)
-                )
-                .also { keyguardQuickAffordanceSnapshotRestorer = it }
     }
 
     fun getNotificationSectionViewModelFactory(

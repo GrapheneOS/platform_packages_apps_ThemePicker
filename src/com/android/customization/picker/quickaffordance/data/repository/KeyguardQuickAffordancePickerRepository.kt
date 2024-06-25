@@ -20,7 +20,10 @@ package com.android.customization.picker.quickaffordance.data.repository
 import com.android.customization.picker.quickaffordance.shared.model.KeyguardQuickAffordancePickerAffordanceModel as AffordanceModel
 import com.android.customization.picker.quickaffordance.shared.model.KeyguardQuickAffordancePickerSelectionModel as SelectionModel
 import com.android.customization.picker.quickaffordance.shared.model.KeyguardQuickAffordancePickerSlotModel as SlotModel
-import com.android.systemui.shared.customization.data.content.CustomizationProviderClient as Client
+import com.android.systemui.shared.customization.data.content.CustomizationProviderClient
+import com.android.wallpaper.picker.di.modules.MainDispatcher
+import javax.inject.Inject
+import javax.inject.Singleton
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
@@ -31,10 +34,10 @@ import kotlinx.coroutines.flow.shareIn
  * Abstracts access to application state related to functionality for selecting, picking, or setting
  * lock screen quick affordances.
  */
-class KeyguardQuickAffordancePickerRepository(
-    private val client: Client,
-    private val scope: CoroutineScope
-) {
+@Singleton
+class KeyguardQuickAffordancePickerRepository
+@Inject
+constructor(client: CustomizationProviderClient, @MainDispatcher mainScope: CoroutineScope) {
     /** List of slots available on the device. */
     val slots: Flow<List<SlotModel>> =
         client.observeSlots().map { slots -> slots.map { slot -> slot.toModel() } }
@@ -44,23 +47,23 @@ class KeyguardQuickAffordancePickerRepository(
         client
             .observeAffordances()
             .map { affordances -> affordances.map { affordance -> affordance.toModel() } }
-            .shareIn(scope, replay = 1, started = SharingStarted.Lazily)
+            .shareIn(mainScope, replay = 1, started = SharingStarted.Lazily)
 
     /** List of slot-affordance pairs, modeling what the user has currently chosen for each slot. */
     val selections: Flow<List<SelectionModel>> =
         client
             .observeSelections()
             .map { selections -> selections.map { selection -> selection.toModel() } }
-            .shareIn(scope, replay = 1, started = SharingStarted.Lazily)
+            .shareIn(mainScope, replay = 1, started = SharingStarted.Lazily)
 
-    private fun Client.Slot.toModel(): SlotModel {
+    private fun CustomizationProviderClient.Slot.toModel(): SlotModel {
         return SlotModel(
             id = id,
             maxSelectedQuickAffordances = capacity,
         )
     }
 
-    private fun Client.Affordance.toModel(): AffordanceModel {
+    private fun CustomizationProviderClient.Affordance.toModel(): AffordanceModel {
         return AffordanceModel(
             id = id,
             name = name,
@@ -73,7 +76,7 @@ class KeyguardQuickAffordancePickerRepository(
         )
     }
 
-    private fun Client.Selection.toModel(): SelectionModel {
+    private fun CustomizationProviderClient.Selection.toModel(): SelectionModel {
         return SelectionModel(
             slotId = slotId,
             affordanceId = affordanceId,

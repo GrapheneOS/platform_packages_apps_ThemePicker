@@ -23,18 +23,22 @@ import com.android.customization.picker.quickaffordance.data.repository.Keyguard
 import com.android.customization.picker.quickaffordance.shared.model.KeyguardQuickAffordancePickerAffordanceModel as AffordanceModel
 import com.android.customization.picker.quickaffordance.shared.model.KeyguardQuickAffordancePickerSelectionModel as SelectionModel
 import com.android.customization.picker.quickaffordance.shared.model.KeyguardQuickAffordancePickerSlotModel as SlotModel
-import com.android.systemui.shared.customization.data.content.CustomizationProviderClient as Client
-import javax.inject.Provider
+import com.android.systemui.shared.customization.data.content.CustomizationProviderClient
+import javax.inject.Inject
+import javax.inject.Singleton
 import kotlinx.coroutines.flow.Flow
 
 /**
  * Single entry-point for all application state and business logic related to quick affordances on
  * the lock screen.
  */
-class KeyguardQuickAffordancePickerInteractor(
-    private val repository: KeyguardQuickAffordancePickerRepository,
-    private val client: Client,
-    private val snapshotRestorer: Provider<KeyguardQuickAffordanceSnapshotRestorer>,
+@Singleton
+class KeyguardQuickAffordancePickerInteractor
+@Inject
+constructor(
+    repository: KeyguardQuickAffordancePickerRepository,
+    private val client: CustomizationProviderClient,
+    private val snapshotRestorer: KeyguardQuickAffordanceSnapshotRestorer,
 ) {
     /** List of slots available on the device. */
     val slots: Flow<List<SlotModel>> = repository.slots
@@ -60,7 +64,7 @@ class KeyguardQuickAffordancePickerInteractor(
             affordanceId = affordanceId,
         )
 
-        snapshotRestorer.get().storeSnapshot()
+        snapshotRestorer.storeSnapshot()
     }
 
     /** Unselects all affordances from the slot with the given ID. */
@@ -69,7 +73,7 @@ class KeyguardQuickAffordancePickerInteractor(
             slotId = slotId,
         )
 
-        snapshotRestorer.get().storeSnapshot()
+        snapshotRestorer.storeSnapshot()
     }
 
     /** Unselects all affordances from all slots. */

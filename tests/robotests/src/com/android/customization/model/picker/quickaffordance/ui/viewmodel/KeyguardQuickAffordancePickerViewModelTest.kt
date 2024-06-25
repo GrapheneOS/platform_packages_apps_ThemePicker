@@ -38,7 +38,6 @@ import com.android.wallpaper.picker.common.text.ui.viewmodel.Text
 import com.android.wallpaper.picker.customization.data.repository.WallpaperRepository
 import com.android.wallpaper.picker.customization.domain.interactor.WallpaperInteractor
 import com.android.wallpaper.picker.option.ui.viewmodel.OptionItemViewModel
-import com.android.wallpaper.testing.FakeSnapshotStore
 import com.android.wallpaper.testing.FakeWallpaperClient
 import com.android.wallpaper.testing.TestCurrentWallpaperInfoFactory
 import com.android.wallpaper.testing.TestInjector
@@ -48,7 +47,6 @@ import com.google.common.truth.Truth.assertThat
 import com.google.common.truth.Truth.assertWithMessage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.resetMain
@@ -89,16 +87,10 @@ class KeyguardQuickAffordancePickerViewModelTest {
                 repository =
                     KeyguardQuickAffordancePickerRepository(
                         client = client,
-                        scope = testScope.backgroundScope,
+                        mainScope = testScope.backgroundScope,
                     ),
                 client = client,
-                snapshotRestorer = {
-                    KeyguardQuickAffordanceSnapshotRestorer(
-                            interactor = quickAffordanceInteractor,
-                            client = client,
-                        )
-                        .apply { runBlocking { setUpSnapshotRestorer(FakeSnapshotStore()) } }
-                },
+                snapshotRestorer = KeyguardQuickAffordanceSnapshotRestorer(client),
             )
         wallpaperInteractor =
             WallpaperInteractor(

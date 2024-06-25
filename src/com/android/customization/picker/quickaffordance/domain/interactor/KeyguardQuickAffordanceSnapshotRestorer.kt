@@ -21,10 +21,14 @@ import com.android.systemui.shared.customization.data.content.CustomizationProvi
 import com.android.wallpaper.picker.undo.domain.interactor.SnapshotRestorer
 import com.android.wallpaper.picker.undo.domain.interactor.SnapshotStore
 import com.android.wallpaper.picker.undo.shared.model.RestorableSnapshot
+import javax.inject.Inject
+import javax.inject.Singleton
 
 /** Handles state restoration for the quick affordances system. */
-class KeyguardQuickAffordanceSnapshotRestorer(
-    private val interactor: KeyguardQuickAffordancePickerInteractor,
+@Singleton
+class KeyguardQuickAffordanceSnapshotRestorer
+@Inject
+constructor(
     private val client: CustomizationProviderClient,
 ) : SnapshotRestorer {
 
@@ -43,7 +47,7 @@ class KeyguardQuickAffordanceSnapshotRestorer(
 
     override suspend fun restoreToSnapshot(snapshot: RestorableSnapshot) {
         // reset all current selections
-        interactor.unselectAll()
+        client.querySlots().forEach { client.deleteAllSelections(it.id) }
 
         val allSelections = checkNotNull(snapshot.args[KEY_SELECTIONS])
         if (allSelections.isEmpty()) return
@@ -55,9 +59,9 @@ class KeyguardQuickAffordanceSnapshotRestorer(
             }
 
         selections.forEach { (slotId, affordanceId) ->
-            interactor.select(
-                slotId,
-                affordanceId,
+            client.insertSelection(
+                slotId = slotId,
+                affordanceId = affordanceId,
             )
         }
     }

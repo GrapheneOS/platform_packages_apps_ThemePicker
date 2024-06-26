@@ -174,8 +174,8 @@ constructor(private val defaultCustomizationOptionUtil: DefaultCustomizationOpti
         layoutInflater: LayoutInflater,
     ): View =
         when (option) {
-            ThemePickerLockCustomizationOption.CLOCK -> com.android.wallpaper.R.layout.bottom_sheet_clock
-            ThemePickerLockCustomizationOption.SHORTCUTS -> com.android.wallpaper.R.layout.bottom_sheet_shortcut
+            ThemePickerLockCustomizationOption.CLOCK -> R.layout.bottom_sheet_clock
+            ThemePickerLockCustomizationOption.SHORTCUTS -> R.layout.bottom_sheet_shortcut
             else ->
                 throw IllegalStateException(
                     "Customization option $option does not have a bottom sheet view"

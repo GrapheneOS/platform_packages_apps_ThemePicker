@@ -40,11 +40,9 @@ import com.android.wallpaper.picker.customization.ui.binder.CustomizationOptions
 import com.android.wallpaper.picker.customization.ui.binder.DefaultCustomizationOptionsBinder
 import com.android.wallpaper.picker.di.modules.BackgroundDispatcher
 import com.android.wallpaper.picker.di.modules.EffectsModule
-import com.android.wallpaper.picker.preview.data.util.LiveWallpaperDownloader
 import com.android.wallpaper.picker.preview.ui.util.DefaultImageEffectDialogUtil
 import com.android.wallpaper.picker.preview.ui.util.ImageEffectDialogUtil
 import com.android.wallpaper.testing.FakeDefaultRequester
-import com.android.wallpaper.testing.FakeLiveWallpaperDownloader
 import com.android.wallpaper.testing.TestPartnerProvider
 import com.android.wallpaper.util.converter.DefaultWallpaperModelFactory
 import com.android.wallpaper.util.converter.WallpaperModelFactory
@@ -96,12 +94,6 @@ abstract class ThemePickerTestModule {
     abstract fun bindWallpaperModelFactory(
         impl: DefaultWallpaperModelFactory
     ): WallpaperModelFactory
-
-    @Binds
-    @Singleton
-    abstract fun bindLiveWallpaperDownloader(
-        impl: FakeLiveWallpaperDownloader
-    ): LiveWallpaperDownloader
 
     @Binds
     @Singleton

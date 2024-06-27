@@ -14,11 +14,36 @@
   ~ limitations under the License.
   -->
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/quick_affordance_horizontal_list"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="16dp"
+    android:paddingBottom="16dp"
+    android:orientation="vertical">
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-</FrameLayout>
+        android:layout_height="wrap_content"
+        android:background="@drawable/picker_fragment_background">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/quick_affordance_horizontal_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:clipToPadding="false"/>
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="8dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@id/slot_tabs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:clipToPadding="false" />
+    </FrameLayout>
+</LinearLayout>

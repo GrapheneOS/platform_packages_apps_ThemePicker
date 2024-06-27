@@ -18,18 +18,29 @@ package com.android.wallpaper.customization.ui.viewmodel
 
 import com.android.wallpaper.customization.ui.util.ThemePickerCustomizationOptionUtil
 import com.android.wallpaper.picker.customization.ui.viewmodel.CustomizationOptionsViewModel
+import com.android.wallpaper.picker.customization.ui.viewmodel.CustomizationOptionsViewModelFactory
 import com.android.wallpaper.picker.customization.ui.viewmodel.DefaultCustomizationOptionsViewModel
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import dagger.hilt.android.scopes.ViewModelScoped
-import javax.inject.Inject
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-@ViewModelScoped
 class ThemePickerCustomizationOptionsViewModel
-@Inject
+@AssistedInject
 constructor(
-    private val defaultCustomizationOptionsViewModel: DefaultCustomizationOptionsViewModel
+    defaultCustomizationOptionsViewModelFactory: DefaultCustomizationOptionsViewModel.Factory,
+    keyguardQuickAffordancePickerViewModel2Factory: KeyguardQuickAffordancePickerViewModel2.Factory,
+    @Assisted private val viewModelScope: CoroutineScope,
 ) : CustomizationOptionsViewModel {
+
+    private val defaultCustomizationOptionsViewModel =
+        defaultCustomizationOptionsViewModelFactory.create(viewModelScope)
+
+    val keyguardQuickAffordancePickerViewModel2 =
+        keyguardQuickAffordancePickerViewModel2Factory.create(viewModelScope = viewModelScope)
 
     override val selectedOption = defaultCustomizationOptionsViewModel.selectedOption
 
@@ -61,4 +72,12 @@ constructor(
                 null
             }
         }
+
+    @ViewModelScoped
+    @AssistedFactory
+    interface Factory : CustomizationOptionsViewModelFactory {
+        override fun create(
+            viewModelScope: CoroutineScope
+        ): ThemePickerCustomizationOptionsViewModel
+    }
 }

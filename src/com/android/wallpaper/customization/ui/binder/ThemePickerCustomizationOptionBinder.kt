@@ -80,7 +80,7 @@ constructor(private val defaultCustomizationOptionsBinder: DefaultCustomizationO
             }
         }
 
-        ShortcutBottomSheetBinder.bind(
+        ShortcutFloatingSheetBinder.bind(
             view,
             viewModel.keyguardQuickAffordancePickerViewModel2,
             lifecycleOwner,

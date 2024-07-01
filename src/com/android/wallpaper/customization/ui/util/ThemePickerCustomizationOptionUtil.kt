@@ -136,20 +136,17 @@ constructor(private val defaultCustomizationOptionUtil: DefaultCustomizationOpti
         }
     }
 
-    override fun initBottomSheetContent(
+    override fun initFloatingSheet(
         bottomSheetContainer: FrameLayout,
         layoutInflater: LayoutInflater
     ): Map<CustomizationOptionUtil.CustomizationOption, View> {
         val map =
-            defaultCustomizationOptionUtil.initBottomSheetContent(
-                bottomSheetContainer,
-                layoutInflater
-            )
+            defaultCustomizationOptionUtil.initFloatingSheet(bottomSheetContainer, layoutInflater)
         return buildMap {
             putAll(map)
             put(
                 ThemePickerLockCustomizationOption.CLOCK,
-                createCustomizationPickerBottomSheetView(
+                inflateFloatingSheet(
                         ThemePickerLockCustomizationOption.CLOCK,
                         bottomSheetContainer,
                         layoutInflater,
@@ -158,7 +155,7 @@ constructor(private val defaultCustomizationOptionUtil: DefaultCustomizationOpti
             )
             put(
                 ThemePickerLockCustomizationOption.SHORTCUTS,
-                createCustomizationPickerBottomSheetView(
+                inflateFloatingSheet(
                         ThemePickerLockCustomizationOption.SHORTCUTS,
                         bottomSheetContainer,
                         layoutInflater,
@@ -168,14 +165,14 @@ constructor(private val defaultCustomizationOptionUtil: DefaultCustomizationOpti
         }
     }
 
-    private fun createCustomizationPickerBottomSheetView(
+    private fun inflateFloatingSheet(
         option: ThemePickerLockCustomizationOption,
         bottomSheetContainer: FrameLayout,
         layoutInflater: LayoutInflater,
     ): View =
         when (option) {
-            ThemePickerLockCustomizationOption.CLOCK -> R.layout.bottom_sheet_clock
-            ThemePickerLockCustomizationOption.SHORTCUTS -> R.layout.bottom_sheet_shortcut
+            ThemePickerLockCustomizationOption.CLOCK -> R.layout.floating_sheet_clock
+            ThemePickerLockCustomizationOption.SHORTCUTS -> R.layout.floating_sheet_shortcut
             else ->
                 throw IllegalStateException(
                     "Customization option $option does not have a bottom sheet view"

@@ -17,14 +17,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingHorizontal="16dp"
+    android:paddingHorizontal="@dimen/shortcut_floating_sheet_horizontal_padding"
     android:paddingBottom="16dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:clipToPadding="false"
+    android:clipChildren="false">
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/picker_fragment_background">
+        android:paddingVertical="@dimen/shortcut_floating_sheet_list_vertical_padding"
+        android:background="@drawable/floating_sheet_content_background"
+        android:clipToPadding="false"
+        android:clipChildren="false">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/quick_affordance_horizontal_list"
@@ -34,16 +39,10 @@
             android:clipToPadding="false"/>
     </FrameLayout>
 
-    <FrameLayout
-        android:layout_width="match_parent"
+    <com.android.wallpaper.picker.customization.ui.view.FloatingTabToolbar
+        android:id="@+id/floating_bar_tabs"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingVertical="8dp">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@id/slot_tabs"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:clipToPadding="false" />
-    </FrameLayout>
+        android:layout_gravity="center_horizontal"
+        android:layout_marginVertical="@dimen/shortcut_floating_sheet_tab_toolbar_vertical_margin" />
 </LinearLayout>

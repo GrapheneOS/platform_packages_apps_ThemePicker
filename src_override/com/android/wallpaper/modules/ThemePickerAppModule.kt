@@ -23,6 +23,8 @@ import com.android.customization.module.DefaultCustomizationPreferences
 import com.android.customization.module.ThemePickerInjector
 import com.android.customization.module.logging.ThemesUserEventLogger
 import com.android.customization.module.logging.ThemesUserEventLoggerImpl
+import com.android.customization.picker.color.data.repository.ColorPickerRepository
+import com.android.customization.picker.color.data.repository.ColorPickerRepositoryImpl
 import com.android.systemui.shared.customization.data.content.CustomizationProviderClient
 import com.android.systemui.shared.customization.data.content.CustomizationProviderClientImpl
 import com.android.wallpaper.customization.ui.binder.ThemePickerCustomizationOptionsBinder
@@ -79,6 +81,10 @@ abstract class ThemePickerAppModule {
     abstract fun bindCustomizationOptionsBinder(
         impl: ThemePickerCustomizationOptionsBinder
     ): CustomizationOptionsBinder
+
+    @Binds
+    @Singleton
+    abstract fun bindColorPickerRepository(impl: ColorPickerRepositoryImpl): ColorPickerRepository
 
     companion object {
         @Provides

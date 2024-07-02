@@ -70,14 +70,14 @@ class ClockSettingsViewModelTest {
                     }
                 },
             )
+        val colorPickerRepository = FakeColorPickerRepository(context = context)
         colorPickerInteractor =
             ColorPickerInteractor(
-                repository = FakeColorPickerRepository(context = context),
-                snapshotRestorer = {
-                    ColorPickerSnapshotRestorer(interactor = colorPickerInteractor).apply {
+                repository = colorPickerRepository,
+                snapshotRestorer =
+                    ColorPickerSnapshotRestorer(repository = colorPickerRepository).apply {
                         runBlocking { setUpSnapshotRestorer(store = FakeSnapshotStore()) }
-                    }
-                },
+                    },
             )
         underTest =
             ClockSettingsViewModel.Factory(

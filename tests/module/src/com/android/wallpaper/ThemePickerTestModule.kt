@@ -23,6 +23,8 @@ import com.android.customization.module.CustomizationInjector
 import com.android.customization.module.CustomizationPreferences
 import com.android.customization.module.logging.TestThemesUserEventLogger
 import com.android.customization.module.logging.ThemesUserEventLogger
+import com.android.customization.picker.color.data.repository.ColorPickerRepository
+import com.android.customization.picker.color.data.repository.ColorPickerRepositoryImpl
 import com.android.customization.testing.TestCustomizationInjector
 import com.android.customization.testing.TestDefaultCustomizationPreferences
 import com.android.systemui.shared.customization.data.content.CustomizationProviderClient
@@ -114,6 +116,10 @@ abstract class ThemePickerTestModule {
     abstract fun bindCustomizationOptionsBinder(
         impl: DefaultCustomizationOptionsBinder
     ): CustomizationOptionsBinder
+
+    @Binds
+    @Singleton
+    abstract fun bindColorPickerRepository(impl: ColorPickerRepositoryImpl): ColorPickerRepository
 
     companion object {
         @Provides

@@ -26,6 +26,8 @@ import com.android.customization.picker.color.shared.model.ColorType
 import com.android.systemui.monet.Style
 import com.android.wallpaper.picker.customization.data.repository.WallpaperColorsRepository
 import com.android.wallpaper.picker.customization.shared.model.WallpaperColorsModel
+import javax.inject.Inject
+import javax.inject.Singleton
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -36,7 +38,10 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 
 // TODO (b/262924623): refactor to remove dependency on ColorCustomizationManager & ColorOption
 // TODO (b/268203200): Create test for ColorPickerRepositoryImpl
-class ColorPickerRepositoryImpl(
+@Singleton
+class ColorPickerRepositoryImpl
+@Inject
+constructor(
     wallpaperColorsRepository: WallpaperColorsRepository,
     private val colorManager: ColorCustomizationManager,
 ) : ColorPickerRepository {

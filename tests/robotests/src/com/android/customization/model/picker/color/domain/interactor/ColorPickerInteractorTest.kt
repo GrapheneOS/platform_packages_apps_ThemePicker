@@ -52,11 +52,10 @@ class ColorPickerInteractorTest {
         underTest =
             ColorPickerInteractor(
                 repository = repository,
-                snapshotRestorer = {
-                    ColorPickerSnapshotRestorer(interactor = underTest).apply {
+                snapshotRestorer =
+                    ColorPickerSnapshotRestorer(repository = repository).apply {
                         runBlocking { setUpSnapshotRestorer(store = store) }
-                    }
-                },
+                    },
             )
         repository.setOptions(4, 4, ColorType.WALLPAPER_COLOR, 0)
     }

@@ -33,6 +33,7 @@ class ThemePickerCustomizationOptionsViewModel
 constructor(
     defaultCustomizationOptionsViewModelFactory: DefaultCustomizationOptionsViewModel.Factory,
     keyguardQuickAffordancePickerViewModel2Factory: KeyguardQuickAffordancePickerViewModel2.Factory,
+    colorPickerViewModel2Factory: ColorPickerViewModel2.Factory,
     @Assisted private val viewModelScope: CoroutineScope,
 ) : CustomizationOptionsViewModel {
 
@@ -41,6 +42,7 @@ constructor(
 
     val keyguardQuickAffordancePickerViewModel2 =
         keyguardQuickAffordancePickerViewModel2Factory.create(viewModelScope = viewModelScope)
+    val colorPickerViewModel2 = colorPickerViewModel2Factory.create(viewModelScope = viewModelScope)
 
     override val selectedOption = defaultCustomizationOptionsViewModel.selectedOption
 
@@ -66,6 +68,19 @@ constructor(
                     defaultCustomizationOptionsViewModel.selectOption(
                         ThemePickerCustomizationOptionUtil.ThemePickerLockCustomizationOption
                             .SHORTCUTS
+                    )
+                }
+            } else {
+                null
+            }
+        }
+
+    val onCustomizeColorsClicked: Flow<(() -> Unit)?> =
+        selectedOption.map {
+            if (it == null) {
+                {
+                    defaultCustomizationOptionsViewModel.selectOption(
+                        ThemePickerCustomizationOptionUtil.ThemePickerHomeCustomizationOption.COLORS
                     )
                 }
             } else {

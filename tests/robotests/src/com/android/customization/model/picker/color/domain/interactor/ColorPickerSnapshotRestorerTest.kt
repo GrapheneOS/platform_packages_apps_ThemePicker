@@ -21,7 +21,6 @@ import android.content.Context
 import androidx.test.filters.SmallTest
 import androidx.test.platform.app.InstrumentationRegistry
 import com.android.customization.picker.color.data.repository.FakeColorPickerRepository
-import com.android.customization.picker.color.domain.interactor.ColorPickerInteractor
 import com.android.customization.picker.color.domain.interactor.ColorPickerSnapshotRestorer
 import com.android.customization.picker.color.shared.model.ColorOptionModel
 import com.android.customization.picker.color.shared.model.ColorType
@@ -51,14 +50,7 @@ class ColorPickerSnapshotRestorerTest {
     fun setUp() {
         context = InstrumentationRegistry.getInstrumentation().targetContext
         repository = FakeColorPickerRepository(context = context)
-        underTest =
-            ColorPickerSnapshotRestorer(
-                interactor =
-                    ColorPickerInteractor(
-                        repository = repository,
-                        snapshotRestorer = { underTest },
-                    )
-            )
+        underTest = ColorPickerSnapshotRestorer(repository = repository)
         store = FakeSnapshotStore()
     }
 

@@ -18,14 +18,20 @@
 package com.android.customization.picker.color.domain.interactor
 
 import android.util.Log
+import com.android.customization.picker.color.data.repository.ColorPickerRepository
 import com.android.customization.picker.color.shared.model.ColorOptionModel
 import com.android.wallpaper.picker.undo.domain.interactor.SnapshotRestorer
 import com.android.wallpaper.picker.undo.domain.interactor.SnapshotStore
 import com.android.wallpaper.picker.undo.shared.model.RestorableSnapshot
+import javax.inject.Inject
+import javax.inject.Singleton
 
 /** Handles state restoration for the color picker system. */
-class ColorPickerSnapshotRestorer(
-    private val interactor: ColorPickerInteractor,
+@Singleton
+class ColorPickerSnapshotRestorer
+@Inject
+constructor(
+    private val repository: ColorPickerRepository,
 ) : SnapshotRestorer {
 
     private var snapshotStore: SnapshotStore = SnapshotStore.NOOP
@@ -39,7 +45,7 @@ class ColorPickerSnapshotRestorer(
         store: SnapshotStore,
     ): RestorableSnapshot {
         snapshotStore = store
-        originalOption = interactor.getCurrentColorOption()
+        originalOption = repository.getCurrentColorOption()
         return snapshot(originalOption)
     }
 
@@ -60,7 +66,7 @@ class ColorPickerSnapshotRestorer(
                 )
             }
 
-            interactor.select(optionToRestore)
+            repository.select(optionToRestore)
         }
     }
 

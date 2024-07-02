@@ -76,11 +76,10 @@ class ColorPickerViewModelTest {
         interactor =
             ColorPickerInteractor(
                 repository = repository,
-                snapshotRestorer = {
-                    ColorPickerSnapshotRestorer(interactor = interactor).apply {
+                snapshotRestorer =
+                    ColorPickerSnapshotRestorer(repository = repository).apply {
                         runBlocking { setUpSnapshotRestorer(store = store) }
-                    }
-                },
+                    },
             )
 
         underTest =

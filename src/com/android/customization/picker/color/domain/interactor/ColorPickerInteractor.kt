@@ -18,15 +18,19 @@ package com.android.customization.picker.color.domain.interactor
 
 import com.android.customization.picker.color.data.repository.ColorPickerRepository
 import com.android.customization.picker.color.shared.model.ColorOptionModel
-import javax.inject.Provider
+import javax.inject.Inject
+import javax.inject.Singleton
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.onEach
 
 /** Single entry-point for all application state and business logic related to system color. */
-class ColorPickerInteractor(
+@Singleton
+class ColorPickerInteractor
+@Inject
+constructor(
     private val repository: ColorPickerRepository,
-    private val snapshotRestorer: Provider<ColorPickerSnapshotRestorer>,
+    private val snapshotRestorer: ColorPickerSnapshotRestorer,
 ) {
     val isApplyingSystemColor = repository.isApplyingSystemColor
 
@@ -51,7 +55,7 @@ class ColorPickerInteractor(
             // actually updated until the picker restarts. Wait to do so when updated color options
             // become available
             repository.select(colorOptionModel)
-            snapshotRestorer.get().storeSnapshot(colorOptionModel)
+            snapshotRestorer.storeSnapshot(colorOptionModel)
         } catch (e: Exception) {
             _selectingColorOption.value = null
         }

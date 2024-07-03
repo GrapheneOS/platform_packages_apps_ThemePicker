@@ -57,10 +57,7 @@ constructor(
         throw UnsupportedOperationException("not implemented")
     }
 
-    override fun getColorPickerViewModelFactory(
-        context: Context,
-        wallpaperColorsRepository: WallpaperColorsRepository,
-    ): ColorPickerViewModel.Factory {
+    override fun getColorPickerViewModelFactory(context: Context): ColorPickerViewModel.Factory {
         throw UnsupportedOperationException("not implemented")
     }
 

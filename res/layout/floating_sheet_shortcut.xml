@@ -17,7 +17,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingHorizontal="@dimen/shortcut_floating_sheet_horizontal_padding"
+    android:paddingHorizontal="@dimen/floating_sheet_horizontal_padding"
     android:paddingBottom="16dp"
     android:orientation="vertical"
     android:clipToPadding="false"
@@ -26,7 +26,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingVertical="@dimen/shortcut_floating_sheet_list_vertical_padding"
+        android:paddingVertical="@dimen/floating_sheet_list_vertical_padding"
         android:background="@drawable/floating_sheet_content_background"
         android:clipToPadding="false"
         android:clipChildren="false">
@@ -44,5 +44,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginVertical="@dimen/shortcut_floating_sheet_tab_toolbar_vertical_margin" />
+        android:layout_marginVertical="@dimen/floating_sheet_tab_toolbar_vertical_margin" />
 </LinearLayout>

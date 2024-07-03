@@ -85,10 +85,7 @@ class ColorPickerFragment : AppbarFragment() {
                 viewModel =
                     ViewModelProvider(
                             requireActivity(),
-                            injector.getColorPickerViewModelFactory(
-                                context = requireContext(),
-                                wallpaperColorsRepository = wallpaperColorsRepository,
-                            ),
+                            injector.getColorPickerViewModelFactory(requireContext()),
                         )
                         .get(),
                 lifecycleOwner = this,

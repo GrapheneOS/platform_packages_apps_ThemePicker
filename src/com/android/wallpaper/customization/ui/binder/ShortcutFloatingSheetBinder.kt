@@ -26,7 +26,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.android.customization.picker.common.ui.view.KeyguardQuickAffordanceItemSpacing
+import com.android.customization.picker.common.ui.view.DoubleRowListItemSpacing
 import com.android.themepicker.R
 import com.android.wallpaper.customization.ui.viewmodel.KeyguardQuickAffordancePickerViewModel2
 import com.android.wallpaper.picker.common.dialog.ui.viewbinder.DialogViewBinder
@@ -184,7 +184,7 @@ object ShortcutFloatingSheetBinder {
                     GridLayoutManager.HORIZONTAL,
                     false,
                 )
-            addItemDecoration(KeyguardQuickAffordanceItemSpacing())
+            addItemDecoration(DoubleRowListItemSpacing(12))
         }
     }
 

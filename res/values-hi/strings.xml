@@ -23,7 +23,7 @@
     <string name="clock_description" msgid="3563839327378948">"घड़ी आइकॉन चुनें"</string>
     <string name="clock_picker_entry_content_description" msgid="8377139273468595734">"पसंद के मुताबिक घड़ी का आइकॉन बदलें"</string>
     <string name="select_clock_action_description" msgid="5025888763471843648">"स्मार्टवॉच की स्क्रीन के डिज़ाइन के लिए विकल्प <xliff:g id="ID_1">%1$s</xliff:g>"</string>
-    <string name="clock_settings_title" msgid="2050906379377120431">"घड़ी का रंग और साइज़"</string>
+    <string name="clock_settings_title" msgid="2050906379377120431">"वॉच का रंग और साइज़"</string>
     <string name="clock_color_and_size_title" msgid="7146791234905111351">"घड़ी का रंग और साइज़"</string>
     <string name="clock_color_and_size_description" msgid="6578061553012886817">"<xliff:g id="ID_1">%1$s</xliff:g>, <xliff:g id="ID_2">%2$s</xliff:g>"</string>
     <string name="clock_color" msgid="8081608867289156163">"रंग"</string>

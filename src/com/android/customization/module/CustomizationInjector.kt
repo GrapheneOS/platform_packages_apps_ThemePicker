@@ -39,10 +39,7 @@ interface CustomizationInjector : Injector {
 
     fun getClockPickerInteractor(context: Context): ClockPickerInteractor
 
-    fun getColorPickerViewModelFactory(
-        context: Context,
-        wallpaperColorsRepository: WallpaperColorsRepository,
-    ): ColorPickerViewModel.Factory
+    fun getColorPickerViewModelFactory(context: Context): ColorPickerViewModel.Factory
 
     fun getClockCarouselViewModelFactory(
         interactor: ClockPickerInteractor,

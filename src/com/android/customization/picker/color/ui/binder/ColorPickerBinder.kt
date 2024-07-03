@@ -133,9 +133,10 @@ object ColorPickerBinder {
 
     interface Binding {
         fun saveInstanceState(savedState: Bundle)
+
         fun restoreInstanceState(savedState: Bundle)
     }
 
-    private val LAYOUT_MANAGER_SAVED_STATE: String = "layout_manager_state"
+    private const val LAYOUT_MANAGER_SAVED_STATE: String = "layout_manager_state"
     private var layoutManagerSavedState: Parcelable? = null
 }

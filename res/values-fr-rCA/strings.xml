@@ -97,7 +97,7 @@
     <string name="clock_preview_content_description" msgid="5460561185905717460">"Aperçu de l\'horloge <xliff:g id="ID_1">%1$s</xliff:g>"</string>
     <string name="something_went_wrong" msgid="529840112449799117">"Oups! Une erreur s\'est produite."</string>
     <string name="theme_preview_icons_section_title" msgid="7064768910744000643">"Couleurs et icônes"</string>
-    <string name="style_info_description" msgid="2612473574431003251">"Aperçu de la police, des icônes, de la forme de l\'application et de la couleur"</string>
+    <string name="style_info_description" msgid="2612473574431003251">"Aperçu de la police, des icônes, de la forme de l\'appli et de la couleur"</string>
     <string name="accessibility_custom_font_title" msgid="966867359157303705">"Police personnalisée"</string>
     <string name="accessibility_custom_icon_title" msgid="5753297905849062296">"Icône personnalisée"</string>
     <string name="accessibility_custom_color_title" msgid="4124246598886320663">"Couleur personnalisée"</string>
@@ -109,7 +109,7 @@
     <string name="mode_changed" msgid="2243581369395418584">"Thème modifié"</string>
     <string name="themed_icon_title" msgid="7312460430471956558">"Icônes du thème"</string>
     <string name="beta_title" msgid="8703819523760746458">"Bêta"</string>
-    <string name="gird_picker_entry_content_description" msgid="9087651470212293439">"Modifiez la grille d\'applications"</string>
+    <string name="gird_picker_entry_content_description" msgid="9087651470212293439">"Modifiez la grille d\'applis"</string>
     <string name="wallpaper_color_tab" msgid="1447926591721403840">"Couleurs fond d\'écran"</string>
     <string name="wallpaper_color_subheader" msgid="4044464573669965670">"Icônes, texte, etc., assortis aux couleurs du fond d\'écran"</string>
     <string name="wallpaper_color_title" msgid="5687965239180986458">"Couleur du fond d\'écran"</string>
@@ -124,7 +124,7 @@
     <string name="keyguard_affordance_none" msgid="1751643933430782312">"Aucun"</string>
     <string name="keyguard_affordance_enablement_dialog_headline" msgid="365379085932610314">"Impossible d\'ajouter le raccourci"</string>
     <string name="keyguard_affordance_enablement_dialog_action_template" msgid="8117011931337357438">"Ouvrir <xliff:g id="APPNAME">%1$s</xliff:g>"</string>
-    <string name="keyguard_affordance_enablement_dialog_message" msgid="6136286758939253570">"Pour ajouter l\'application <xliff:g id="APPNAME">%1$s</xliff:g> en tant que raccourci, assurez-vous"</string>
+    <string name="keyguard_affordance_enablement_dialog_message" msgid="6136286758939253570">"Pour ajouter l\'appli <xliff:g id="APPNAME">%1$s</xliff:g> en tant que raccourci, assurez-vous"</string>
     <string name="keyguard_affordance_enablement_dialog_dismiss_button" msgid="629754625264422508">"OK"</string>
     <string name="keyguard_quick_affordance_title" msgid="4242813186995735584">"Raccourcis"</string>
     <string name="keyguard_quick_affordance_section_title" msgid="2806304242671717309">"Raccourcis"</string>

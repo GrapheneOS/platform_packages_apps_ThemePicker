@@ -22,7 +22,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
 import android.net.Uri
-import android.text.TextUtils
 import androidx.activity.ComponentActivity
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
@@ -217,12 +216,6 @@ constructor(
                             wallpaperPreferences = getPreferences(context = appContext),
                             backgroundDispatcher = bgDispatcher,
                         ),
-                    shouldHandleReload = {
-                        TextUtils.equals(
-                            getColorCustomizationManager(appContext).currentColorSource,
-                            COLOR_SOURCE_PRESET,
-                        )
-                    }
                 )
                 .also { wallpaperInteractor = it }
     }

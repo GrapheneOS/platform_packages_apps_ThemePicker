@@ -17,8 +17,14 @@ package com.android.customization.module
 
 import android.content.Context
 import com.android.wallpaper.module.DefaultWallpaperPreferences
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
+import javax.inject.Singleton
 
-open class DefaultCustomizationPreferences(context: Context) :
+@Singleton
+open class DefaultCustomizationPreferences
+@Inject
+constructor(@ApplicationContext context: Context) :
     DefaultWallpaperPreferences(context), CustomizationPreferences {
 
     override fun getSerializedCustomThemes(): String? {

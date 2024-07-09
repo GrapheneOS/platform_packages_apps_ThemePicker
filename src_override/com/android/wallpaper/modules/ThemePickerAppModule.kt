@@ -86,14 +86,13 @@ abstract class ThemePickerAppModule {
     @Singleton
     abstract fun bindColorPickerRepository(impl: ColorPickerRepositoryImpl): ColorPickerRepository
 
+    @Binds
+    @Singleton
+    abstract fun bindWallpaperPreferences(
+        impl: DefaultCustomizationPreferences
+    ): WallpaperPreferences
+
     companion object {
-        @Provides
-        @Singleton
-        fun provideWallpaperPreferences(
-            @ApplicationContext context: Context
-        ): WallpaperPreferences {
-            return DefaultCustomizationPreferences(context)
-        }
 
         @Provides
         @Singleton

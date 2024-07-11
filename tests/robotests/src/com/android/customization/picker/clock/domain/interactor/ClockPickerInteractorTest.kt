@@ -30,14 +30,14 @@ class ClockPickerInteractorTest {
     fun setUp() {
         val testDispatcher = StandardTestDispatcher()
         Dispatchers.setMain(testDispatcher)
+        val repository = FakeClockPickerRepository()
         underTest =
             ClockPickerInteractor(
-                repository = FakeClockPickerRepository(),
-                snapshotRestorer = {
-                    ClockPickerSnapshotRestorer(interactor = underTest).apply {
+                repository = repository,
+                snapshotRestorer =
+                    ClockPickerSnapshotRestorer(repository = repository).apply {
                         runBlocking { setUpSnapshotRestorer(store = FakeSnapshotStore()) }
-                    }
-                },
+                    },
             )
     }
 

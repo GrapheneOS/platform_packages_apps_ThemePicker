@@ -24,6 +24,9 @@ import com.android.customization.picker.clock.shared.model.ClockMetadataModel
 import com.android.systemui.plugins.clocks.ClockMetadata
 import com.android.systemui.shared.clocks.ClockRegistry
 import com.android.systemui.shared.settings.data.repository.SecureSettingsRepository
+import com.android.wallpaper.picker.di.modules.MainDispatcher
+import javax.inject.Inject
+import javax.inject.Singleton
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -42,11 +45,14 @@ import kotlinx.coroutines.flow.shareIn
 import org.json.JSONObject
 
 /** Implementation of [ClockPickerRepository], using [ClockRegistry]. */
-class ClockPickerRepositoryImpl(
+@Singleton
+class ClockPickerRepositoryImpl
+@Inject
+constructor(
     private val secureSettingsRepository: SecureSettingsRepository,
     private val registry: ClockRegistry,
-    scope: CoroutineScope,
-    mainDispatcher: CoroutineDispatcher,
+    @MainDispatcher mainScope: CoroutineScope,
+    @MainDispatcher mainDispatcher: CoroutineDispatcher,
 ) : ClockPickerRepository {
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -94,7 +100,8 @@ class ClockPickerRepositoryImpl(
                             ?.toModel(
                                 isSelected = true,
                                 selectedColorId = metadata?.getSelectedColorId(),
-                                colorTone = metadata?.getColorTone()
+                                colorTone =
+                                    metadata?.getColorTone()
                                         ?: ClockMetadataModel.DEFAULT_COLOR_TONE_PROGRESS,
                                 seedColor = registry.seedColor
                             )
@@ -151,7 +158,7 @@ class ClockPickerRepositoryImpl(
             .map { isDynamic -> if (isDynamic) ClockSize.DYNAMIC else ClockSize.SMALL }
             .distinctUntilChanged()
             .shareIn(
-                scope = scope,
+                scope = mainScope,
                 started = SharingStarted.Eagerly,
                 replay = 1,
             )

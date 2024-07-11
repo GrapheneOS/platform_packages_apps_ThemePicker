@@ -100,11 +100,10 @@ class ClockCarouselViewModelTest {
     private fun getClockPickerInteractor(repository: ClockPickerRepository): ClockPickerInteractor {
         return ClockPickerInteractor(
                 repository = repository,
-                snapshotRestorer = {
-                    ClockPickerSnapshotRestorer(interactor = interactor).apply {
+                snapshotRestorer =
+                    ClockPickerSnapshotRestorer(repository = repository).apply {
                         runBlocking { setUpSnapshotRestorer(store = FakeSnapshotStore()) }
-                    }
-                }
+                    },
             )
             .also { interactor = it }
     }

@@ -19,14 +19,22 @@ package com.android.customization.picker.clock.domain.interactor
 
 import android.text.TextUtils
 import android.util.Log
+import com.android.customization.picker.clock.data.repository.ClockPickerRepository
 import com.android.customization.picker.clock.shared.model.ClockSnapshotModel
 import com.android.wallpaper.picker.undo.domain.interactor.SnapshotRestorer
 import com.android.wallpaper.picker.undo.domain.interactor.SnapshotStore
 import com.android.wallpaper.picker.undo.shared.model.RestorableSnapshot
+import javax.inject.Inject
+import javax.inject.Singleton
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.map
 
 /** Handles state restoration for clocks. */
-class ClockPickerSnapshotRestorer(private val interactor: ClockPickerInteractor) :
-    SnapshotRestorer {
+@Singleton
+class ClockPickerSnapshotRestorer
+@Inject
+constructor(private val repository: ClockPickerRepository) : SnapshotRestorer {
     private var snapshotStore: SnapshotStore = SnapshotStore.NOOP
     private var originalOption: ClockSnapshotModel? = null
 
@@ -34,7 +42,23 @@ class ClockPickerSnapshotRestorer(private val interactor: ClockPickerInteractor)
         store: SnapshotStore,
     ): RestorableSnapshot {
         snapshotStore = store
-        originalOption = interactor.getCurrentClockToRestore()
+        originalOption =
+            ClockSnapshotModel(
+                clockId =
+                    repository.selectedClock
+                        .map { clock -> clock.clockId }
+                        .distinctUntilChanged()
+                        .firstOrNull(),
+                clockSize = repository.selectedClockSize.firstOrNull(),
+                colorToneProgress =
+                    repository.selectedClock.map { clock -> clock.colorToneProgress }.firstOrNull(),
+                selectedColorId =
+                    repository.selectedClock
+                        .map { clock -> clock.selectedColorId }
+                        .distinctUntilChanged()
+                        .firstOrNull(),
+                seedColor = repository.selectedClock.map { clock -> clock.seedColor }.firstOrNull(),
+            )
         return snapshot(originalOption)
     }
 
@@ -58,7 +82,15 @@ class ClockPickerSnapshotRestorer(private val interactor: ClockPickerInteractor)
                 )
             }
 
-            interactor.setClockOption(optionToRestore)
+            optionToRestore.clockSize?.let { repository.setClockSize(it) }
+            optionToRestore.colorToneProgress?.let {
+                repository.setClockColor(
+                    selectedColorId = optionToRestore.selectedColorId,
+                    colorToneProgress = optionToRestore.colorToneProgress,
+                    seedColor = optionToRestore.seedColor
+                )
+            }
+            optionToRestore.clockId?.let { repository.setSelectedClock(it) }
         }
     }
 

@@ -24,7 +24,6 @@ import com.android.customization.picker.clock.ui.viewmodel.ClockCarouselViewMode
 import com.android.customization.picker.clock.ui.viewmodel.ClockSettingsViewModel
 import com.android.customization.picker.color.ui.viewmodel.ColorPickerViewModel
 import com.android.customization.picker.quickaffordance.domain.interactor.KeyguardQuickAffordancePickerInteractor
-import com.android.systemui.shared.clocks.ClockRegistry
 import com.android.wallpaper.module.Injector
 import com.android.wallpaper.picker.customization.data.repository.WallpaperColorsRepository
 
@@ -34,10 +33,6 @@ interface CustomizationInjector : Injector {
     fun getKeyguardQuickAffordancePickerInteractor(
         context: Context,
     ): KeyguardQuickAffordancePickerInteractor
-
-    fun getClockRegistry(context: Context): ClockRegistry?
-
-    fun getClockPickerInteractor(context: Context): ClockPickerInteractor
 
     fun getColorPickerViewModelFactory(context: Context): ColorPickerViewModel.Factory
 

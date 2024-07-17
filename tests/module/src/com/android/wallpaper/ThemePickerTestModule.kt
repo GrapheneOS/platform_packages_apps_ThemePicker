@@ -23,12 +23,18 @@ import com.android.customization.module.CustomizationInjector
 import com.android.customization.module.CustomizationPreferences
 import com.android.customization.module.logging.TestThemesUserEventLogger
 import com.android.customization.module.logging.ThemesUserEventLogger
+import com.android.customization.picker.clock.data.repository.ClockPickerRepository
+import com.android.customization.picker.clock.data.repository.ClockPickerRepositoryImpl
+import com.android.customization.picker.clock.data.repository.ClockRegistryProvider
 import com.android.customization.picker.color.data.repository.ColorPickerRepository
 import com.android.customization.picker.color.data.repository.ColorPickerRepositoryImpl
 import com.android.customization.testing.TestCustomizationInjector
 import com.android.customization.testing.TestDefaultCustomizationPreferences
+import com.android.systemui.shared.clocks.ClockRegistry
 import com.android.systemui.shared.customization.data.content.CustomizationProviderClient
 import com.android.systemui.shared.customization.data.content.CustomizationProviderClientImpl
+import com.android.systemui.shared.settings.data.repository.SecureSettingsRepository
+import com.android.systemui.shared.settings.data.repository.SecureSettingsRepositoryImpl
 import com.android.wallpaper.effects.EffectsController
 import com.android.wallpaper.effects.FakeEffectsController
 import com.android.wallpaper.module.Injector
@@ -42,6 +48,7 @@ import com.android.wallpaper.picker.customization.ui.binder.CustomizationOptions
 import com.android.wallpaper.picker.customization.ui.binder.DefaultCustomizationOptionsBinder
 import com.android.wallpaper.picker.di.modules.BackgroundDispatcher
 import com.android.wallpaper.picker.di.modules.EffectsModule
+import com.android.wallpaper.picker.di.modules.MainDispatcher
 import com.android.wallpaper.picker.preview.ui.util.DefaultImageEffectDialogUtil
 import com.android.wallpaper.picker.preview.ui.util.ImageEffectDialogUtil
 import com.android.wallpaper.testing.FakeDefaultRequester
@@ -56,6 +63,7 @@ import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
 import javax.inject.Singleton
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
 
 @Module
 @TestInstallIn(
@@ -121,6 +129,10 @@ abstract class ThemePickerTestModule {
     @Singleton
     abstract fun bindColorPickerRepository(impl: ColorPickerRepositoryImpl): ColorPickerRepository
 
+    @Binds
+    @Singleton
+    abstract fun bindClockPickerRepository(impl: ClockPickerRepositoryImpl): ClockPickerRepository
+
     companion object {
         @Provides
         @Singleton
@@ -138,6 +150,32 @@ abstract class ThemePickerTestModule {
             @BackgroundDispatcher bgDispatcher: CoroutineDispatcher,
         ): CustomizationProviderClient {
             return CustomizationProviderClientImpl(context, bgDispatcher)
+        }
+
+        @Provides
+        @Singleton
+        fun provideSecureSettingsRepository(
+            @ApplicationContext context: Context,
+            @BackgroundDispatcher bgDispatcher: CoroutineDispatcher,
+        ): SecureSettingsRepository {
+            return SecureSettingsRepositoryImpl(context.contentResolver, bgDispatcher)
+        }
+
+        @Provides
+        @Singleton
+        fun provideClockRegistry(
+            @ApplicationContext context: Context,
+            @MainDispatcher mainScope: CoroutineScope,
+            @MainDispatcher mainDispatcher: CoroutineDispatcher,
+            @BackgroundDispatcher bgDispatcher: CoroutineDispatcher,
+        ): ClockRegistry {
+            return ClockRegistryProvider(
+                    context = context,
+                    coroutineScope = mainScope,
+                    mainDispatcher = mainDispatcher,
+                    backgroundDispatcher = bgDispatcher,
+                )
+                .get()
         }
     }
 }

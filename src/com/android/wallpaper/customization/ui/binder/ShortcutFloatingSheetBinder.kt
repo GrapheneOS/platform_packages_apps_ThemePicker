@@ -184,7 +184,19 @@ object ShortcutFloatingSheetBinder {
                     GridLayoutManager.HORIZONTAL,
                     false,
                 )
-            addItemDecoration(DoubleRowListItemSpacing(12))
+            addItemDecoration(
+                DoubleRowListItemSpacing(
+                    context.resources.getDimensionPixelSize(
+                        R.dimen.floating_sheet_content_horizontal_padding
+                    ),
+                    context.resources.getDimensionPixelSize(
+                        R.dimen.floating_sheet_list_item_horizontal_space
+                    ),
+                    context.resources.getDimensionPixelSize(
+                        R.dimen.floating_sheet_list_item_vertical_space
+                    ),
+                )
+            )
         }
     }
 

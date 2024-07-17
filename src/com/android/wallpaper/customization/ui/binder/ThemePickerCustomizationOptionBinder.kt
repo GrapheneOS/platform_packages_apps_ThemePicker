@@ -30,10 +30,8 @@ import com.android.wallpaper.picker.customization.ui.util.CustomizationOptionUti
 import com.android.wallpaper.picker.customization.ui.viewmodel.CustomizationOptionsViewModel
 import javax.inject.Inject
 import javax.inject.Singleton
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalCoroutinesApi::class)
 @Singleton
 class ThemePickerCustomizationOptionsBinder
 @Inject
@@ -44,6 +42,7 @@ constructor(private val defaultCustomizationOptionsBinder: DefaultCustomizationO
         view: View,
         lockScreenCustomizationOptionEntries: List<Pair<CustomizationOption, View>>,
         homeScreenCustomizationOptionEntries: List<Pair<CustomizationOption, View>>,
+        customizationOptionFloatingSheetViewMap: Map<CustomizationOption, View>?,
         viewModel: CustomizationOptionsViewModel,
         lifecycleOwner: LifecycleOwner
     ) {
@@ -51,6 +50,7 @@ constructor(private val defaultCustomizationOptionsBinder: DefaultCustomizationO
             view,
             lockScreenCustomizationOptionEntries,
             homeScreenCustomizationOptionEntries,
+            customizationOptionFloatingSheetViewMap,
             viewModel,
             lifecycleOwner
         )
@@ -91,16 +91,34 @@ constructor(private val defaultCustomizationOptionsBinder: DefaultCustomizationO
             }
         }
 
-        ShortcutFloatingSheetBinder.bind(
-            view,
-            viewModel.keyguardQuickAffordancePickerViewModel2,
-            lifecycleOwner,
-        )
+        customizationOptionFloatingSheetViewMap
+            ?.get(ThemePickerLockCustomizationOption.CLOCK)
+            ?.let {
+                ClockFloatingSheetBinder.bind(
+                    it,
+                    viewModel.clockPickerViewModel,
+                    lifecycleOwner,
+                )
+            }
 
-        ColorsFloatingSheetBinder.bind(
-            view,
-            viewModel.colorPickerViewModel2,
-            lifecycleOwner,
-        )
+        customizationOptionFloatingSheetViewMap
+            ?.get(ThemePickerLockCustomizationOption.SHORTCUTS)
+            ?.let {
+                ShortcutFloatingSheetBinder.bind(
+                    it,
+                    viewModel.keyguardQuickAffordancePickerViewModel2,
+                    lifecycleOwner,
+                )
+            }
+
+        customizationOptionFloatingSheetViewMap
+            ?.get(ThemePickerHomeCustomizationOption.COLORS)
+            ?.let {
+                ColorsFloatingSheetBinder.bind(
+                    it,
+                    viewModel.colorPickerViewModel2,
+                    lifecycleOwner,
+                )
+            }
     }
 }

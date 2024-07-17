@@ -19,8 +19,12 @@ import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 
-/** Item spacing used by the RecyclerView with 2 rows. */
-class DoubleRowListItemSpacing(private val rowSpaceDp: Int) : RecyclerView.ItemDecoration() {
+/** Item spacing used by the horizontal RecyclerView with 2 rows. */
+class DoubleRowListItemSpacing(
+    private val edgeItemSpacePx: Int,
+    private val itemHorizontalSpacePx: Int,
+    private val itemVerticalSpacePx: Int,
+) : RecyclerView.ItemDecoration() {
     override fun getItemOffsets(
         outRect: Rect,
         view: View,
@@ -36,42 +40,25 @@ class DoubleRowListItemSpacing(private val rowSpaceDp: Int) : RecyclerView.ItemD
         val columnCount = (itemCount + 1) / 2
         when {
             columnCount == 1 -> {
-                outRect.left = EDGE_ITEM_HORIZONTAL_SPACING_DP.toPx(density)
-                outRect.right = EDGE_ITEM_HORIZONTAL_SPACING_DP.toPx(density)
+                outRect.left = edgeItemSpacePx
+                outRect.right = edgeItemSpacePx
             }
             columnIndex > 0 && columnIndex < columnCount - 1 -> {
-                outRect.left = COMMON_HORIZONTAL_SPACING_DP.toPx(density)
-                outRect.right = COMMON_HORIZONTAL_SPACING_DP.toPx(density)
+                outRect.left = itemHorizontalSpacePx
+                outRect.right = itemHorizontalSpacePx
             }
             columnIndex == 0 -> {
-                outRect.left =
-                    if (!isRtl) EDGE_ITEM_HORIZONTAL_SPACING_DP.toPx(density)
-                    else COMMON_HORIZONTAL_SPACING_DP.toPx(density)
-                outRect.right =
-                    if (isRtl) EDGE_ITEM_HORIZONTAL_SPACING_DP.toPx(density)
-                    else COMMON_HORIZONTAL_SPACING_DP.toPx(density)
+                outRect.left = if (!isRtl) edgeItemSpacePx else itemHorizontalSpacePx
+                outRect.right = if (isRtl) edgeItemSpacePx else itemHorizontalSpacePx
             }
             columnIndex == columnCount - 1 -> {
-                outRect.right =
-                    if (!isRtl) EDGE_ITEM_HORIZONTAL_SPACING_DP.toPx(density)
-                    else COMMON_HORIZONTAL_SPACING_DP.toPx(density)
-                outRect.left =
-                    if (isRtl) EDGE_ITEM_HORIZONTAL_SPACING_DP.toPx(density)
-                    else COMMON_HORIZONTAL_SPACING_DP.toPx(density)
+                outRect.right = if (!isRtl) edgeItemSpacePx else itemHorizontalSpacePx
+                outRect.left = if (isRtl) edgeItemSpacePx else itemHorizontalSpacePx
             }
         }
 
         if (itemIndex % 2 == 0) {
-            outRect.bottom = rowSpaceDp.toPx(density)
+            outRect.bottom = itemVerticalSpacePx
         }
-    }
-
-    private fun Int.toPx(density: Float): Int {
-        return (this * density).toInt()
-    }
-
-    companion object {
-        const val EDGE_ITEM_HORIZONTAL_SPACING_DP = 20
-        const val COMMON_HORIZONTAL_SPACING_DP = 4
     }
 }

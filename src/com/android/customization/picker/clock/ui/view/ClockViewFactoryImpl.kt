@@ -257,7 +257,6 @@ class ClockViewFactoryImpl(
         const val TEMPERATURE_FAHRENHEIT_PLACEHOLDER = 58
         const val TEMPERATURE_CELSIUS_PLACEHOLDER = 21
         val WEATHERICON_PLACEHOLDER = WeatherData.WeatherStateIcon.MOSTLY_SUNNY
-        const val USE_CELSIUS_PLACEHODLER = false
 
         private fun getStatusBarHeight(resource: Resources): Int {
             var result = 0

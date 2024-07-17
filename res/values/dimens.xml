@@ -176,7 +176,12 @@
     <dimen name="notification_section_title_padding">8dp</dimen>
 
     <!-- Floating sheet dimensions -->
-    <dimen name="floating_sheet_list_vertical_padding">20dp</dimen>
+    <dimen name="floating_sheet_content_vertical_padding">20dp</dimen>
+    <dimen name="floating_sheet_content_horizontal_padding">20dp</dimen>
     <dimen name="floating_sheet_horizontal_padding">16dp</dimen>
     <dimen name="floating_sheet_tab_toolbar_vertical_margin">8dp</dimen>
+    <dimen name="floating_sheet_list_item_horizontal_space">4dp</dimen>
+    <dimen name="floating_sheet_list_item_vertical_space">4dp</dimen>
+    <dimen name="floating_sheet_clock_size_icon_size">80dp</dimen>
+    <dimen name="floating_sheet_clock_size_icon_margin_bottom">8dp</dimen>
 </resources>

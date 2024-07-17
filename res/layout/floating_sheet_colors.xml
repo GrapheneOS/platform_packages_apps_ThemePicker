@@ -18,15 +18,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingHorizontal="@dimen/floating_sheet_horizontal_padding"
-    android:orientation="vertical"
-    android:clipToPadding="false"
-    android:clipChildren="false">
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/floating_sheet_content_background"
-        android:paddingVertical="@dimen/floating_sheet_list_vertical_padding"
+        android:paddingVertical="@dimen/floating_sheet_content_vertical_padding"
         android:orientation="vertical">
 
         <TextView
@@ -53,7 +51,7 @@
             android:layout_height="wrap_content"
             android:clickable="true"
             android:gravity="center_vertical"
-            android:layout_marginHorizontal="20dp"
+            android:layout_marginHorizontal="@dimen/floating_sheet_content_horizontal_padding"
             android:orientation="horizontal">
 
             <TextView

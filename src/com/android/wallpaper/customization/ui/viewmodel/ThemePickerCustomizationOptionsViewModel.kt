@@ -34,12 +34,14 @@ constructor(
     defaultCustomizationOptionsViewModelFactory: DefaultCustomizationOptionsViewModel.Factory,
     keyguardQuickAffordancePickerViewModel2Factory: KeyguardQuickAffordancePickerViewModel2.Factory,
     colorPickerViewModel2Factory: ColorPickerViewModel2.Factory,
+    clockPickerViewModelFactory: ClockPickerViewModel.Factory,
     @Assisted private val viewModelScope: CoroutineScope,
 ) : CustomizationOptionsViewModel {
 
     private val defaultCustomizationOptionsViewModel =
         defaultCustomizationOptionsViewModelFactory.create(viewModelScope)
 
+    val clockPickerViewModel = clockPickerViewModelFactory.create(viewModelScope = viewModelScope)
     val keyguardQuickAffordancePickerViewModel2 =
         keyguardQuickAffordancePickerViewModel2Factory.create(viewModelScope = viewModelScope)
     val colorPickerViewModel2 = colorPickerViewModel2Factory.create(viewModelScope = viewModelScope)

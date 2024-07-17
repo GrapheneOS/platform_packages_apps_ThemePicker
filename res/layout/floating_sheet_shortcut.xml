@@ -18,14 +18,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingHorizontal="@dimen/floating_sheet_horizontal_padding"
-    android:orientation="vertical"
-    android:clipToPadding="false"
-    android:clipChildren="false">
+    android:orientation="vertical">
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingVertical="@dimen/floating_sheet_list_vertical_padding"
+        android:paddingVertical="@dimen/floating_sheet_content_vertical_padding"
         android:background="@drawable/floating_sheet_content_background"
         android:clipToPadding="false"
         android:clipChildren="false">

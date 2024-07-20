@@ -16,6 +16,7 @@
  */
 package com.android.customization.picker.clock.data.repository
 
+import android.graphics.drawable.Drawable
 import android.provider.Settings
 import androidx.annotation.ColorInt
 import androidx.annotation.IntRange
@@ -61,8 +62,18 @@ constructor(
                 fun send() {
                     val activeClockId = registry.activeClockId
                     val allClocks =
-                        registry.getClocks().map {
-                            it.toModel(isSelected = it.clockId == activeClockId)
+                        registry.getClocks().mapNotNull {
+                            val clockConfig = registry.getClockPickerConfig(it.clockId)
+                            if (clockConfig != null) {
+                                it.toModel(
+                                    isSelected = it.clockId == activeClockId,
+                                    description = clockConfig.description,
+                                    thumbnail = clockConfig.thumbnail,
+                                    isReactiveToTone = clockConfig.isReactiveToTone,
+                                )
+                            } else {
+                                null
+                            }
                         }
 
                     trySend(allClocks)
@@ -93,18 +104,24 @@ constructor(
                 fun send() {
                     val activeClockId = registry.activeClockId
                     val metadata = registry.settings?.metadata
+                    val clockConfig = registry.getClockPickerConfig(activeClockId)
                     val model =
-                        registry
-                            .getClocks()
-                            .find { clockMetadata -> clockMetadata.clockId == activeClockId }
-                            ?.toModel(
-                                isSelected = true,
-                                selectedColorId = metadata?.getSelectedColorId(),
-                                colorTone =
-                                    metadata?.getColorTone()
-                                        ?: ClockMetadataModel.DEFAULT_COLOR_TONE_PROGRESS,
-                                seedColor = registry.seedColor
-                            )
+                        clockConfig?.let {
+                            registry
+                                .getClocks()
+                                .find { clockMetadata -> clockMetadata.clockId == activeClockId }
+                                ?.toModel(
+                                    isSelected = true,
+                                    description = it.description,
+                                    thumbnail = it.thumbnail,
+                                    isReactiveToTone = it.isReactiveToTone,
+                                    selectedColorId = metadata?.getSelectedColorId(),
+                                    colorTone =
+                                        metadata?.getColorTone()
+                                            ?: ClockMetadataModel.DEFAULT_COLOR_TONE_PROGRESS,
+                                    seedColor = registry.seedColor,
+                                )
+                        }
                     trySend(model)
                 }
 
@@ -188,6 +205,9 @@ constructor(
     /** By default, [ClockMetadataModel] has no color information unless specified. */
     private fun ClockMetadata.toModel(
         isSelected: Boolean,
+        description: String,
+        thumbnail: Drawable,
+        isReactiveToTone: Boolean,
         selectedColorId: String? = null,
         @IntRange(from = 0, to = 100) colorTone: Int = 0,
         @ColorInt seedColor: Int? = null,
@@ -195,6 +215,9 @@ constructor(
         return ClockMetadataModel(
             clockId = clockId,
             isSelected = isSelected,
+            description = description,
+            thumbnail = thumbnail,
+            isReactiveToTone = isReactiveToTone,
             selectedColorId = selectedColorId,
             colorToneProgress = colorTone,
             seedColor = seedColor,

@@ -17,6 +17,7 @@ package com.android.wallpaper.customization.ui.viewmodel
 
 import android.content.Context
 import android.content.res.Resources
+import android.graphics.drawable.Drawable
 import androidx.core.graphics.ColorUtils
 import com.android.customization.model.color.ColorOptionImpl
 import com.android.customization.module.logging.ThemesUserEventLogger
@@ -87,22 +88,41 @@ constructor(
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val allClocks: StateFlow<List<ClockOptionItemViewModel>> =
+    val clockStyleOptions: StateFlow<List<OptionItemViewModel<Drawable>>> =
         clockPickerInteractor.allClocks
             .mapLatest { allClocks ->
                 // Delay to avoid the case that the full list of clocks is not initiated.
                 delay(CLOCKS_EVENT_UPDATE_DELAY_MILLIS)
-                allClocks.map {
+                allClocks.map { clockModel ->
+                    val isSelectedFlow =
+                        clockPickerInteractor.selectedClock
+                            .map { clockModel.clockId == it.clockId }
+                            .stateIn(viewModelScope)
                     val contentDescription =
                         resources.getString(
                             R.string.select_clock_action_description,
-                            // TODO (b/350718184): Get ClockConfig.description from ClockRegistry
-                            "description"
+                            clockModel.description,
                         )
-                    ClockOptionItemViewModel(
-                        clockId = it.clockId,
-                        isSelected = it.isSelected,
-                        contentDescription = contentDescription,
+                    OptionItemViewModel<Drawable>(
+                        key = MutableStateFlow(clockModel.clockId) as StateFlow<String>,
+                        payload = clockModel.thumbnail,
+                        text = Text.Loaded(contentDescription),
+                        isTextUserVisible = false,
+                        isSelected = isSelectedFlow,
+                        onClicked =
+                            isSelectedFlow.map { isSelected ->
+                                if (isSelected) {
+                                    null
+                                } else {
+                                    {
+                                        viewModelScope.launch {
+                                            clockPickerInteractor.setSelectedClock(
+                                                clockModel.clockId
+                                            )
+                                        }
+                                    }
+                                }
+                            },
                     )
                 }
             }
@@ -111,11 +131,6 @@ constructor(
             // the flows run sequentially
             .flowOn(backgroundDispatcher.limitedParallelism(1))
             .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
-
-    val selectedClockId: StateFlow<String?> =
-        clockPickerInteractor.selectedClockId
-            .distinctUntilChanged()
-            .stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
     private var setSelectedClockJob: Job? = null
 
@@ -134,12 +149,13 @@ constructor(
     private val sliderColorToneProgress =
         MutableStateFlow(ClockMetadataModel.DEFAULT_COLOR_TONE_PROGRESS)
     val isSliderEnabled: Flow<Boolean> =
-        combine(selectedClockId, clockPickerInteractor.selectedColorId) { clockId, colorId ->
-                if (colorId == null || clockId == null) {
+        combine(clockPickerInteractor.selectedClock, clockPickerInteractor.selectedColorId) {
+                clock,
+                colorId ->
+                if (colorId == null) {
                     false
                 } else {
-                    // TODO (b/350718184): Get ClockConfig.isReactiveToTone from ClockRegistry
-                    false
+                    clock.isReactiveToTone
                 }
             }
             .distinctUntilChanged()

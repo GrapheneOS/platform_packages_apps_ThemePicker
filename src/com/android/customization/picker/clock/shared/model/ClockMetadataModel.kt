@@ -17,6 +17,7 @@
 
 package com.android.customization.picker.clock.shared.model
 
+import android.graphics.drawable.Drawable
 import androidx.annotation.ColorInt
 import androidx.annotation.IntRange
 
@@ -24,6 +25,9 @@ import androidx.annotation.IntRange
 data class ClockMetadataModel(
     val clockId: String,
     val isSelected: Boolean,
+    val description: String,
+    val thumbnail: Drawable,
+    val isReactiveToTone: Boolean,
     val selectedColorId: String?,
     @IntRange(from = 0, to = 100) val colorToneProgress: Int,
     @ColorInt val seedColor: Int?,

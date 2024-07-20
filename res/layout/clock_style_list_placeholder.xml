@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-     Copyright (C) 2023 The Android Open Source Project
+     Copyright (C) 2024 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -13,23 +13,25 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<!-- Content description is set programmatically on the parent FrameLayout -->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:visibility="invisible"
     android:orientation="vertical">
+
     <include
-        layout="@layout/color_option"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        layout="@layout/clock_style_option"
+        android:layout_width="@dimen/floating_sheet_clock_style_option_size"
+        android:layout_height="@dimen/floating_sheet_clock_style_option_size" />
+
     <View
         android:layout_width="match_parent"
-        android:layout_height="4dp"/>
+        android:layout_height="@dimen/floating_sheet_list_item_vertical_space"/>
+
     <include
-        layout="@layout/color_option"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        layout="@layout/clock_style_option"
+        android:layout_width="@dimen/floating_sheet_clock_style_option_size"
+        android:layout_height="@dimen/floating_sheet_clock_style_option_size" />
 </LinearLayout>
 

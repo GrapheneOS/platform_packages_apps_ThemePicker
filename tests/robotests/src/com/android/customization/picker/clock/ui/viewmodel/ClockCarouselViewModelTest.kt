@@ -15,6 +15,7 @@
  */
 package com.android.customization.picker.clock.ui.viewmodel
 
+import android.graphics.drawable.ColorDrawable
 import androidx.test.filters.SmallTest
 import androidx.test.platform.app.InstrumentationRegistry
 import com.android.customization.module.logging.TestThemesUserEventLogger
@@ -54,6 +55,9 @@ class ClockCarouselViewModelTest {
                 ClockMetadataModel(
                     clockId = FakeClockPickerRepository.CLOCK_ID_0,
                     isSelected = true,
+                    description = "description",
+                    thumbnail = ColorDrawable(0),
+                    isReactiveToTone = true,
                     selectedColorId = null,
                     colorToneProgress = ClockMetadataModel.DEFAULT_COLOR_TONE_PROGRESS,
                     seedColor = null,

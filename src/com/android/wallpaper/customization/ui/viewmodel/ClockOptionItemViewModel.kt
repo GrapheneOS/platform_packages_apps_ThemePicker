@@ -22,5 +22,5 @@ data class ClockOptionItemViewModel(
     val clockId: String,
     val isSelected: Boolean,
     val contentDescription: String,
-    val thumbnail: Drawable? = null,
+    val thumbnail: Drawable,
 )

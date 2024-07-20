@@ -47,6 +47,8 @@ constructor(
     val selectedClockId: Flow<String> =
         repository.selectedClock.map { clock -> clock.clockId }.distinctUntilChanged()
 
+    val selectedClock: Flow<ClockMetadataModel> = repository.selectedClock
+
     val selectedColorId: Flow<String?> =
         repository.selectedClock.map { clock -> clock.selectedColorId }.distinctUntilChanged()
 

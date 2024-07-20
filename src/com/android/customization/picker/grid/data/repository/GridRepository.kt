@@ -30,6 +30,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -37,11 +39,17 @@ import kotlinx.coroutines.withContext
 
 interface GridRepository {
     suspend fun isAvailable(): Boolean
+
     fun getOptionChanges(): Flow<Unit>
+
     suspend fun getOptions(): GridOptionItemsModel
-    fun getSelectedOption(): GridOption?
+
+    fun getSelectedOption(): StateFlow<GridOption?>
+
     fun applySelectedOption(callback: Callback)
+
     fun clearSelectedOption()
+
     fun isSelectedOptionApplied(): Boolean
 }
 
@@ -63,7 +71,7 @@ class GridRepositoryImpl(
 
     private var appliedOption: GridOption? = null
 
-    override fun getSelectedOption() = selectedOption.value
+    override fun getSelectedOption() = selectedOption.asStateFlow()
 
     override suspend fun getOptions(): GridOptionItemsModel {
         return withContext(backgroundDispatcher) {
@@ -133,6 +141,7 @@ class GridRepositoryImpl(
                         option,
                         object : CustomizationManager.Callback {
                             override fun onSuccess() {
+                                selectedOption.value = option
                                 continuation.resume(true)
                             }
 
@@ -147,7 +156,7 @@ class GridRepositoryImpl(
     }
 
     override fun applySelectedOption(callback: Callback) {
-        val option = getSelectedOption()
+        val option = getSelectedOption().value
         manager.apply(
             option,
             if (isGridApplyButtonEnabled) {

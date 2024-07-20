@@ -142,6 +142,7 @@ constructor(
                     clockViewFactory,
                     getThemedIconSnapshotRestorer(appContext),
                     getThemedIconInteractor(),
+                    getGridInteractor(appContext),
                     colorPickerInteractor.get(),
                     getUserEventLogger(),
                 )

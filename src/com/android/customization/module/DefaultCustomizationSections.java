@@ -19,6 +19,7 @@ import com.android.customization.picker.clock.ui.viewmodel.ClockCarouselViewMode
 import com.android.customization.picker.color.domain.interactor.ColorPickerInteractor;
 import com.android.customization.picker.color.ui.section.ColorSectionController;
 import com.android.customization.picker.color.ui.viewmodel.ColorPickerViewModel;
+import com.android.customization.picker.grid.domain.interactor.GridInteractor;
 import com.android.customization.picker.grid.ui.section.GridSectionController;
 import com.android.customization.picker.notifications.ui.section.NotificationSectionController;
 import com.android.customization.picker.notifications.ui.viewmodel.NotificationSectionViewModel;
@@ -61,6 +62,7 @@ public final class DefaultCustomizationSections implements CustomizationSections
     private final ClockViewFactory mClockViewFactory;
     private final ThemedIconSnapshotRestorer mThemedIconSnapshotRestorer;
     private final ThemedIconInteractor mThemedIconInteractor;
+    private final GridInteractor mGridInteractor;
     private final ColorPickerInteractor mColorPickerInteractor;
     private final ThemesUserEventLogger mThemesUserEventLogger;
 
@@ -75,6 +77,7 @@ public final class DefaultCustomizationSections implements CustomizationSections
             ClockViewFactory clockViewFactory,
             ThemedIconSnapshotRestorer themedIconSnapshotRestorer,
             ThemedIconInteractor themedIconInteractor,
+            GridInteractor gridInteractor,
             ColorPickerInteractor colorPickerInteractor,
             ThemesUserEventLogger themesUserEventLogger) {
         mColorPickerViewModelFactory = colorPickerViewModelFactory;
@@ -86,6 +89,7 @@ public final class DefaultCustomizationSections implements CustomizationSections
         mClockViewFactory = clockViewFactory;
         mThemedIconSnapshotRestorer = themedIconSnapshotRestorer;
         mThemedIconInteractor = themedIconInteractor;
+        mGridInteractor = gridInteractor;
         mColorPickerInteractor = colorPickerInteractor;
         mThemesUserEventLogger = themesUserEventLogger;
         mColorContrastSectionViewModelFactory = colorContrastSectionViewModelFactory;
@@ -125,6 +129,7 @@ public final class DefaultCustomizationSections implements CustomizationSections
                         sectionNavigationController,
                         wallpaperInteractor,
                         mThemedIconInteractor,
+                        mGridInteractor,
                         mColorPickerInteractor,
                         wallpaperManager,
                         isTwoPaneAndSmallWidth,
@@ -139,6 +144,7 @@ public final class DefaultCustomizationSections implements CustomizationSections
                                 wallpaperPreviewNavigator,
                                 wallpaperInteractor,
                                 mThemedIconInteractor,
+                                mGridInteractor,
                                 mColorPickerInteractor,
                                 wallpaperManager,
                                 isTwoPaneAndSmallWidth,
@@ -210,8 +216,7 @@ public final class DefaultCustomizationSections implements CustomizationSections
                         new GridSectionController(
                                 GridOptionsManager.getInstance(activity),
                                 sectionNavigationController,
-                                lifecycleOwner,
-                                /* isRevampedUiEnabled= */ true));
+                                lifecycleOwner));
                 break;
         }
 

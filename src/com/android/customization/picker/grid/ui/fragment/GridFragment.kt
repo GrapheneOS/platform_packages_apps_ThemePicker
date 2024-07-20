@@ -115,7 +115,7 @@ class GridFragment : AppbarFragment() {
                                     context,
                                     getString(
                                         R.string.toast_of_changing_grid,
-                                        gridInteractor.getSelectOptionNonSuspend()?.title
+                                        gridInteractor.getSelectOptionStateFlow().value?.title
                                     ),
                                     Toast.LENGTH_SHORT
                                 )
@@ -128,7 +128,7 @@ class GridFragment : AppbarFragment() {
                             val errorMsg =
                                 getString(
                                     R.string.toast_of_failure_to_change_grid,
-                                    gridInteractor.getSelectOptionNonSuspend()?.title
+                                    gridInteractor.getSelectOptionStateFlow().value?.title
                                 )
                             Toast.makeText(context, errorMsg, Toast.LENGTH_SHORT).show()
                             Log.e(TAG, errorMsg, throwable)
@@ -178,7 +178,10 @@ class GridFragment : AppbarFragment() {
                         ),
                     initialExtrasProvider = {
                         val bundle = Bundle()
-                        bundle.putString("name", gridInteractor.getSelectOptionNonSuspend()?.name)
+                        bundle.putString(
+                            "name",
+                            gridInteractor.getSelectOptionStateFlow().value?.name
+                        )
                         bundle
                     },
                     wallpaperInfoProvider = {

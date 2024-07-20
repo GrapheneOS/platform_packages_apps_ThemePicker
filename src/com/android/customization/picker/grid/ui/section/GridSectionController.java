@@ -51,8 +51,7 @@ public class GridSectionController implements CustomizationSectionController<Gri
     public GridSectionController(
             GridOptionsManager gridOptionsManager,
             CustomizationSectionNavigationController sectionNavigationController,
-            LifecycleOwner lifecycleOwner,
-            boolean isRevampedUiEnabled) {
+            LifecycleOwner lifecycleOwner) {
         mGridOptionsManager = gridOptionsManager;
         mSectionNavigationController = sectionNavigationController;
         mLifecycleOwner = lifecycleOwner;

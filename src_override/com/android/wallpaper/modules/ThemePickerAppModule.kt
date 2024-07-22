@@ -58,31 +58,18 @@ import kotlinx.coroutines.CoroutineScope
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class ThemePickerAppModule {
-    @Binds @Singleton abstract fun bindInjector(impl: ThemePickerInjector): CustomizationInjector
 
     @Binds
     @Singleton
-    abstract fun bindUserEventLogger(impl: ThemesUserEventLoggerImpl): UserEventLogger
+    abstract fun bindClockPickerRepository(impl: ClockPickerRepositoryImpl): ClockPickerRepository
 
     @Binds
     @Singleton
-    abstract fun bindThemesUserEventLogger(impl: ThemesUserEventLoggerImpl): ThemesUserEventLogger
+    abstract fun bindColorPickerRepository(impl: ColorPickerRepositoryImpl): ColorPickerRepository
 
     @Binds
     @Singleton
-    abstract fun bindWallpaperModelFactory(
-        impl: DefaultWallpaperModelFactory
-    ): WallpaperModelFactory
-
-    @Binds
-    @Singleton
-    abstract fun bindPartnerProvider(impl: DefaultPartnerProvider): PartnerProvider
-
-    @Binds
-    @Singleton
-    abstract fun bindEffectsWallpaperDialogUtil(
-        impl: DefaultImageEffectDialogUtil
-    ): ImageEffectDialogUtil
+    abstract fun bindCustomizationInjector(impl: ThemePickerInjector): CustomizationInjector
 
     @Binds
     @Singleton
@@ -92,7 +79,27 @@ abstract class ThemePickerAppModule {
 
     @Binds
     @Singleton
-    abstract fun bindColorPickerRepository(impl: ColorPickerRepositoryImpl): ColorPickerRepository
+    abstract fun bindImageEffectDialogUtil(
+        impl: DefaultImageEffectDialogUtil
+    ): ImageEffectDialogUtil
+
+    @Binds
+    @Singleton
+    abstract fun bindPartnerProvider(impl: DefaultPartnerProvider): PartnerProvider
+
+    @Binds
+    @Singleton
+    abstract fun bindThemesUserEventLogger(impl: ThemesUserEventLoggerImpl): ThemesUserEventLogger
+
+    @Binds
+    @Singleton
+    abstract fun bindUserEventLogger(impl: ThemesUserEventLoggerImpl): UserEventLogger
+
+    @Binds
+    @Singleton
+    abstract fun bindWallpaperModelFactory(
+        impl: DefaultWallpaperModelFactory
+    ): WallpaperModelFactory
 
     @Binds
     @Singleton
@@ -100,11 +107,24 @@ abstract class ThemePickerAppModule {
         impl: DefaultCustomizationPreferences
     ): WallpaperPreferences
 
-    @Binds
-    @Singleton
-    abstract fun bindClockPickerRepository(impl: ClockPickerRepositoryImpl): ClockPickerRepository
-
     companion object {
+
+        @Provides
+        @Singleton
+        fun provideClockRegistry(
+            @ApplicationContext context: Context,
+            @MainDispatcher mainScope: CoroutineScope,
+            @MainDispatcher mainDispatcher: CoroutineDispatcher,
+            @BackgroundDispatcher bgDispatcher: CoroutineDispatcher,
+        ): ClockRegistry {
+            return ClockRegistryProvider(
+                    context = context,
+                    coroutineScope = mainScope,
+                    mainDispatcher = mainDispatcher,
+                    backgroundDispatcher = bgDispatcher,
+                )
+                .get()
+        }
 
         @Provides
         @Singleton
@@ -130,23 +150,6 @@ abstract class ThemePickerAppModule {
             @BackgroundDispatcher bgDispatcher: CoroutineDispatcher,
         ): SecureSettingsRepository {
             return SecureSettingsRepositoryImpl(context.contentResolver, bgDispatcher)
-        }
-
-        @Provides
-        @Singleton
-        fun provideClockRegistry(
-            @ApplicationContext context: Context,
-            @MainDispatcher mainScope: CoroutineScope,
-            @MainDispatcher mainDispatcher: CoroutineDispatcher,
-            @BackgroundDispatcher bgDispatcher: CoroutineDispatcher,
-        ): ClockRegistry {
-            return ClockRegistryProvider(
-                    context = context,
-                    coroutineScope = mainScope,
-                    mainDispatcher = mainDispatcher,
-                    backgroundDispatcher = bgDispatcher,
-                )
-                .get()
         }
     }
 }

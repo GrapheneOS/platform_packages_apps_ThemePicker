@@ -34,6 +34,8 @@ import com.android.systemui.shared.customization.data.content.CustomizationProvi
 import com.android.systemui.shared.settings.data.repository.SecureSettingsRepository
 import com.android.systemui.shared.settings.data.repository.SecureSettingsRepositoryImpl
 import com.android.wallpaper.customization.ui.binder.ThemePickerCustomizationOptionsBinder
+import com.android.wallpaper.effects.DefaultEffectsController
+import com.android.wallpaper.effects.EffectsController
 import com.android.wallpaper.module.DefaultPartnerProvider
 import com.android.wallpaper.module.PartnerProvider
 import com.android.wallpaper.module.WallpaperPreferences
@@ -76,6 +78,10 @@ abstract class ThemePickerAppModule {
     abstract fun bindCustomizationOptionsBinder(
         impl: ThemePickerCustomizationOptionsBinder
     ): CustomizationOptionsBinder
+
+    @Binds
+    @Singleton
+    abstract fun bindEffectsController(impl: DefaultEffectsController): EffectsController
 
     @Binds
     @Singleton

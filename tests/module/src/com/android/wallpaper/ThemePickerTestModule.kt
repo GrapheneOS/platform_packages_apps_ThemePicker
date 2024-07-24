@@ -47,7 +47,6 @@ import com.android.wallpaper.network.Requester
 import com.android.wallpaper.picker.customization.ui.binder.CustomizationOptionsBinder
 import com.android.wallpaper.picker.customization.ui.binder.DefaultCustomizationOptionsBinder
 import com.android.wallpaper.picker.di.modules.BackgroundDispatcher
-import com.android.wallpaper.picker.di.modules.EffectsModule
 import com.android.wallpaper.picker.di.modules.MainDispatcher
 import com.android.wallpaper.picker.preview.ui.util.DefaultImageEffectDialogUtil
 import com.android.wallpaper.picker.preview.ui.util.ImageEffectDialogUtil
@@ -66,10 +65,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 
 @Module
-@TestInstallIn(
-    components = [SingletonComponent::class],
-    replaces = [EffectsModule::class, ThemePickerAppModule::class]
-)
+@TestInstallIn(components = [SingletonComponent::class], replaces = [ThemePickerAppModule::class])
 abstract class ThemePickerTestModule {
 
     @Binds

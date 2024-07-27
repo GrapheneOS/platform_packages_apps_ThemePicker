@@ -23,6 +23,7 @@ import com.android.customization.module.logging.ThemesUserEventLogger
 import com.android.systemui.shared.notifications.data.repository.NotificationSettingsRepository
 import com.android.systemui.shared.notifications.domain.interactor.NotificationSettingsInteractor
 import com.android.systemui.shared.settings.data.repository.FakeSecureSettingsRepository
+import com.android.systemui.shared.settings.data.repository.FakeSystemSettingsRepository
 import com.android.wallpaper.testing.collectLastValue
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.Dispatchers
@@ -62,6 +63,7 @@ class NotificationSectionViewModelTest {
                         scope = testScope.backgroundScope,
                         backgroundDispatcher = testDispatcher,
                         secureSettingsRepository = FakeSecureSettingsRepository(),
+                        systemSettingsRepository = FakeSystemSettingsRepository(),
                     ),
             )
 

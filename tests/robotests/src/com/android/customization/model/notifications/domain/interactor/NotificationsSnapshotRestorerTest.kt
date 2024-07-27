@@ -23,6 +23,7 @@ import com.android.customization.picker.notifications.domain.interactor.Notifica
 import com.android.systemui.shared.notifications.data.repository.NotificationSettingsRepository
 import com.android.systemui.shared.notifications.domain.interactor.NotificationSettingsInteractor
 import com.android.systemui.shared.settings.data.repository.FakeSecureSettingsRepository
+import com.android.systemui.shared.settings.data.repository.FakeSystemSettingsRepository
 import com.android.wallpaper.testing.FakeSnapshotStore
 import com.android.wallpaper.testing.collectLastValue
 import com.google.common.truth.Truth.assertThat
@@ -44,6 +45,7 @@ class NotificationsSnapshotRestorerTest {
 
     private lateinit var underTest: NotificationsSnapshotRestorer
     private lateinit var fakeSecureSettingsRepository: FakeSecureSettingsRepository
+    private lateinit var fakeSystemSettingsRepository: FakeSystemSettingsRepository
     private lateinit var interactor: NotificationSettingsInteractor
 
     private lateinit var testScope: TestScope
@@ -54,6 +56,7 @@ class NotificationsSnapshotRestorerTest {
         Dispatchers.setMain(testDispatcher)
         testScope = TestScope(testDispatcher)
         fakeSecureSettingsRepository = FakeSecureSettingsRepository()
+        fakeSystemSettingsRepository = FakeSystemSettingsRepository()
         interactor =
             NotificationSettingsInteractor(
                 repository =
@@ -61,6 +64,7 @@ class NotificationsSnapshotRestorerTest {
                         scope = testScope.backgroundScope,
                         backgroundDispatcher = testDispatcher,
                         secureSettingsRepository = fakeSecureSettingsRepository,
+                        systemSettingsRepository = fakeSystemSettingsRepository,
                     ),
             )
         underTest =

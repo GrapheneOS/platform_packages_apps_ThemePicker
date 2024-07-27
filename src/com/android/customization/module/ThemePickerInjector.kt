@@ -61,6 +61,7 @@ import com.android.systemui.shared.clocks.ClockRegistry
 import com.android.systemui.shared.notifications.data.repository.NotificationSettingsRepository
 import com.android.systemui.shared.notifications.domain.interactor.NotificationSettingsInteractor
 import com.android.systemui.shared.settings.data.repository.SecureSettingsRepository
+import com.android.systemui.shared.settings.data.repository.SystemSettingsRepository
 import com.android.wallpaper.config.BaseFlags
 import com.android.wallpaper.module.CustomizationSections
 import com.android.wallpaper.module.FragmentFactory
@@ -120,6 +121,7 @@ constructor(
     @Inject lateinit var colorPickerSnapshotRestorer: Lazy<ColorPickerSnapshotRestorer>
     @Inject lateinit var clockRegistry: Lazy<ClockRegistry>
     @Inject lateinit var secureSettingsRepository: Lazy<SecureSettingsRepository>
+    @Inject lateinit var systemSettingsRepository: Lazy<SystemSettingsRepository>
     @Inject lateinit var clockPickerInteractor: Lazy<ClockPickerInteractor>
     @Inject lateinit var clockPickerSnapshotRestorer: Lazy<ClockPickerSnapshotRestorer>
 
@@ -238,6 +240,7 @@ constructor(
                             scope = getApplicationCoroutineScope(),
                             backgroundDispatcher = bgDispatcher,
                             secureSettingsRepository = secureSettingsRepository.get(),
+                            systemSettingsRepository = systemSettingsRepository.get(),
                         ),
                 )
                 .also { notificationSettingsInteractor = it }

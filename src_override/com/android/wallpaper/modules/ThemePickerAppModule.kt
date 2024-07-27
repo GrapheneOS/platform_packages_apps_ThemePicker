@@ -33,6 +33,8 @@ import com.android.systemui.shared.customization.data.content.CustomizationProvi
 import com.android.systemui.shared.customization.data.content.CustomizationProviderClientImpl
 import com.android.systemui.shared.settings.data.repository.SecureSettingsRepository
 import com.android.systemui.shared.settings.data.repository.SecureSettingsRepositoryImpl
+import com.android.systemui.shared.settings.data.repository.SystemSettingsRepository
+import com.android.systemui.shared.settings.data.repository.SystemSettingsRepositoryImpl
 import com.android.wallpaper.customization.ui.binder.ThemePickerCustomizationOptionsBinder
 import com.android.wallpaper.effects.DefaultEffectsController
 import com.android.wallpaper.effects.EffectsController
@@ -156,6 +158,15 @@ abstract class ThemePickerAppModule {
             @BackgroundDispatcher bgDispatcher: CoroutineDispatcher,
         ): SecureSettingsRepository {
             return SecureSettingsRepositoryImpl(context.contentResolver, bgDispatcher)
+        }
+
+        @Provides
+        @Singleton
+        fun provideSystemSettingsRepository(
+            @ApplicationContext context: Context,
+            @BackgroundDispatcher bgDispatcher: CoroutineDispatcher,
+        ): SystemSettingsRepository {
+            return SystemSettingsRepositoryImpl(context.contentResolver, bgDispatcher)
         }
     }
 }

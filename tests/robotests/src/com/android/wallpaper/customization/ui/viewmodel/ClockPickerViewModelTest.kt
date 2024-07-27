@@ -116,13 +116,12 @@ class ClockPickerViewModelTest {
 
     @Test
     fun setTab() = runTest {
-        val tab = collectLastValue(underTest.selectedTab)
-        underTest.setTab(ClockPickerViewModel.Tab.STYLE)
-        assertThat(tab()).isEqualTo(ClockPickerViewModel.Tab.STYLE)
-        underTest.setTab(ClockPickerViewModel.Tab.COLOR)
-        assertThat(tab()).isEqualTo(ClockPickerViewModel.Tab.COLOR)
-        underTest.setTab(ClockPickerViewModel.Tab.SIZE)
-        assertThat(tab()).isEqualTo(ClockPickerViewModel.Tab.SIZE)
+        val tabs = collectLastValue(underTest.tabs)
+        assertThat(tabs()?.get(0)?.isSelected).isTrue()
+        tabs()?.get(1)?.onClick?.invoke()
+        assertThat(tabs()?.get(1)?.isSelected).isTrue()
+        tabs()?.get(2)?.onClick?.invoke()
+        assertThat(tabs()?.get(2)?.isSelected).isTrue()
     }
 
     @Test

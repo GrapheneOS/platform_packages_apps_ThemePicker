@@ -44,10 +44,7 @@ import com.android.wallpaper.customization.ui.viewmodel.ClockPickerViewModel
 import com.android.wallpaper.customization.ui.viewmodel.ClockPickerViewModel.Tab.COLOR
 import com.android.wallpaper.customization.ui.viewmodel.ClockPickerViewModel.Tab.SIZE
 import com.android.wallpaper.customization.ui.viewmodel.ClockPickerViewModel.Tab.STYLE
-import com.android.wallpaper.picker.customization.ui.view.FloatingTabToolbar
-import com.android.wallpaper.picker.customization.ui.view.FloatingTabToolbar.Tab.PRIMARY
-import com.android.wallpaper.picker.customization.ui.view.FloatingTabToolbar.Tab.SECONDARY
-import com.android.wallpaper.picker.customization.ui.view.FloatingTabToolbar.Tab.TERTIARY
+import com.android.wallpaper.picker.customization.ui.view.FloatingToolbar
 import com.android.wallpaper.picker.option.ui.adapter.OptionItemAdapter
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -72,25 +69,7 @@ object ClockFloatingSheetBinder {
     ) {
         val appContext = view.context.applicationContext
 
-        val tabs =
-            view.requireViewById<FloatingTabToolbar>(R.id.floating_bar_tabs).apply {
-                showTertiaryTab(true)
-                setTabText(PRIMARY, appContext.getString(R.string.clock_style))
-                primaryIcon.setImageDrawable(
-                    getDrawable(appContext, R.drawable.ic_style_filled_24px)
-                )
-                setOnTabClick(PRIMARY) { viewModel.setTab(STYLE) }
-                setTabText(SECONDARY, appContext.getString(R.string.clock_color))
-                secondaryIcon.setImageDrawable(
-                    getDrawable(appContext, R.drawable.ic_palette_filled_24px)
-                )
-                setOnTabClick(SECONDARY) { viewModel.setTab(COLOR) }
-                setTabText(TERTIARY, appContext.getString(R.string.clock_size))
-                tertiaryIcon.setImageDrawable(
-                    getDrawable(appContext, R.drawable.ic_open_in_full_24px)
-                )
-                setOnTabClick(TERTIARY) { viewModel.setTab(SIZE) }
-            }
+        val tabs = view.requireViewById<FloatingToolbar>(R.id.floating_toolbar)
 
         val floatingSheetContainer =
             view.requireViewById<ViewGroup>(R.id.clock_floating_sheet_content_container)
@@ -149,6 +128,8 @@ object ClockFloatingSheetBinder {
 
         lifecycleOwner.lifecycleScope.launch {
             lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch { viewModel.tabs.collect { tabs.setItems(it) } }
+
                 launch {
                     combine(clockFloatingSheetHeights, viewModel.selectedTab) { heights, selectedTab
                             ->
@@ -156,11 +137,6 @@ object ClockFloatingSheetBinder {
                         }
                         .collect { (heights, selectedTab) ->
                             heights ?: return@collect
-                            when (selectedTab) {
-                                STYLE -> tabs.setTabSelected(PRIMARY)
-                                COLOR -> tabs.setTabSelected(SECONDARY)
-                                SIZE -> tabs.setTabSelected(TERTIARY)
-                            }
                             val targetHeight =
                                 when (selectedTab) {
                                     STYLE -> heights.clockStyleContentHeight

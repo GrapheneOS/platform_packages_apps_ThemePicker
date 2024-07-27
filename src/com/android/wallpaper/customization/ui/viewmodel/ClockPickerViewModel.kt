@@ -32,7 +32,9 @@ import com.android.customization.picker.color.shared.model.ColorOptionModel
 import com.android.customization.picker.color.shared.model.ColorType
 import com.android.customization.picker.color.ui.viewmodel.ColorOptionIconViewModel
 import com.android.themepicker.R
+import com.android.wallpaper.picker.common.icon.ui.viewmodel.Icon
 import com.android.wallpaper.picker.common.text.ui.viewmodel.Text
+import com.android.wallpaper.picker.customization.ui.viewmodel.FloatingToolbarTabViewModel
 import com.android.wallpaper.picker.di.modules.BackgroundDispatcher
 import com.android.wallpaper.picker.option.ui.viewmodel.OptionItemViewModel
 import dagger.assisted.Assisted
@@ -82,10 +84,41 @@ constructor(
 
     private val _selectedTab = MutableStateFlow(Tab.STYLE)
     val selectedTab: StateFlow<Tab> = _selectedTab.asStateFlow()
-
-    fun setTab(tab: Tab) {
-        _selectedTab.value = tab
-    }
+    val tabs: Flow<List<FloatingToolbarTabViewModel>> =
+        _selectedTab.asStateFlow().map {
+            listOf(
+                FloatingToolbarTabViewModel(
+                    Icon.Resource(
+                        res = R.drawable.ic_style_filled_24px,
+                        contentDescription = Text.Resource(R.string.clock_style),
+                    ),
+                    context.getString(R.string.clock_style),
+                    it == Tab.STYLE
+                ) {
+                    _selectedTab.value = Tab.STYLE
+                },
+                FloatingToolbarTabViewModel(
+                    Icon.Resource(
+                        res = R.drawable.ic_palette_filled_24px,
+                        contentDescription = Text.Resource(R.string.clock_color),
+                    ),
+                    context.getString(R.string.clock_color),
+                    it == Tab.COLOR
+                ) {
+                    _selectedTab.value = Tab.COLOR
+                },
+                FloatingToolbarTabViewModel(
+                    Icon.Resource(
+                        res = R.drawable.ic_open_in_full_24px,
+                        contentDescription = Text.Resource(R.string.clock_size),
+                    ),
+                    context.getString(R.string.clock_size),
+                    it == Tab.SIZE
+                ) {
+                    _selectedTab.value = Tab.SIZE
+                },
+            )
+        }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val clockStyleOptions: StateFlow<List<OptionItemViewModel<Drawable>>> =

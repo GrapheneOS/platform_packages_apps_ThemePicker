@@ -31,7 +31,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.android.customization.picker.common.ui.view.ItemSpacing
 import com.android.customization.picker.quickaffordance.ui.adapter.SlotTabAdapter
 import com.android.customization.picker.quickaffordance.ui.viewmodel.KeyguardQuickAffordancePickerViewModel
 import com.android.themepicker.R
@@ -39,6 +38,7 @@ import com.android.wallpaper.picker.common.dialog.ui.viewbinder.DialogViewBinder
 import com.android.wallpaper.picker.common.dialog.ui.viewmodel.DialogViewModel
 import com.android.wallpaper.picker.common.icon.ui.viewbinder.IconViewBinder
 import com.android.wallpaper.picker.common.icon.ui.viewmodel.Icon
+import com.android.wallpaper.picker.common.ui.view.ItemSpacing
 import com.android.wallpaper.picker.option.ui.adapter.OptionItemAdapter
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collectIndexed

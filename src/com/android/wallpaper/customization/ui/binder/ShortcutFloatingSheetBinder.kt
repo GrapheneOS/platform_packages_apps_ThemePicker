@@ -33,18 +33,13 @@ import com.android.wallpaper.picker.common.dialog.ui.viewbinder.DialogViewBinder
 import com.android.wallpaper.picker.common.dialog.ui.viewmodel.DialogViewModel
 import com.android.wallpaper.picker.common.icon.ui.viewbinder.IconViewBinder
 import com.android.wallpaper.picker.common.icon.ui.viewmodel.Icon
-import com.android.wallpaper.picker.customization.ui.view.FloatingTabToolbar
-import com.android.wallpaper.picker.customization.ui.view.FloatingTabToolbar.Tab
-import com.android.wallpaper.picker.customization.ui.view.FloatingTabToolbar.Tab.PRIMARY
-import com.android.wallpaper.picker.customization.ui.view.FloatingTabToolbar.Tab.SECONDARY
+import com.android.wallpaper.picker.customization.ui.view.FloatingToolbar
 import com.android.wallpaper.picker.option.ui.adapter.OptionItemAdapter
-import com.android.wallpaper.picker.option.ui.viewmodel.OptionItemViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collectIndexed
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -61,34 +56,13 @@ object ShortcutFloatingSheetBinder {
                 it.initQuickAffordanceList(view.context.applicationContext, quickAffordanceAdapter)
             }
 
-        val tabs = view.requireViewById<FloatingTabToolbar>(R.id.floating_bar_tabs)
+        val tabs = view.requireViewById<FloatingToolbar>(R.id.floating_toolbar)
 
         var dialog: Dialog? = null
 
         lifecycleOwner.lifecycleScope.launch {
             lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch {
-                    viewModel.slots
-                        .map { slotById -> slotById.values }
-                        .collect { slots ->
-                            val list = slots.toList()
-                            list.mapIndexed { index, slot ->
-                                val tab = if (index == 0) PRIMARY else SECONDARY
-                                tabs.setSelectedAffordances(tab, slot.selectedQuickAffordances)
-                                tabs.setTabText(tab, slot.name)
-                                tabs.setOnTabClick(tab, slot.onClicked)
-                            }
-                            list
-                                .indexOfFirst { it.isSelected }
-                                .let {
-                                    if (it == 0) {
-                                        tabs.setTabSelected(PRIMARY)
-                                    } else if (it == 1) {
-                                        tabs.setTabSelected(SECONDARY)
-                                    }
-                                }
-                        }
-                }
+                launch { viewModel.tabs.collect { tabs.setItems(it) } }
 
                 launch {
                     viewModel.quickAffordances.collect { affordances ->
@@ -198,22 +172,5 @@ object ShortcutFloatingSheetBinder {
                 )
             )
         }
-    }
-
-    private fun FloatingTabToolbar.setSelectedAffordances(
-        tab: Tab,
-        selectedQuickAffordances: List<OptionItemViewModel<Icon>>,
-    ) {
-        val icon =
-            selectedQuickAffordances.firstOrNull()?.payload
-                ?: Icon.Resource(res = R.drawable.link_off, contentDescription = null)
-        IconViewBinder.bind(
-            if (tab == PRIMARY) {
-                this.primaryIcon
-            } else {
-                this.secondaryIcon
-            },
-            icon,
-        )
     }
 }

@@ -21,7 +21,6 @@ import android.content.res.Configuration.UI_MODE_NIGHT_MASK
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.view.View
 import android.widget.TextView
-import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
@@ -29,17 +28,13 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.android.customization.picker.color.shared.model.ColorType
 import com.android.customization.picker.color.ui.binder.ColorOptionIconBinder
 import com.android.customization.picker.color.ui.view.ColorOptionIconView
 import com.android.customization.picker.color.ui.viewmodel.ColorOptionIconViewModel
-import com.android.customization.picker.color.ui.viewmodel.ColorTypeTabViewModel
 import com.android.customization.picker.common.ui.view.DoubleRowListItemSpacing
 import com.android.themepicker.R
 import com.android.wallpaper.customization.ui.viewmodel.ColorPickerViewModel2
-import com.android.wallpaper.picker.customization.ui.view.FloatingTabToolbar
-import com.android.wallpaper.picker.customization.ui.view.FloatingTabToolbar.Tab.PRIMARY
-import com.android.wallpaper.picker.customization.ui.view.FloatingTabToolbar.Tab.SECONDARY
+import com.android.wallpaper.picker.customization.ui.view.FloatingToolbar
 import com.android.wallpaper.picker.option.ui.adapter.OptionItemAdapter
 import kotlinx.coroutines.launch
 
@@ -59,27 +54,11 @@ object ColorsFloatingSheetBinder {
                 it.initColorsList(view.context.applicationContext, colorsAdapter)
             }
 
-        val tabs = view.requireViewById<FloatingTabToolbar>(R.id.floating_bar_tabs)
+        val tabs = view.requireViewById<FloatingToolbar>(R.id.floating_toolbar)
 
         lifecycleOwner.lifecycleScope.launch {
             lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch {
-                    viewModel.colorTypeTabs.collect { colorTypes ->
-                        colorTypes.forEach { (colorType, tabViewModel) ->
-                            bindTab(tabs, colorType, tabViewModel)
-                        }
-                        colorTypes
-                            .filterValues { it.isSelected }
-                            .keys
-                            .firstOrNull()
-                            ?.let {
-                                when (it) {
-                                    ColorType.WALLPAPER_COLOR -> tabs.setTabSelected(PRIMARY)
-                                    ColorType.PRESET_COLOR -> tabs.setTabSelected(SECONDARY)
-                                }
-                            }
-                    }
-                }
+                launch { viewModel.colorTypeTabs.collect { tabs.setItems(it) } }
 
                 launch { viewModel.colorTypeTabSubheader.collect { subhead.text = it } }
 
@@ -138,33 +117,5 @@ object ColorsFloatingSheetBinder {
                 )
             )
         }
-    }
-
-    private fun bindTab(
-        tabs: FloatingTabToolbar,
-        colorType: ColorType,
-        viewModel: ColorTypeTabViewModel
-    ) {
-        val tab =
-            when (colorType) {
-                ColorType.WALLPAPER_COLOR -> PRIMARY
-                ColorType.PRESET_COLOR -> SECONDARY
-            }
-        val iconDrawable =
-            ResourcesCompat.getDrawable(
-                tabs.resources,
-                when (colorType) {
-                    ColorType.WALLPAPER_COLOR ->
-                        com.android.wallpaper.R.drawable.ic_baseline_wallpaper_24
-                    ColorType.PRESET_COLOR -> R.drawable.ic_colors
-                },
-                null,
-            )
-        when (colorType) {
-            ColorType.WALLPAPER_COLOR -> tabs.primaryIcon.setImageDrawable(iconDrawable)
-            ColorType.PRESET_COLOR -> tabs.secondaryIcon.setImageDrawable(iconDrawable)
-        }
-        tabs.setTabText(tab, viewModel.name)
-        tabs.setOnTabClick(tab, viewModel.onClick)
     }
 }

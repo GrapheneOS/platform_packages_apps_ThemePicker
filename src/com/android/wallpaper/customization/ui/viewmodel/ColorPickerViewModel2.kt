@@ -22,9 +22,10 @@ import com.android.customization.module.logging.ThemesUserEventLogger
 import com.android.customization.picker.color.domain.interactor.ColorPickerInteractor
 import com.android.customization.picker.color.shared.model.ColorType
 import com.android.customization.picker.color.ui.viewmodel.ColorOptionIconViewModel
-import com.android.customization.picker.color.ui.viewmodel.ColorTypeTabViewModel
 import com.android.themepicker.R
+import com.android.wallpaper.picker.common.icon.ui.viewmodel.Icon
 import com.android.wallpaper.picker.common.text.ui.viewmodel.Text
+import com.android.wallpaper.picker.customization.ui.viewmodel.FloatingToolbarTabViewModel
 import com.android.wallpaper.picker.option.ui.viewmodel.OptionItemViewModel
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -53,35 +54,42 @@ constructor(
     private val selectedColorTypeTabId = MutableStateFlow<ColorType?>(null)
 
     /** View-models for each color tab. */
-    val colorTypeTabs: Flow<Map<ColorType, ColorTypeTabViewModel>> =
+    val colorTypeTabs: Flow<List<FloatingToolbarTabViewModel>> =
         combine(
             interactor.colorOptions,
             selectedColorTypeTabId,
         ) { colorOptions, selectedColorTypeIdOrNull ->
-            colorOptions.keys
-                .mapIndexed { index, colorType ->
-                    val isSelected =
-                        (selectedColorTypeIdOrNull == null && index == 0) ||
-                            selectedColorTypeIdOrNull == colorType
-                    colorType to
-                        ColorTypeTabViewModel(
-                            name =
-                                when (colorType) {
-                                    ColorType.WALLPAPER_COLOR ->
-                                        context.resources.getString(R.string.wallpaper_color_tab)
-                                    ColorType.PRESET_COLOR ->
-                                        context.resources.getString(R.string.preset_color_tab_2)
-                                },
-                            isSelected = isSelected,
-                            onClick =
-                                if (isSelected) {
-                                    null
-                                } else {
-                                    { this.selectedColorTypeTabId.value = colorType }
-                                },
-                        )
+            colorOptions.keys.mapIndexed { index, colorType ->
+                val isSelected =
+                    (selectedColorTypeIdOrNull == null && index == 0) ||
+                        selectedColorTypeIdOrNull == colorType
+
+                val name =
+                    when (colorType) {
+                        ColorType.WALLPAPER_COLOR ->
+                            context.resources.getString(R.string.wallpaper_color_tab)
+                        ColorType.PRESET_COLOR ->
+                            context.resources.getString(R.string.preset_color_tab_2)
+                    }
+
+                FloatingToolbarTabViewModel(
+                    Icon.Resource(
+                        res =
+                            when (colorType) {
+                                ColorType.WALLPAPER_COLOR ->
+                                    com.android.wallpaper.R.drawable.ic_baseline_wallpaper_24
+                                ColorType.PRESET_COLOR -> R.drawable.ic_colors
+                            },
+                        contentDescription = Text.Loaded(name),
+                    ),
+                    name,
+                    isSelected,
+                ) {
+                    if (!isSelected) {
+                        this.selectedColorTypeTabId.value = colorType
+                    }
                 }
-                .toMap()
+            }
         }
 
     /** View-models for each color tab subheader */

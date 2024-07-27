@@ -74,8 +74,8 @@
         </LinearLayout>
     </LinearLayout>
 
-    <com.android.wallpaper.picker.customization.ui.view.FloatingTabToolbar
-        android:id="@+id/floating_bar_tabs"
+    <com.android.wallpaper.picker.customization.ui.view.FloatingToolbar
+        android:id="@+id/floating_toolbar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

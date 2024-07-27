@@ -28,8 +28,8 @@ import com.android.customization.picker.color.domain.interactor.ColorPickerInter
 import com.android.customization.picker.color.domain.interactor.ColorPickerSnapshotRestorer
 import com.android.customization.picker.color.shared.model.ColorType
 import com.android.customization.picker.color.ui.viewmodel.ColorOptionIconViewModel
-import com.android.customization.picker.color.ui.viewmodel.ColorTypeTabViewModel
 import com.android.systemui.monet.Style
+import com.android.wallpaper.picker.customization.ui.viewmodel.FloatingToolbarTabViewModel
 import com.android.wallpaper.picker.option.ui.viewmodel.OptionItemViewModel
 import com.android.wallpaper.testing.FakeSnapshotStore
 import com.android.wallpaper.testing.collectLastValue
@@ -116,7 +116,7 @@ class ColorPickerViewModel2Test {
             val colorOptions = collectLastValue(underTest.colorOptions)
 
             // Select "Wallpaper colors" tab
-            colorTypes()?.get(ColorType.WALLPAPER_COLOR)?.onClick?.invoke()
+            colorTypes()?.get(0)?.onClick?.invoke()
             // Select a color option
             selectColorOption(colorOptions, 0)
 
@@ -146,7 +146,7 @@ class ColorPickerViewModel2Test {
             val colorOptions = collectLastValue(underTest.colorOptions)
 
             // Select "Wallpaper colors" tab
-            colorTypes()?.get(ColorType.PRESET_COLOR)?.onClick?.invoke()
+            colorTypes()?.get(1)?.onClick?.invoke()
             // Select a color option
             selectColorOption(colorOptions, 0)
 
@@ -170,7 +170,7 @@ class ColorPickerViewModel2Test {
             )
 
             // Select "Basic colors" tab
-            colorTypes()?.get(ColorType.PRESET_COLOR)?.onClick?.invoke()
+            colorTypes()?.get(1)?.onClick?.invoke()
             assertPickerUiState(
                 colorTypes = colorTypes(),
                 colorOptions = colorOptions(),
@@ -182,7 +182,7 @@ class ColorPickerViewModel2Test {
             selectColorOption(colorOptions, 2)
 
             // Check original option is no longer selected
-            colorTypes()?.get(ColorType.WALLPAPER_COLOR)?.onClick?.invoke()
+            colorTypes()?.get(0)?.onClick?.invoke()
             assertPickerUiState(
                 colorTypes = colorTypes(),
                 colorOptions = colorOptions(),
@@ -191,7 +191,7 @@ class ColorPickerViewModel2Test {
             )
 
             // Check new option is selected
-            colorTypes()?.get(ColorType.PRESET_COLOR)?.onClick?.invoke()
+            colorTypes()?.get(1)?.onClick?.invoke()
             assertPickerUiState(
                 colorTypes = colorTypes(),
                 colorOptions = colorOptions(),
@@ -225,7 +225,7 @@ class ColorPickerViewModel2Test {
      *   -1 stands for no color option should be selected
      */
     private fun TestScope.assertPickerUiState(
-        colorTypes: Map<ColorType, ColorTypeTabViewModel>?,
+        colorTypes: List<FloatingToolbarTabViewModel>?,
         colorOptions: List<OptionItemViewModel<ColorOptionIconViewModel>>?,
         selectedColorTypeText: String,
         selectedColorOptionIndex: Int,
@@ -295,12 +295,13 @@ class ColorPickerViewModel2Test {
      * @param isSelected Whether that color type should be selected
      */
     private fun assertColorTypeTabUiState(
-        colorTypes: Map<ColorType, ColorTypeTabViewModel>?,
+        colorTypes: List<FloatingToolbarTabViewModel>?,
         colorTypeId: ColorType,
         isSelected: Boolean,
     ) {
+        val position = if (colorTypeId == ColorType.WALLPAPER_COLOR) 0 else 1
         val viewModel =
-            colorTypes?.get(colorTypeId) ?: error("No color type with ID \"$colorTypeId\"!")
+            colorTypes?.get(position) ?: error("No color type with ID \"$colorTypeId\"!")
         assertThat(viewModel.isSelected).isEqualTo(isSelected)
     }
 }

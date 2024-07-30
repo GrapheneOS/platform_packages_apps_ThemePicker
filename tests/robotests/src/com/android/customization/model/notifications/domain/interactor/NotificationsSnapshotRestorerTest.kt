@@ -61,7 +61,7 @@ class NotificationsSnapshotRestorerTest {
             NotificationSettingsInteractor(
                 repository =
                     NotificationSettingsRepository(
-                        scope = testScope.backgroundScope,
+                        backgroundScope = testScope.backgroundScope,
                         backgroundDispatcher = testDispatcher,
                         secureSettingsRepository = fakeSecureSettingsRepository,
                         systemSettingsRepository = fakeSystemSettingsRepository,

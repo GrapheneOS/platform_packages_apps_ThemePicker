@@ -60,7 +60,7 @@ class NotificationSectionViewModelTest {
             NotificationSettingsInteractor(
                 repository =
                     NotificationSettingsRepository(
-                        scope = testScope.backgroundScope,
+                        backgroundScope = testScope.backgroundScope,
                         backgroundDispatcher = testDispatcher,
                         secureSettingsRepository = FakeSecureSettingsRepository(),
                         systemSettingsRepository = FakeSystemSettingsRepository(),

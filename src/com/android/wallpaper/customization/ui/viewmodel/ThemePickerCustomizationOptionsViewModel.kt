@@ -77,6 +77,8 @@ constructor(
             }
         }
 
+    val keyguardQuickAffordanceSummery = keyguardQuickAffordancePickerViewModel2.summary
+
     val onCustomizeColorsClicked: Flow<(() -> Unit)?> =
         selectedOption.map {
             if (it == null) {

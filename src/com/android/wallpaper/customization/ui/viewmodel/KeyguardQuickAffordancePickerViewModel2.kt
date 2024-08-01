@@ -24,6 +24,7 @@ import androidx.annotation.DrawableRes
 import com.android.customization.module.logging.ThemesUserEventLogger
 import com.android.customization.picker.quickaffordance.domain.interactor.KeyguardQuickAffordancePickerInteractor
 import com.android.customization.picker.quickaffordance.ui.viewmodel.KeyguardQuickAffordanceSlotViewModel
+import com.android.customization.picker.quickaffordance.ui.viewmodel.KeyguardQuickAffordanceSummaryViewModel
 import com.android.systemui.shared.keyguard.shared.model.KeyguardQuickAffordanceSlots
 import com.android.themepicker.R
 import com.android.wallpaper.picker.common.button.ui.viewmodel.ButtonStyle
@@ -59,7 +60,6 @@ constructor(
     private val logger: ThemesUserEventLogger,
     @Assisted private val viewModelScope: CoroutineScope,
 ) {
-
     /** A locally-selected slot, if the user ever switched from the original one. */
     private val _selectedSlotId = MutableStateFlow<String?>(null)
     /** The ID of the selected slot. */
@@ -389,6 +389,35 @@ constructor(
     private suspend fun getAffordanceIcon(@DrawableRes iconResourceId: Int): Drawable {
         return quickAffordanceInteractor.getAffordanceIcon(iconResourceId)
     }
+
+    val summary: Flow<KeyguardQuickAffordanceSummaryViewModel> =
+        slots.map { slots ->
+            val icon2 =
+                (slots[KeyguardQuickAffordanceSlots.SLOT_ID_BOTTOM_END]
+                        ?.selectedQuickAffordances
+                        ?.firstOrNull())
+                    ?.payload
+            val icon1 =
+                (slots[KeyguardQuickAffordanceSlots.SLOT_ID_BOTTOM_START]
+                        ?.selectedQuickAffordances
+                        ?.firstOrNull())
+                    ?.payload
+
+            KeyguardQuickAffordanceSummaryViewModel(
+                description = toDescriptionText(applicationContext, slots),
+                icon1 =
+                    icon1
+                        ?: if (icon2 == null) {
+                            Icon.Resource(
+                                res = R.drawable.link_off,
+                                contentDescription = null,
+                            )
+                        } else {
+                            null
+                        },
+                icon2 = icon2,
+            )
+        }
 
     private fun toDescriptionText(
         context: Context,

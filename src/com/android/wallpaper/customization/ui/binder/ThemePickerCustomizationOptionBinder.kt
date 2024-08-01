@@ -17,13 +17,19 @@
 package com.android.wallpaper.customization.ui.binder
 
 import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.android.themepicker.R
 import com.android.wallpaper.customization.ui.util.ThemePickerCustomizationOptionUtil.ThemePickerHomeCustomizationOption
 import com.android.wallpaper.customization.ui.util.ThemePickerCustomizationOptionUtil.ThemePickerLockCustomizationOption
 import com.android.wallpaper.customization.ui.viewmodel.ThemePickerCustomizationOptionsViewModel
+import com.android.wallpaper.picker.common.icon.ui.viewbinder.IconViewBinder
+import com.android.wallpaper.picker.common.text.ui.viewbinder.TextViewBinder
 import com.android.wallpaper.picker.customization.ui.binder.CustomizationOptionsBinder
 import com.android.wallpaper.picker.customization.ui.binder.DefaultCustomizationOptionsBinder
 import com.android.wallpaper.picker.customization.ui.util.CustomizationOptionUtil.CustomizationOption
@@ -59,16 +65,30 @@ constructor(private val defaultCustomizationOptionsBinder: DefaultCustomizationO
             lockScreenCustomizationOptionEntries
                 .find { it.first == ThemePickerLockCustomizationOption.CLOCK }
                 ?.second
+
         val optionShortcut =
             lockScreenCustomizationOptionEntries
                 .find { it.first == ThemePickerLockCustomizationOption.SHORTCUTS }
                 ?.second
+        val optionShortcutDescription =
+            optionShortcut?.findViewById<TextView>(
+                R.id.option_entry_keyguard_quick_affordance_description
+            )
+        val optionShortcutIcon1 =
+            optionShortcut?.findViewById<ImageView>(
+                R.id.option_entry_keyguard_quick_affordance_icon_1
+            )
+        val optionShortcutIcon2 =
+            optionShortcut?.findViewById<ImageView>(
+                R.id.option_entry_keyguard_quick_affordance_icon_2
+            )
+
         val optionColors =
             homeScreenCustomizationOptionEntries
                 .find { it.first == ThemePickerHomeCustomizationOption.COLORS }
                 ?.second
-        viewModel as ThemePickerCustomizationOptionsViewModel
 
+        viewModel as ThemePickerCustomizationOptionsViewModel
         lifecycleOwner.lifecycleScope.launch {
             lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
@@ -80,6 +100,36 @@ constructor(private val defaultCustomizationOptionsBinder: DefaultCustomizationO
                 launch {
                     viewModel.onCustomizeShortcutClicked.collect {
                         optionShortcut?.setOnClickListener { _ -> it?.invoke() }
+                    }
+                }
+
+                launch {
+                    viewModel.keyguardQuickAffordanceSummery.collect { summary ->
+                        optionShortcutDescription?.let {
+                            TextViewBinder.bind(
+                                view = it,
+                                viewModel = summary.description,
+                            )
+                        }
+                        summary.icon1?.let { icon ->
+                            optionShortcutIcon1?.let {
+                                IconViewBinder.bind(
+                                    view = it,
+                                    viewModel = icon,
+                                )
+                            }
+                        }
+                        optionShortcutIcon1?.isVisible = summary.icon1 != null
+
+                        summary.icon2?.let { icon ->
+                            optionShortcutIcon2?.let {
+                                IconViewBinder.bind(
+                                    view = it,
+                                    viewModel = icon,
+                                )
+                            }
+                        }
+                        optionShortcutIcon2?.isVisible = summary.icon2 != null
                     }
                 }
 

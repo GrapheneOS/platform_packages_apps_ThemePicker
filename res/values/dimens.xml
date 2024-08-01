@@ -186,4 +186,5 @@
     <dimen name="floating_sheet_clock_size_icon_margin_bottom">8dp</dimen>
     <dimen name="floating_sheet_clock_style_option_size">82dp</dimen>
     <dimen name="floating_sheet_clock_style_thumbnail_margin">12dp</dimen>
+    <dimen name="customization_option_entry_shortcut_icon_size">20dp</dimen>
 </resources>

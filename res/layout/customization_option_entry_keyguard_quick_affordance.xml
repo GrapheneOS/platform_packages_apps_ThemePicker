@@ -56,8 +56,8 @@
         android:layout_height="@dimen/customization_option_entry_icon_size"
         android:orientation="horizontal"
         android:background="@drawable/customization_option_entry_icon_background"
-        android:divider="@drawable/horizontal_divider_14dp"
-        android:layout_gravity="center"
+        android:gravity="center"
+        android:divider="@drawable/horizontal_divider_4dp"
         android:showDividers="middle"
         android:importantForAccessibility="noHideDescendants"
         app:layout_constraintEnd_toEndOf="parent"
@@ -66,15 +66,15 @@
 
         <ImageView
             android:id="@+id/option_entry_keyguard_quick_affordance_icon_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/customization_option_entry_shortcut_icon_size"
+            android:layout_height="@dimen/customization_option_entry_shortcut_icon_size"
             android:visibility="gone"
             android:tint="@color/system_on_surface" />
 
         <ImageView
             android:id="@+id/option_entry_keyguard_quick_affordance_icon_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/customization_option_entry_shortcut_icon_size"
+            android:layout_height="@dimen/customization_option_entry_shortcut_icon_size"
             android:visibility="gone"
             android:tint="@color/system_on_surface" />
     </LinearLayout>

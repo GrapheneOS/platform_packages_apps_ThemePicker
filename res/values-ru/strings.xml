@@ -38,7 +38,7 @@
     <string name="clock_color_gray" msgid="9221530636948859231">"Серый"</string>
     <string name="clock_color_teal" msgid="7499223425741344251">"Темно-бирюзовый"</string>
     <string name="clock_size" msgid="5028923902364418263">"Размер"</string>
-    <string name="clock_size_dynamic" msgid="1023930312455061642">"Динамичный"</string>
+    <string name="clock_size_dynamic" msgid="1023930312455061642">"Динамический"</string>
     <string name="clock_size_dynamic_description" msgid="2776620745774561662">"Размер часов меняется в зависимости от контента на заблокированном экране"</string>
     <string name="clock_size_large" msgid="3143248715744138979">"Большой"</string>
     <string name="clock_size_small" msgid="2280449912094164133">"Маленький"</string>

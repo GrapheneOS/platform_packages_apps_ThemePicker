@@ -29,7 +29,6 @@ import com.android.systemui.shared.plugins.PluginInstance
 import com.android.systemui.shared.plugins.PluginManagerImpl
 import com.android.systemui.shared.plugins.PluginPrefs
 import com.android.systemui.shared.system.UncaughtExceptionPreHandlerManager_Factory
-import com.android.wallpaper.module.InjectorProvider
 import java.util.concurrent.Executors
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -56,8 +55,6 @@ class ClockRegistryProvider(
             DefaultClockProvider(context, LayoutInflater.from(context), context.resources),
             keepAllLoaded = true,
             subTag = "Picker",
-            isTransitClockEnabled =
-                InjectorProvider.getInjector().getFlags().isTransitClockEnabled(context)
         )
     }
 

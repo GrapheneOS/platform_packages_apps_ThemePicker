@@ -145,8 +145,7 @@ class ClockCarouselView(
             clocks
                 .indexOfFirst { it.isSelected }
                 // If not found, default to the first clock as selected:
-                .takeIf { it != -1 }
-                ?: 0
+                .takeIf { it != -1 } ?: 0
         carousel.jumpToIndex(indexOfSelectedClock)
         motionLayout.setTransitionListener(
             object : MotionLayout.TransitionListener {
@@ -247,15 +246,13 @@ class ClockCarouselView(
                             offCenterClockHostView[0]
                         } else {
                             null
-                        }
-                            ?: return
+                        } ?: return
                     val toCenterClockFrame =
                         if (toCenterClockHostView.isNotEmpty()) {
                             toCenterClockHostView[0]
                         } else {
                             null
-                        }
-                            ?: return
+                        } ?: return
                     offCenterClockHostView.doOnPreDraw {
                         it.pivotX =
                             progress * it.width / 2 + (1 - progress) * getCenteredHostViewPivotX(it)
@@ -351,12 +348,12 @@ class ClockCarouselView(
             }
         }
 
-        val previousConstaintSet = motionLayout.getConstraintSet(R.id.previous)
-        val startConstaintSet = motionLayout.getConstraintSet(R.id.start)
-        val nextConstaintSet = motionLayout.getConstraintSet(R.id.next)
-        val constaintSetList =
-            listOf<ConstraintSet>(previousConstaintSet, startConstaintSet, nextConstaintSet)
-        constaintSetList.forEach { constraintSet ->
+        val previousConstraintSet = motionLayout.getConstraintSet(R.id.previous)
+        val startConstraintSet = motionLayout.getConstraintSet(R.id.start)
+        val nextConstraintSet = motionLayout.getConstraintSet(R.id.next)
+        val constraintSetList =
+            listOf<ConstraintSet>(previousConstraintSet, startConstraintSet, nextConstraintSet)
+        constraintSetList.forEach { constraintSet ->
             itemViewIds.forEach { id ->
                 constraintSet.getConstraint(id)?.let { constraint ->
                     val layout = constraint.layout
@@ -387,6 +384,16 @@ class ClockCarouselView(
         private val clockViewFactory: ClockViewFactory,
         private val onClockSelected: (clock: ClockCarouselItemViewModel) -> Unit
     ) : Carousel.Adapter {
+
+        // This map is used to eagerly save the translation X and Y of each small clock view, so
+        // that the next time we need it, we do not need to wait for onPreDraw to obtain the
+        // translation X and Y.
+        // This is to solve the issue that when Fragment transition triggers another attach of the
+        // view for animation purposes. We need to obtain the translation X and Y quick enough so
+        // that the outgoing carousel view that shows this the small clock views are correctly
+        // positioned.
+        private val smallClockTranslationMap: MutableMap<String, Pair<Float, Float>> =
+            mutableMapOf()
 
         fun getContentDescription(index: Int, resources: Resources): String {
             return clocks[index].contentDescription
@@ -440,6 +447,7 @@ class ClockCarouselView(
                     )
                 ClockSize.SMALL ->
                     initializeSmallClockView(
+                        clockId,
                         isMiddleView,
                         clockHostView,
                         clockView,
@@ -472,10 +480,18 @@ class ClockCarouselView(
         }
 
         private fun initializeSmallClockView(
+            clockId: String,
             isMiddleView: Boolean,
             clockHostView: ClockHostView,
             clockView: View,
         ) {
+            smallClockTranslationMap[clockId]?.let {
+                // If isMiddleView, the translation X and Y should both be 0
+                if (!isMiddleView) {
+                    clockView.translationX = it.first
+                    clockView.translationY = it.second
+                }
+            }
             clockHostView.doOnPreDraw {
                 if (isMiddleView) {
                     it.pivotX = getCenteredHostViewPivotX(it)
@@ -485,18 +501,21 @@ class ClockCarouselView(
                 } else {
                     it.pivotX = it.width / 2F
                     it.pivotY = it.height / 2F
-                    clockView.translationX =
+                    val translationX =
                         getTranslationDistance(
                             clockHostView.width,
                             clockView.width,
                             clockView.left,
                         )
-                    clockView.translationY =
+                    val translationY =
                         getTranslationDistance(
                             clockHostView.height,
                             clockView.height,
                             clockView.top,
                         )
+                    clockView.translationX = translationX
+                    clockView.translationY = translationY
+                    smallClockTranslationMap[clockId] = Pair(translationX, translationY)
                 }
             }
         }

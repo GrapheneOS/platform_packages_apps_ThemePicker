@@ -31,10 +31,14 @@ class TestThemesUserEventLogger @Inject constructor() :
     @ColorSource
     var themeColorSource: Int = StyleEnums.COLOR_SOURCE_UNSPECIFIED
         private set
+
     var themeColorStyle: Int = -1
         private set
+
     var themeSeedColor: Int = -1
         private set
+
+    var shortcutLogs: List<Pair<String, String>> = emptyList()
 
     override fun logThemeColorApplied(@ColorSource source: Int, style: Int, seedColor: Int) {
         this.themeColorSource = source
@@ -56,7 +60,9 @@ class TestThemesUserEventLogger @Inject constructor() :
 
     override fun logLockScreenNotificationApplied(showLockScreenNotifications: Boolean) {}
 
-    override fun logShortcutApplied(shortcut: String, shortcutSlotId: String) {}
+    override fun logShortcutApplied(shortcut: String, shortcutSlotId: String) {
+        shortcutLogs = shortcutLogs.toMutableList().apply { add(shortcut to shortcutSlotId) }
+    }
 
     override fun logDarkThemeApplied(useDarkTheme: Boolean) {}
 

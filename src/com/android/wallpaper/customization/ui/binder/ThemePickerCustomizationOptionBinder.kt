@@ -50,7 +50,7 @@ constructor(private val defaultCustomizationOptionsBinder: DefaultCustomizationO
         homeScreenCustomizationOptionEntries: List<Pair<CustomizationOption, View>>,
         customizationOptionFloatingSheetViewMap: Map<CustomizationOption, View>?,
         viewModel: CustomizationOptionsViewModel,
-        lifecycleOwner: LifecycleOwner
+        lifecycleOwner: LifecycleOwner,
     ) {
         defaultCustomizationOptionsBinder.bind(
             view,
@@ -104,7 +104,7 @@ constructor(private val defaultCustomizationOptionsBinder: DefaultCustomizationO
                 }
 
                 launch {
-                    viewModel.keyguardQuickAffordanceSummery.collect { summary ->
+                    viewModel.keyguardQuickAffordancePickerViewModel2.summary.collect { summary ->
                         optionShortcutDescription?.let {
                             TextViewBinder.bind(
                                 view = it,

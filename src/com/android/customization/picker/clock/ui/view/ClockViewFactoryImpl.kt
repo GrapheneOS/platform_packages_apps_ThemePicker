@@ -29,7 +29,6 @@ import androidx.lifecycle.LifecycleOwner
 import com.android.systemui.plugins.clocks.ClockController
 import com.android.systemui.plugins.clocks.WeatherData
 import com.android.systemui.shared.clocks.ClockRegistry
-import com.android.themepicker.R
 import com.android.wallpaper.config.BaseFlags
 import com.android.wallpaper.util.TimeUtils.TimeTicker
 import java.util.concurrent.ConcurrentHashMap
@@ -107,10 +106,9 @@ class ClockViewFactoryImpl(
     }
 
     private fun getSmallClockTopMargin() =
-        getStatusBarHeight(appContext.resources) +
-            appContext.resources.getDimensionPixelSize(
-                com.android.systemui.customization.R.dimen.small_clock_padding_top
-            )
+        appContext.resources.getDimensionPixelSize(
+            com.android.systemui.customization.R.dimen.small_clock_padding_top
+        )
 
     private fun getSmallClockStartPadding() =
         appContext.resources.getDimensionPixelSize(

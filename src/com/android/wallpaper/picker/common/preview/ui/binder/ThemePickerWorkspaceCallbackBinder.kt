@@ -33,6 +33,7 @@ import com.android.systemui.shared.quickaffordance.shared.model.KeyguardPreviewC
 import com.android.systemui.shared.quickaffordance.shared.model.KeyguardPreviewConstants.MESSAGE_ID_START_CUSTOMIZING_QUICK_AFFORDANCES
 import com.android.wallpaper.customization.ui.util.ThemePickerCustomizationOptionUtil.ThemePickerLockCustomizationOption
 import com.android.wallpaper.customization.ui.viewmodel.ThemePickerCustomizationOptionsViewModel
+import com.android.wallpaper.model.Screen
 import com.android.wallpaper.picker.common.preview.ui.binder.WorkspaceCallbackBinder.Companion.sendMessage
 import com.android.wallpaper.picker.customization.ui.viewmodel.CustomizationOptionsViewModel
 import javax.inject.Inject
@@ -48,11 +49,13 @@ constructor(private val defaultWorkspaceCallbackBinder: DefaultWorkspaceCallback
     override fun bind(
         workspaceCallback: Message,
         viewModel: CustomizationOptionsViewModel,
+        screen: Screen,
         lifecycleOwner: LifecycleOwner,
     ) {
         defaultWorkspaceCallbackBinder.bind(
             workspaceCallback = workspaceCallback,
             viewModel = viewModel,
+            screen = screen,
             lifecycleOwner = lifecycleOwner,
         )
 
@@ -62,61 +65,63 @@ constructor(private val defaultWorkspaceCallbackBinder: DefaultWorkspaceCallback
             )
         }
 
-        lifecycleOwner.lifecycleScope.launch {
-            lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch {
-                    viewModel.selectedOption.collect {
-                        when (it) {
-                            ThemePickerLockCustomizationOption.SHORTCUTS ->
-                                workspaceCallback.sendMessage(
-                                    MESSAGE_ID_START_CUSTOMIZING_QUICK_AFFORDANCES,
-                                    Bundle().apply {
-                                        putString(
-                                            KEY_INITIALLY_SELECTED_SLOT_ID,
-                                            SLOT_ID_BOTTOM_START,
-                                        )
-                                    }
-                                )
-                            else ->
-                                workspaceCallback.sendMessage(
-                                    MESSAGE_ID_DEFAULT_PREVIEW,
-                                    Bundle.EMPTY,
-                                )
-                        }
-                    }
-                }
-
-                launch {
-                    viewModel.keyguardQuickAffordancePickerViewModel2.selectedSlotId.collect {
-                        workspaceCallback.sendMessage(
-                            MESSAGE_ID_SLOT_SELECTED,
-                            Bundle().apply { putString(KEY_SLOT_ID, it) },
-                        )
-                    }
-                }
-
-                launch {
-                    viewModel.keyguardQuickAffordancePickerViewModel2.selectedQuickAffordances
-                        .collect {
-                            it[SLOT_ID_BOTTOM_START]?.let {
-                                workspaceCallback.sendMessage(
-                                    MESSAGE_ID_PREVIEW_QUICK_AFFORDANCE_SELECTED,
-                                    Bundle().apply {
-                                        putString(KEY_SLOT_ID, SLOT_ID_BOTTOM_START)
-                                        putString(KEY_QUICK_AFFORDANCE_ID, it)
-                                    },
-                                )
-                            }
-                            it[SLOT_ID_BOTTOM_END]?.let {
-                                workspaceCallback.sendMessage(
-                                    MESSAGE_ID_PREVIEW_QUICK_AFFORDANCE_SELECTED,
-                                    Bundle().apply {
-                                        putString(KEY_SLOT_ID, SLOT_ID_BOTTOM_END)
-                                        putString(KEY_QUICK_AFFORDANCE_ID, it)
-                                    },
-                                )
+        if (screen == Screen.LOCK_SCREEN) {
+            lifecycleOwner.lifecycleScope.launch {
+                lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    launch {
+                        viewModel.selectedOption.collect {
+                            when (it) {
+                                ThemePickerLockCustomizationOption.SHORTCUTS ->
+                                    workspaceCallback.sendMessage(
+                                        MESSAGE_ID_START_CUSTOMIZING_QUICK_AFFORDANCES,
+                                        Bundle().apply {
+                                            putString(
+                                                KEY_INITIALLY_SELECTED_SLOT_ID,
+                                                SLOT_ID_BOTTOM_START,
+                                            )
+                                        }
+                                    )
+                                else ->
+                                    workspaceCallback.sendMessage(
+                                        MESSAGE_ID_DEFAULT_PREVIEW,
+                                        Bundle.EMPTY,
+                                    )
                             }
                         }
+                    }
+
+                    launch {
+                        viewModel.keyguardQuickAffordancePickerViewModel2.selectedSlotId.collect {
+                            workspaceCallback.sendMessage(
+                                MESSAGE_ID_SLOT_SELECTED,
+                                Bundle().apply { putString(KEY_SLOT_ID, it) },
+                            )
+                        }
+                    }
+
+                    launch {
+                        viewModel.keyguardQuickAffordancePickerViewModel2.selectedQuickAffordances
+                            .collect {
+                                it[SLOT_ID_BOTTOM_START]?.let {
+                                    workspaceCallback.sendMessage(
+                                        MESSAGE_ID_PREVIEW_QUICK_AFFORDANCE_SELECTED,
+                                        Bundle().apply {
+                                            putString(KEY_SLOT_ID, SLOT_ID_BOTTOM_START)
+                                            putString(KEY_QUICK_AFFORDANCE_ID, it)
+                                        },
+                                    )
+                                }
+                                it[SLOT_ID_BOTTOM_END]?.let {
+                                    workspaceCallback.sendMessage(
+                                        MESSAGE_ID_PREVIEW_QUICK_AFFORDANCE_SELECTED,
+                                        Bundle().apply {
+                                            putString(KEY_SLOT_ID, SLOT_ID_BOTTOM_END)
+                                            putString(KEY_QUICK_AFFORDANCE_ID, it)
+                                        },
+                                    )
+                                }
+                            }
+                    }
                 }
             }
         }

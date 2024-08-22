@@ -18,7 +18,6 @@ package com.android.customization.picker.clock.ui.view
 import android.app.WallpaperColors
 import android.app.WallpaperManager
 import android.content.Context
-import android.content.res.Resources
 import android.graphics.Point
 import android.graphics.Rect
 import android.view.View
@@ -26,6 +25,7 @@ import android.widget.FrameLayout
 import androidx.annotation.ColorInt
 import androidx.core.text.util.LocalePreferences
 import androidx.lifecycle.LifecycleOwner
+import com.android.internal.policy.SystemBarUtils
 import com.android.systemui.plugins.clocks.ClockController
 import com.android.systemui.plugins.clocks.WeatherData
 import com.android.systemui.shared.clocks.ClockRegistry
@@ -106,9 +106,10 @@ class ClockViewFactoryImpl(
     }
 
     private fun getSmallClockTopMargin() =
-        appContext.resources.getDimensionPixelSize(
-            com.android.systemui.customization.R.dimen.small_clock_padding_top
-        )
+        getStatusBarHeight(appContext) +
+            appContext.resources.getDimensionPixelSize(
+                com.android.systemui.customization.R.dimen.small_clock_padding_top
+            )
 
     private fun getSmallClockStartPadding() =
         appContext.resources.getDimensionPixelSize(
@@ -256,11 +257,18 @@ class ClockViewFactoryImpl(
         const val TEMPERATURE_CELSIUS_PLACEHOLDER = 21
         val WEATHERICON_PLACEHOLDER = WeatherData.WeatherStateIcon.MOSTLY_SUNNY
 
-        private fun getStatusBarHeight(resource: Resources): Int {
+        private fun getStatusBarHeight(context: Context): Int {
+
+            val display = context.displayNoVerify
+            if (display != null) {
+                return SystemBarUtils.getStatusBarHeight(context.resources, display.cutout)
+            }
+
             var result = 0
-            val resourceId: Int = resource.getIdentifier("status_bar_height", "dimen", "android")
+            val resourceId: Int =
+                context.resources.getIdentifier("status_bar_height", "dimen", "android")
             if (resourceId > 0) {
-                result = resource.getDimensionPixelSize(resourceId)
+                result = context.resources.getDimensionPixelSize(resourceId)
             }
             return result
         }

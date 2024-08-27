@@ -34,7 +34,10 @@ import com.android.wallpaper.picker.common.dialog.ui.viewmodel.DialogViewModel
 import com.android.wallpaper.picker.common.icon.ui.viewbinder.IconViewBinder
 import com.android.wallpaper.picker.common.icon.ui.viewmodel.Icon
 import com.android.wallpaper.picker.customization.ui.view.FloatingToolbar
+import com.android.wallpaper.picker.customization.ui.view.adapter.FloatingToolbarTabAdapter
+import com.android.wallpaper.picker.customization.ui.viewmodel.ColorUpdateViewModel
 import com.android.wallpaper.picker.option.ui.adapter.OptionItemAdapter
+import java.lang.ref.WeakReference
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collectIndexed
 import kotlinx.coroutines.flow.combine
@@ -48,6 +51,7 @@ object ShortcutFloatingSheetBinder {
     fun bind(
         view: View,
         viewModel: KeyguardQuickAffordancePickerViewModel2,
+        colorUpdateViewModel: ColorUpdateViewModel,
         lifecycleOwner: LifecycleOwner,
     ) {
         val quickAffordanceAdapter = createOptionItemAdapter(lifecycleOwner)
@@ -57,12 +61,16 @@ object ShortcutFloatingSheetBinder {
             }
 
         val tabs = view.requireViewById<FloatingToolbar>(R.id.floating_toolbar)
+        val tabAdapter =
+            FloatingToolbarTabAdapter(WeakReference(colorUpdateViewModel)).also {
+                tabs.setAdapter(it)
+            }
 
         var dialog: Dialog? = null
 
         lifecycleOwner.lifecycleScope.launch {
             lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch { viewModel.tabs.collect { tabs.setItems(it) } }
+                launch { viewModel.tabs.collect { tabAdapter.submitList(it) } }
 
                 launch {
                     viewModel.quickAffordances.collect { affordances ->

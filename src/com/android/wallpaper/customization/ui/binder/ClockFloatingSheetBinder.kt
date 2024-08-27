@@ -45,7 +45,10 @@ import com.android.wallpaper.customization.ui.viewmodel.ClockPickerViewModel.Tab
 import com.android.wallpaper.customization.ui.viewmodel.ClockPickerViewModel.Tab.SIZE
 import com.android.wallpaper.customization.ui.viewmodel.ClockPickerViewModel.Tab.STYLE
 import com.android.wallpaper.picker.customization.ui.view.FloatingToolbar
+import com.android.wallpaper.picker.customization.ui.view.adapter.FloatingToolbarTabAdapter
+import com.android.wallpaper.picker.customization.ui.viewmodel.ColorUpdateViewModel
 import com.android.wallpaper.picker.option.ui.adapter.OptionItemAdapter
+import java.lang.ref.WeakReference
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -65,11 +68,16 @@ object ClockFloatingSheetBinder {
     fun bind(
         view: View,
         viewModel: ClockPickerViewModel,
+        colorUpdateViewModel: ColorUpdateViewModel,
         lifecycleOwner: LifecycleOwner,
     ) {
         val appContext = view.context.applicationContext
 
         val tabs = view.requireViewById<FloatingToolbar>(R.id.floating_toolbar)
+        val tabAdapter =
+            FloatingToolbarTabAdapter(WeakReference(colorUpdateViewModel)).also {
+                tabs.setAdapter(it)
+            }
 
         val floatingSheetContainer =
             view.requireViewById<ViewGroup>(R.id.clock_floating_sheet_content_container)
@@ -128,7 +136,7 @@ object ClockFloatingSheetBinder {
 
         lifecycleOwner.lifecycleScope.launch {
             lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch { viewModel.tabs.collect { tabs.setItems(it) } }
+                launch { viewModel.tabs.collect { tabAdapter.submitList(it) } }
 
                 launch {
                     combine(clockFloatingSheetHeights, viewModel.selectedTab) { heights, selectedTab

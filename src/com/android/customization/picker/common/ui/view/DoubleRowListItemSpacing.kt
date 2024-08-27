@@ -34,7 +34,6 @@ class DoubleRowListItemSpacing(
         val itemIndex = parent.getChildAdapterPosition(view)
         val columnIndex = itemIndex / 2
         val isRtl = parent.layoutManager?.layoutDirection == View.LAYOUT_DIRECTION_RTL
-        val density = parent.context.resources.displayMetrics.density
 
         val itemCount = parent.adapter?.itemCount ?: 0
         val columnCount = (itemCount + 1) / 2

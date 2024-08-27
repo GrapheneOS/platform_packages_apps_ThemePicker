@@ -33,6 +33,7 @@ import com.android.wallpaper.picker.common.text.ui.viewbinder.TextViewBinder
 import com.android.wallpaper.picker.customization.ui.binder.CustomizationOptionsBinder
 import com.android.wallpaper.picker.customization.ui.binder.DefaultCustomizationOptionsBinder
 import com.android.wallpaper.picker.customization.ui.util.CustomizationOptionUtil.CustomizationOption
+import com.android.wallpaper.picker.customization.ui.viewmodel.ColorUpdateViewModel
 import com.android.wallpaper.picker.customization.ui.viewmodel.CustomizationOptionsViewModel
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -50,6 +51,7 @@ constructor(private val defaultCustomizationOptionsBinder: DefaultCustomizationO
         homeScreenCustomizationOptionEntries: List<Pair<CustomizationOption, View>>,
         customizationOptionFloatingSheetViewMap: Map<CustomizationOption, View>?,
         viewModel: CustomizationOptionsViewModel,
+        colorUpdateViewModel: ColorUpdateViewModel,
         lifecycleOwner: LifecycleOwner,
     ) {
         defaultCustomizationOptionsBinder.bind(
@@ -58,7 +60,8 @@ constructor(private val defaultCustomizationOptionsBinder: DefaultCustomizationO
             homeScreenCustomizationOptionEntries,
             customizationOptionFloatingSheetViewMap,
             viewModel,
-            lifecycleOwner
+            colorUpdateViewModel,
+            lifecycleOwner,
         )
 
         val optionClock =
@@ -147,6 +150,7 @@ constructor(private val defaultCustomizationOptionsBinder: DefaultCustomizationO
                 ClockFloatingSheetBinder.bind(
                     it,
                     viewModel.clockPickerViewModel,
+                    colorUpdateViewModel,
                     lifecycleOwner,
                 )
             }
@@ -157,6 +161,7 @@ constructor(private val defaultCustomizationOptionsBinder: DefaultCustomizationO
                 ShortcutFloatingSheetBinder.bind(
                     it,
                     viewModel.keyguardQuickAffordancePickerViewModel2,
+                    colorUpdateViewModel,
                     lifecycleOwner,
                 )
             }
@@ -167,6 +172,7 @@ constructor(private val defaultCustomizationOptionsBinder: DefaultCustomizationO
                 ColorsFloatingSheetBinder.bind(
                     it,
                     viewModel.colorPickerViewModel2,
+                    colorUpdateViewModel,
                     lifecycleOwner,
                 )
             }

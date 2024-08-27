@@ -35,7 +35,10 @@ import com.android.customization.picker.common.ui.view.DoubleRowListItemSpacing
 import com.android.themepicker.R
 import com.android.wallpaper.customization.ui.viewmodel.ColorPickerViewModel2
 import com.android.wallpaper.picker.customization.ui.view.FloatingToolbar
+import com.android.wallpaper.picker.customization.ui.view.adapter.FloatingToolbarTabAdapter
+import com.android.wallpaper.picker.customization.ui.viewmodel.ColorUpdateViewModel
 import com.android.wallpaper.picker.option.ui.adapter.OptionItemAdapter
+import java.lang.ref.WeakReference
 import kotlinx.coroutines.launch
 
 object ColorsFloatingSheetBinder {
@@ -43,6 +46,7 @@ object ColorsFloatingSheetBinder {
     fun bind(
         view: View,
         viewModel: ColorPickerViewModel2,
+        colorUpdateViewModel: ColorUpdateViewModel,
         lifecycleOwner: LifecycleOwner,
     ) {
         val subhead = view.requireViewById<TextView>(R.id.color_type_tab_subhead)
@@ -55,10 +59,14 @@ object ColorsFloatingSheetBinder {
             }
 
         val tabs = view.requireViewById<FloatingToolbar>(R.id.floating_toolbar)
+        val tabAdapter =
+            FloatingToolbarTabAdapter(WeakReference(colorUpdateViewModel)).also {
+                tabs.setAdapter(it)
+            }
 
         lifecycleOwner.lifecycleScope.launch {
             lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch { viewModel.colorTypeTabs.collect { tabs.setItems(it) } }
+                launch { viewModel.colorTypeTabs.collect { tabAdapter.submitList(it) } }
 
                 launch { viewModel.colorTypeTabSubheader.collect { subhead.text = it } }
 

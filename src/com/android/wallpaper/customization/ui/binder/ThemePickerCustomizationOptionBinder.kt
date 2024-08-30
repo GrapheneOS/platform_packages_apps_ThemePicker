@@ -34,7 +34,7 @@ import com.android.wallpaper.picker.customization.ui.binder.CustomizationOptions
 import com.android.wallpaper.picker.customization.ui.binder.DefaultCustomizationOptionsBinder
 import com.android.wallpaper.picker.customization.ui.util.CustomizationOptionUtil.CustomizationOption
 import com.android.wallpaper.picker.customization.ui.viewmodel.ColorUpdateViewModel
-import com.android.wallpaper.picker.customization.ui.viewmodel.CustomizationOptionsViewModel
+import com.android.wallpaper.picker.customization.ui.viewmodel.CustomizationPickerViewModel2
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlinx.coroutines.launch
@@ -50,7 +50,7 @@ constructor(private val defaultCustomizationOptionsBinder: DefaultCustomizationO
         lockScreenCustomizationOptionEntries: List<Pair<CustomizationOption, View>>,
         homeScreenCustomizationOptionEntries: List<Pair<CustomizationOption, View>>,
         customizationOptionFloatingSheetViewMap: Map<CustomizationOption, View>?,
-        viewModel: CustomizationOptionsViewModel,
+        viewModel: CustomizationPickerViewModel2,
         colorUpdateViewModel: ColorUpdateViewModel,
         lifecycleOwner: LifecycleOwner,
     ) {
@@ -91,23 +91,25 @@ constructor(private val defaultCustomizationOptionsBinder: DefaultCustomizationO
                 .find { it.first == ThemePickerHomeCustomizationOption.COLORS }
                 ?.second
 
-        viewModel as ThemePickerCustomizationOptionsViewModel
+        val optionsViewModel =
+            viewModel.customizationOptionsViewModel as ThemePickerCustomizationOptionsViewModel
         lifecycleOwner.lifecycleScope.launch {
             lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
-                    viewModel.onCustomizeClockClicked.collect {
+                    optionsViewModel.onCustomizeClockClicked.collect {
                         optionClock?.setOnClickListener { _ -> it?.invoke() }
                     }
                 }
 
                 launch {
-                    viewModel.onCustomizeShortcutClicked.collect {
+                    optionsViewModel.onCustomizeShortcutClicked.collect {
                         optionShortcut?.setOnClickListener { _ -> it?.invoke() }
                     }
                 }
 
                 launch {
-                    viewModel.keyguardQuickAffordancePickerViewModel2.summary.collect { summary ->
+                    optionsViewModel.keyguardQuickAffordancePickerViewModel2.summary.collect {
+                        summary ->
                         optionShortcutDescription?.let {
                             TextViewBinder.bind(
                                 view = it,
@@ -137,7 +139,7 @@ constructor(private val defaultCustomizationOptionsBinder: DefaultCustomizationO
                 }
 
                 launch {
-                    viewModel.onCustomizeColorsClicked.collect {
+                    optionsViewModel.onCustomizeColorsClicked.collect {
                         optionColors?.setOnClickListener { _ -> it?.invoke() }
                     }
                 }
@@ -149,7 +151,7 @@ constructor(private val defaultCustomizationOptionsBinder: DefaultCustomizationO
             ?.let {
                 ClockFloatingSheetBinder.bind(
                     it,
-                    viewModel.clockPickerViewModel,
+                    optionsViewModel,
                     colorUpdateViewModel,
                     lifecycleOwner,
                 )
@@ -160,7 +162,7 @@ constructor(private val defaultCustomizationOptionsBinder: DefaultCustomizationO
             ?.let {
                 ShortcutFloatingSheetBinder.bind(
                     it,
-                    viewModel.keyguardQuickAffordancePickerViewModel2,
+                    optionsViewModel,
                     colorUpdateViewModel,
                     lifecycleOwner,
                 )
@@ -171,7 +173,7 @@ constructor(private val defaultCustomizationOptionsBinder: DefaultCustomizationO
             ?.let {
                 ColorsFloatingSheetBinder.bind(
                     it,
-                    viewModel.colorPickerViewModel2,
+                    optionsViewModel,
                     colorUpdateViewModel,
                     lifecycleOwner,
                 )

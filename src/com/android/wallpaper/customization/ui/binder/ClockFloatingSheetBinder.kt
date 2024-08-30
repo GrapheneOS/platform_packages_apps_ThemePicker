@@ -39,11 +39,12 @@ import com.android.customization.picker.color.ui.view.ColorOptionIconView
 import com.android.customization.picker.color.ui.viewmodel.ColorOptionIconViewModel
 import com.android.customization.picker.common.ui.view.DoubleRowListItemSpacing
 import com.android.themepicker.R
+import com.android.wallpaper.customization.ui.util.ThemePickerCustomizationOptionUtil.ThemePickerLockCustomizationOption.CLOCK
 import com.android.wallpaper.customization.ui.viewmodel.ClockFloatingSheetHeightsViewModel
-import com.android.wallpaper.customization.ui.viewmodel.ClockPickerViewModel
 import com.android.wallpaper.customization.ui.viewmodel.ClockPickerViewModel.Tab.COLOR
 import com.android.wallpaper.customization.ui.viewmodel.ClockPickerViewModel.Tab.SIZE
 import com.android.wallpaper.customization.ui.viewmodel.ClockPickerViewModel.Tab.STYLE
+import com.android.wallpaper.customization.ui.viewmodel.ThemePickerCustomizationOptionsViewModel
 import com.android.wallpaper.picker.customization.ui.view.FloatingToolbar
 import com.android.wallpaper.picker.customization.ui.view.adapter.FloatingToolbarTabAdapter
 import com.android.wallpaper.picker.customization.ui.viewmodel.ColorUpdateViewModel
@@ -67,17 +68,21 @@ object ClockFloatingSheetBinder {
 
     fun bind(
         view: View,
-        viewModel: ClockPickerViewModel,
+        optionsViewModel: ThemePickerCustomizationOptionsViewModel,
         colorUpdateViewModel: ColorUpdateViewModel,
         lifecycleOwner: LifecycleOwner,
     ) {
+        val viewModel = optionsViewModel.clockPickerViewModel
+
         val appContext = view.context.applicationContext
 
         val tabs = view.requireViewById<FloatingToolbar>(R.id.floating_toolbar)
         val tabAdapter =
-            FloatingToolbarTabAdapter(WeakReference(colorUpdateViewModel)).also {
-                tabs.setAdapter(it)
-            }
+            FloatingToolbarTabAdapter(
+                    colorUpdateViewModel = WeakReference(colorUpdateViewModel),
+                    shouldAnimateColor = { optionsViewModel.selectedOption.value == CLOCK },
+                )
+                .also { tabs.setAdapter(it) }
 
         val floatingSheetContainer =
             view.requireViewById<ViewGroup>(R.id.clock_floating_sheet_content_container)

@@ -35,6 +35,7 @@ constructor(
     keyguardQuickAffordancePickerViewModel2Factory: KeyguardQuickAffordancePickerViewModel2.Factory,
     colorPickerViewModel2Factory: ColorPickerViewModel2.Factory,
     clockPickerViewModelFactory: ClockPickerViewModel.Factory,
+    shapeAndGridPickerViewModelFactory: ShapeAndGridPickerViewModel.Factory,
     @Assisted private val viewModelScope: CoroutineScope,
 ) : CustomizationOptionsViewModel {
 
@@ -45,6 +46,8 @@ constructor(
     val keyguardQuickAffordancePickerViewModel2 =
         keyguardQuickAffordancePickerViewModel2Factory.create(viewModelScope = viewModelScope)
     val colorPickerViewModel2 = colorPickerViewModel2Factory.create(viewModelScope = viewModelScope)
+    val shapeAndGridPickerViewModel =
+        shapeAndGridPickerViewModelFactory.create(viewModelScope = viewModelScope)
 
     override val selectedOption = defaultCustomizationOptionsViewModel.selectedOption
 
@@ -86,6 +89,20 @@ constructor(
                 {
                     defaultCustomizationOptionsViewModel.selectOption(
                         ThemePickerCustomizationOptionUtil.ThemePickerHomeCustomizationOption.COLORS
+                    )
+                }
+            } else {
+                null
+            }
+        }
+
+    val onCustomizeShapeAndGridClicked: Flow<(() -> Unit)?> =
+        selectedOption.map {
+            if (it == null) {
+                {
+                    defaultCustomizationOptionsViewModel.selectOption(
+                        ThemePickerCustomizationOptionUtil.ThemePickerHomeCustomizationOption
+                            .APP_GRID
                     )
                 }
             } else {

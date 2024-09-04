@@ -19,11 +19,13 @@ package com.android.wallpaper.customization.ui.binder
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.android.customization.picker.grid.ui.binder.GridIconViewBinder
 import com.android.themepicker.R
 import com.android.wallpaper.customization.ui.util.ThemePickerCustomizationOptionUtil.ThemePickerHomeCustomizationOption
 import com.android.wallpaper.customization.ui.util.ThemePickerCustomizationOptionUtil.ThemePickerLockCustomizationOption
@@ -37,6 +39,7 @@ import com.android.wallpaper.picker.customization.ui.viewmodel.ColorUpdateViewMo
 import com.android.wallpaper.picker.customization.ui.viewmodel.CustomizationPickerViewModel2
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @Singleton
@@ -91,6 +94,15 @@ constructor(private val defaultCustomizationOptionsBinder: DefaultCustomizationO
                 .find { it.first == ThemePickerHomeCustomizationOption.COLORS }
                 ?.second
 
+        val optionShapeAndGrid =
+            homeScreenCustomizationOptionEntries
+                .find { it.first == ThemePickerHomeCustomizationOption.APP_GRID }
+                ?.second
+        val optionShapeAndGridDescription =
+            optionShapeAndGrid?.findViewById<TextView>(R.id.option_entry_app_grid_description)
+        val optionShapeAndGridIcon =
+            optionShapeAndGrid?.findViewById<ImageView>(R.id.option_entry_app_grid_icon)
+
         val optionsViewModel =
             viewModel.customizationOptionsViewModel as ThemePickerCustomizationOptionsViewModel
         lifecycleOwner.lifecycleScope.launch {
@@ -143,6 +155,36 @@ constructor(private val defaultCustomizationOptionsBinder: DefaultCustomizationO
                         optionColors?.setOnClickListener { _ -> it?.invoke() }
                     }
                 }
+
+                launch {
+                    optionsViewModel.onCustomizeShapeAndGridClicked.collect {
+                        optionShapeAndGrid?.setOnClickListener { _ -> it?.invoke() }
+                    }
+                }
+
+                launch {
+                    optionsViewModel.shapeAndGridPickerViewModel.selectedGridOption.collect {
+                        gridOption ->
+                        optionShapeAndGridDescription?.let {
+                            TextViewBinder.bind(it, gridOption.text)
+                        }
+                        gridOption.payload?.let { gridIconViewModel ->
+                            optionShapeAndGridIcon?.let {
+                                GridIconViewBinder.bind(
+                                    view = it,
+                                    viewModel = gridIconViewModel,
+                                )
+                            }
+                            // TODO(b/363018910): Use ColorUpdateBinder to update color
+                            optionShapeAndGridIcon?.setColorFilter(
+                                ContextCompat.getColor(
+                                    view.context,
+                                    com.android.wallpaper.R.color.system_on_surface_variant
+                                )
+                            )
+                        }
+                    }
+                }
             }
         }
 
@@ -176,6 +218,17 @@ constructor(private val defaultCustomizationOptionsBinder: DefaultCustomizationO
                     optionsViewModel,
                     colorUpdateViewModel,
                     lifecycleOwner,
+                )
+            }
+
+        customizationOptionFloatingSheetViewMap
+            ?.get(ThemePickerHomeCustomizationOption.APP_GRID)
+            ?.let {
+                ShapeAndGridFloatingSheetBinder.bind(
+                    it,
+                    optionsViewModel.shapeAndGridPickerViewModel,
+                    lifecycleOwner,
+                    Dispatchers.IO,
                 )
             }
     }

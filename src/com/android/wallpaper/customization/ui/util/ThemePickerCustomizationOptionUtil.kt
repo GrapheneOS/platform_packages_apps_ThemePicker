@@ -171,6 +171,15 @@ constructor(private val defaultCustomizationOptionUtil: DefaultCustomizationOpti
                     )
                     .also { bottomSheetContainer.addView(it) }
             )
+            put(
+                ThemePickerHomeCustomizationOption.APP_GRID,
+                inflateFloatingSheet(
+                        ThemePickerHomeCustomizationOption.APP_GRID,
+                        bottomSheetContainer,
+                        layoutInflater,
+                    )
+                    .also { bottomSheetContainer.addView(it) }
+            )
         }
     }
 
@@ -183,6 +192,7 @@ constructor(private val defaultCustomizationOptionUtil: DefaultCustomizationOpti
             ThemePickerLockCustomizationOption.CLOCK -> R.layout.floating_sheet_clock
             ThemePickerLockCustomizationOption.SHORTCUTS -> R.layout.floating_sheet_shortcut
             ThemePickerHomeCustomizationOption.COLORS -> R.layout.floating_sheet_colors
+            ThemePickerHomeCustomizationOption.APP_GRID -> R.layout.floating_sheet_shape_and_grid
             else ->
                 throw IllegalStateException(
                     "Customization option $option does not have a bottom sheet view"

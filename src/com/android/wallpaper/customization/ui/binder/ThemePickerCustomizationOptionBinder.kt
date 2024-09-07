@@ -96,7 +96,7 @@ constructor(private val defaultCustomizationOptionsBinder: DefaultCustomizationO
 
         val optionShapeAndGrid =
             homeScreenCustomizationOptionEntries
-                .find { it.first == ThemePickerHomeCustomizationOption.APP_GRID }
+                .find { it.first == ThemePickerHomeCustomizationOption.APP_SHAPE_AND_GRID }
                 ?.second
         val optionShapeAndGridDescription =
             optionShapeAndGrid?.findViewById<TextView>(R.id.option_entry_app_grid_description)
@@ -222,7 +222,7 @@ constructor(private val defaultCustomizationOptionsBinder: DefaultCustomizationO
             }
 
         customizationOptionFloatingSheetViewMap
-            ?.get(ThemePickerHomeCustomizationOption.APP_GRID)
+            ?.get(ThemePickerHomeCustomizationOption.APP_SHAPE_AND_GRID)
             ?.let {
                 ShapeAndGridFloatingSheetBinder.bind(
                     it,

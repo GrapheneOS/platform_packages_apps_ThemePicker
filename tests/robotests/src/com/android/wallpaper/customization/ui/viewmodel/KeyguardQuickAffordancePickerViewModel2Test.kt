@@ -117,19 +117,19 @@ class KeyguardQuickAffordancePickerViewModel2Test {
     @Test
     fun selectedQuickAffordancesMapUpdates_whenClickingOnQuickAffordanceOptionsAndCallingResetPreview() =
         testScope.runTest {
-            val selectedQuickAffordances = collectLastValue(underTest.selectedQuickAffordances)
+            val previewingQuickAffordances = collectLastValue(underTest.previewingQuickAffordances)
 
             val tabs = collectLastValue(underTest.tabs)
             val quickAffordances = collectLastValue(underTest.quickAffordances)
 
             // Default selectedQuickAffordances is an empty map
-            assertThat(selectedQuickAffordances()).isEqualTo(emptyMap<String, String>())
+            assertThat(previewingQuickAffordances()).isEqualTo(emptyMap<String, String>())
 
             // Click on quick affordance 1 when selected slot ID is bottom_start
             val onClickAffordance1 =
                 collectLastValue(quickAffordances()?.get(1)?.onClicked ?: emptyFlow())
             onClickAffordance1()?.invoke()
-            assertThat(selectedQuickAffordances())
+            assertThat(previewingQuickAffordances())
                 .isEqualTo(
                     mapOf(
                         KeyguardQuickAffordanceSlots.SLOT_ID_BOTTOM_START to
@@ -143,7 +143,7 @@ class KeyguardQuickAffordancePickerViewModel2Test {
             val onClickAffordance2 =
                 collectLastValue(quickAffordances()?.get(2)?.onClicked ?: emptyFlow())
             onClickAffordance2()?.invoke()
-            assertThat(selectedQuickAffordances())
+            assertThat(previewingQuickAffordances())
                 .isEqualTo(
                     mapOf(
                         KeyguardQuickAffordanceSlots.SLOT_ID_BOTTOM_START to
@@ -154,7 +154,7 @@ class KeyguardQuickAffordancePickerViewModel2Test {
                 )
 
             underTest.resetPreview()
-            assertThat(selectedQuickAffordances()).isEqualTo(emptyMap<String, String>())
+            assertThat(previewingQuickAffordances()).isEqualTo(emptyMap<String, String>())
         }
 
     @Test

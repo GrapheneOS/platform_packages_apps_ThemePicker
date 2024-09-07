@@ -51,7 +51,17 @@ object ShapeAndGridFloatingSheetBinder {
 
         lifecycleOwner.lifecycleScope.launch {
             lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch { viewModel.optionItems.collect { options -> adapter.setItems(options) } }
+                launch {
+                    viewModel.optionItems.collect { options ->
+                        adapter.setItems(options) {
+                            val indexToFocus =
+                                options.indexOfFirst { it.isSelected.value }.coerceAtLeast(0)
+                            (gridOptionList.layoutManager as LinearLayoutManager).scrollToPosition(
+                                indexToFocus
+                            )
+                        }
+                    }
+                }
             }
         }
     }

@@ -25,8 +25,13 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 
 class ThemePickerCustomizationOptionsViewModel
 @AssistedInject
@@ -53,6 +58,8 @@ constructor(
 
     override fun deselectOption(): Boolean {
         keyguardQuickAffordancePickerViewModel2.resetPreview()
+        shapeAndGridPickerViewModel.resetPreview()
+
         return defaultCustomizationOptionsViewModel.deselectOption()
     }
 
@@ -102,13 +109,31 @@ constructor(
                 {
                     defaultCustomizationOptionsViewModel.selectOption(
                         ThemePickerCustomizationOptionUtil.ThemePickerHomeCustomizationOption
-                            .APP_GRID
+                            .APP_SHAPE_AND_GRID
                     )
                 }
             } else {
                 null
             }
         }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val onApplyButtonClicked =
+        selectedOption
+            .flatMapLatest {
+                when (it) {
+                    ThemePickerCustomizationOptionUtil.ThemePickerLockCustomizationOption
+                        .SHORTCUTS -> keyguardQuickAffordancePickerViewModel2.onApply
+                    ThemePickerCustomizationOptionUtil.ThemePickerHomeCustomizationOption
+                        .APP_SHAPE_AND_GRID -> shapeAndGridPickerViewModel.onApply
+                    else -> flow { emit(null) }
+                }
+            }
+            .stateIn(viewModelScope, SharingStarted.Eagerly, null)
+
+    val isOnApplyEnabled: Flow<Boolean> = onApplyButtonClicked.map { it != null }
+
+    val isOnApplyVisible: Flow<Boolean> = selectedOption.map { it != null }
 
     @ViewModelScoped
     @AssistedFactory

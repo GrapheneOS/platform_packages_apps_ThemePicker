@@ -19,6 +19,7 @@ package com.android.wallpaper.customization.ui.binder
 import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.Toolbar
+import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
@@ -54,12 +55,16 @@ constructor(private val defaultToolbarBinder: DefaultToolbarBinder) : ToolbarBin
         lifecycleOwner.lifecycleScope.launch {
             lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
-                    viewModel.keyguardQuickAffordancePickerViewModel2.onApply.collect { onApply ->
+                    viewModel.onApplyButtonClicked.collect { onApplyButtonClicked ->
                         applyButton.setOnClickListener {
-                            onApply?.invoke()?.let { viewModel.deselectOption() }
+                            onApplyButtonClicked?.invoke()?.let { viewModel.deselectOption() }
                         }
                     }
                 }
+
+                launch { viewModel.isOnApplyVisible.collect { applyButton.isVisible = it } }
+
+                launch { viewModel.isOnApplyEnabled.collect { applyButton.isEnabled = it } }
             }
         }
     }

@@ -83,12 +83,12 @@ constructor(
                 started = SharingStarted.WhileSubscribed(),
                 initialValue = "",
             )
-    private val _selectedQuickAffordances = MutableStateFlow<Map<String, String>>(emptyMap())
-    val selectedQuickAffordances: Flow<Map<String, String>> =
-        _selectedQuickAffordances.asStateFlow()
+    private val _previewingQuickAffordances = MutableStateFlow<Map<String, String>>(emptyMap())
+    val previewingQuickAffordances: Flow<Map<String, String>> =
+        _previewingQuickAffordances.asStateFlow()
 
     fun resetPreview() {
-        _selectedQuickAffordances.tryEmit(emptyMap())
+        _previewingQuickAffordances.tryEmit(emptyMap())
         _selectedSlotId.tryEmit(SLOT_ID_BOTTOM_START)
     }
 
@@ -98,7 +98,7 @@ constructor(
                 quickAffordanceInteractor.slots,
                 quickAffordanceInteractor.affordances,
                 quickAffordanceInteractor.selections,
-                selectedQuickAffordances,
+                previewingQuickAffordances,
                 selectedSlotId,
             ) { slots, affordances, selections, selectedQuickAffordances, selectedSlotId ->
                 slots.associate { slot ->
@@ -194,7 +194,7 @@ constructor(
             val isNoneSelected =
                 combine(
                         selectedSlotId,
-                        selectedQuickAffordances,
+                        previewingQuickAffordances,
                         selectedAffordanceIds,
                     ) { selectedSlotId, selectedQuickAffordances, selectedAffordanceIds ->
                         selectedQuickAffordances[selectedSlotId]?.let {
@@ -214,10 +214,10 @@ constructor(
                             if (!isSelected) {
                                 {
                                     val newMap =
-                                        _selectedQuickAffordances.value.toMutableMap().apply {
+                                        _previewingQuickAffordances.value.toMutableMap().apply {
                                             put(selectedSlotId, KEYGUARD_QUICK_AFFORDANCE_ID_NONE)
                                         }
-                                    _selectedQuickAffordances.tryEmit(newMap)
+                                    _previewingQuickAffordances.tryEmit(newMap)
                                 }
                             } else {
                                 null
@@ -230,7 +230,7 @@ constructor(
                     val isSelectedFlow: StateFlow<Boolean> =
                         combine(
                                 selectedSlotId,
-                                selectedQuickAffordances,
+                                previewingQuickAffordances,
                                 selectedAffordanceIds,
                             ) { selectedSlotId, selectedQuickAffordances, selectedAffordanceIds ->
                                 selectedQuickAffordances[selectedSlotId]?.let {
@@ -255,10 +255,10 @@ constructor(
                                     if (!isSelected) {
                                         {
                                             val newMap =
-                                                _selectedQuickAffordances.value
+                                                _previewingQuickAffordances.value
                                                     .toMutableMap()
                                                     .apply { put(selectedSlotId, affordance.id) }
-                                            _selectedQuickAffordances.tryEmit(newMap)
+                                            _previewingQuickAffordances.tryEmit(newMap)
                                         }
                                     } else {
                                         null
@@ -287,7 +287,7 @@ constructor(
         }
 
     val onApply: Flow<(() -> Unit)?> =
-        selectedQuickAffordances.map {
+        previewingQuickAffordances.map {
             if (it.isEmpty()) {
                 null
             } else {

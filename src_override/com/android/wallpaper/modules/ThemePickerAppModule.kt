@@ -51,6 +51,8 @@ import com.android.wallpaper.picker.category.domain.interactor.implementations.C
 import com.android.wallpaper.picker.category.domain.interactor.implementations.DefaultCategoriesLoadingStatusInteractor
 import com.android.wallpaper.picker.category.ui.view.providers.IndividualPickerFactory
 import com.android.wallpaper.picker.category.ui.view.providers.implementation.DefaultIndividualPickerFactory
+import com.android.wallpaper.picker.category.wrapper.DefaultWallpaperCategoryWrapper
+import com.android.wallpaper.picker.category.wrapper.WallpaperCategoryWrapper
 import com.android.wallpaper.picker.common.preview.ui.binder.ThemePickerWorkspaceCallbackBinder
 import com.android.wallpaper.picker.common.preview.ui.binder.WorkspaceCallbackBinder
 import com.android.wallpaper.picker.customization.ui.binder.CustomizationOptionsBinder
@@ -86,8 +88,14 @@ abstract class ThemePickerAppModule {
     @Binds
     @Singleton
     abstract fun bindCreativeCategoryInteractor(
-        impl: CreativeCategoryInteractorImpl,
+        impl: CreativeCategoryInteractorImpl
     ): CreativeCategoryInteractor
+
+    @Binds
+    @Singleton
+    abstract fun bindWallpaperCategoryWrapper(
+        impl: DefaultWallpaperCategoryWrapper
+    ): WallpaperCategoryWrapper
 
     @Binds
     @Singleton
@@ -122,7 +130,7 @@ abstract class ThemePickerAppModule {
     @Binds
     @Singleton
     abstract fun bindLoadingStatusInteractor(
-        impl: DefaultCategoriesLoadingStatusInteractor,
+        impl: DefaultCategoriesLoadingStatusInteractor
     ): CategoriesLoadingStatusInteractor
 
     @Binds

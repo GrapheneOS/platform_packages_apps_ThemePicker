@@ -45,6 +45,7 @@ import com.android.wallpaper.module.logging.TestUserEventLogger
 import com.android.wallpaper.module.logging.UserEventLogger
 import com.android.wallpaper.modules.ThemePickerAppModule
 import com.android.wallpaper.network.Requester
+import com.android.wallpaper.picker.category.wrapper.WallpaperCategoryWrapper
 import com.android.wallpaper.picker.common.preview.ui.binder.ThemePickerWorkspaceCallbackBinder
 import com.android.wallpaper.picker.common.preview.ui.binder.WorkspaceCallbackBinder
 import com.android.wallpaper.picker.customization.ui.binder.CustomizationOptionsBinder
@@ -55,6 +56,7 @@ import com.android.wallpaper.picker.di.modules.MainDispatcher
 import com.android.wallpaper.picker.preview.ui.util.DefaultImageEffectDialogUtil
 import com.android.wallpaper.picker.preview.ui.util.ImageEffectDialogUtil
 import com.android.wallpaper.testing.FakeDefaultRequester
+import com.android.wallpaper.testing.FakeWallpaperCategoryWrapper
 import com.android.wallpaper.testing.TestPartnerProvider
 import com.android.wallpaper.util.converter.DefaultWallpaperModelFactory
 import com.android.wallpaper.util.converter.WallpaperModelFactory
@@ -99,6 +101,12 @@ abstract class ThemePickerTestModule {
     @Binds
     @Singleton
     abstract fun bindEffectsController(impl: FakeEffectsController): EffectsController
+
+    @Binds
+    @Singleton
+    abstract fun bindWallpaperCategoryWrapper(
+        impl: FakeWallpaperCategoryWrapper
+    ): WallpaperCategoryWrapper
 
     @Binds
     @Singleton
@@ -164,7 +172,7 @@ abstract class ThemePickerTestModule {
         fun provideColorCustomizationManager(): ColorCustomizationManager {
             return ColorCustomizationManager.getInstance(
                 ApplicationProvider.getApplicationContext(),
-                OverlayManagerCompat(ApplicationProvider.getApplicationContext())
+                OverlayManagerCompat(ApplicationProvider.getApplicationContext()),
             )
         }
 

@@ -15,6 +15,7 @@ import com.android.customization.picker.clock.ui.viewmodel.ClockSettingsViewMode
 import com.android.customization.picker.color.ui.viewmodel.ColorPickerViewModel
 import com.android.customization.picker.quickaffordance.domain.interactor.KeyguardQuickAffordancePickerInteractor
 import com.android.wallpaper.module.logging.UserEventLogger
+import com.android.wallpaper.picker.category.wrapper.WallpaperCategoryWrapper
 import com.android.wallpaper.picker.customization.data.repository.WallpaperColorsRepository
 import com.android.wallpaper.testing.TestInjector
 import javax.inject.Inject
@@ -25,7 +26,7 @@ open class TestCustomizationInjector
 @Inject
 constructor(
     private val customPrefs: TestDefaultCustomizationPreferences,
-    private val themesUserEventLogger: ThemesUserEventLogger
+    private val themesUserEventLogger: ThemesUserEventLogger,
 ) : TestInjector(themesUserEventLogger), CustomizationInjector {
     /////////////////
     // CustomizationInjector implementations
@@ -43,7 +44,7 @@ constructor(
 
     override fun getWallpaperColorResources(
         wallpaperColors: WallpaperColors,
-        context: Context
+        context: Context,
     ): WallpaperColorResources {
         throw UnsupportedOperationException("not implemented")
     }
@@ -78,5 +79,9 @@ constructor(
 
     override fun getUserEventLogger(): UserEventLogger {
         return themesUserEventLogger
+    }
+
+    override fun getWallpaperCategoryWrapper(): WallpaperCategoryWrapper {
+        return super.fakeWallpaperCategoryWrapper
     }
 }

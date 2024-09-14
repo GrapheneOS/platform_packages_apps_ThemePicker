@@ -16,6 +16,8 @@
 
 package com.android.wallpaper.modules
 
+import com.android.customization.picker.clock.ui.view.ClockViewFactory
+import com.android.customization.picker.clock.ui.view.ThemePickerClockViewFactory
 import com.android.wallpaper.customization.ui.util.ThemePickerCustomizationOptionUtil
 import com.android.wallpaper.picker.customization.ui.util.CustomizationOptionUtil
 import dagger.Binds
@@ -27,6 +29,10 @@ import dagger.hilt.android.scopes.ActivityScoped
 @Module
 @InstallIn(ActivityComponent::class)
 abstract class ThemePickerActivityModule {
+
+    @Binds
+    @ActivityScoped
+    abstract fun bindClockViewFactory(impl: ThemePickerClockViewFactory): ClockViewFactory
 
     @Binds
     @ActivityScoped

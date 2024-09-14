@@ -37,12 +37,11 @@ open class FakeClockPickerRepository(clocks: List<ClockMetadataModel> = fakeCloc
     private val colorTone = MutableStateFlow(ClockMetadataModel.DEFAULT_COLOR_TONE_PROGRESS)
     @ColorInt private val seedColor = MutableStateFlow<Int?>(null)
     override val selectedClock: Flow<ClockMetadataModel> =
-        combine(
+        combine(selectedClockId, selectedColorId, colorTone, seedColor) {
             selectedClockId,
-            selectedColorId,
+            selectedColor,
             colorTone,
-            seedColor,
-        ) { selectedClockId, selectedColor, colorTone, seedColor ->
+            seedColor ->
             val selectedClock = fakeClocks.find { clock -> clock.clockId == selectedClockId }
             checkNotNull(selectedClock)
             ClockMetadataModel(
@@ -57,7 +56,7 @@ open class FakeClockPickerRepository(clocks: List<ClockMetadataModel> = fakeCloc
             )
         }
 
-    private val _selectedClockSize = MutableStateFlow(ClockSize.SMALL)
+    private val _selectedClockSize = MutableStateFlow(ClockSize.DYNAMIC)
     override val selectedClockSize: Flow<ClockSize> = _selectedClockSize.asStateFlow()
 
     override suspend fun setSelectedClock(clockId: String) {
@@ -93,7 +92,7 @@ open class FakeClockPickerRepository(clocks: List<ClockMetadataModel> = fakeCloc
                     true,
                     null,
                     50,
-                    null
+                    null,
                 ),
                 ClockMetadataModel(
                     CLOCK_ID_1,
@@ -103,7 +102,7 @@ open class FakeClockPickerRepository(clocks: List<ClockMetadataModel> = fakeCloc
                     true,
                     null,
                     50,
-                    null
+                    null,
                 ),
                 ClockMetadataModel(
                     CLOCK_ID_2,
@@ -113,7 +112,7 @@ open class FakeClockPickerRepository(clocks: List<ClockMetadataModel> = fakeCloc
                     true,
                     null,
                     50,
-                    null
+                    null,
                 ),
                 ClockMetadataModel(
                     CLOCK_ID_3,
@@ -123,7 +122,7 @@ open class FakeClockPickerRepository(clocks: List<ClockMetadataModel> = fakeCloc
                     false,
                     null,
                     50,
-                    null
+                    null,
                 ),
             )
         const val CLOCK_COLOR_ID = "RED"

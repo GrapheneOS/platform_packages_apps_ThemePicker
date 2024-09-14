@@ -32,6 +32,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
 class ThemePickerCustomizationOptionsViewModel
 @AssistedInject
@@ -59,7 +60,7 @@ constructor(
     override fun deselectOption(): Boolean {
         keyguardQuickAffordancePickerViewModel2.resetPreview()
         shapeAndGridPickerViewModel.resetPreview()
-
+        clockPickerViewModel.resetPreview()
         return defaultCustomizationOptionsViewModel.deselectOption()
     }
 
@@ -122,11 +123,26 @@ constructor(
         selectedOption
             .flatMapLatest {
                 when (it) {
+                    ThemePickerCustomizationOptionUtil.ThemePickerLockCustomizationOption.CLOCK ->
+                        clockPickerViewModel.onApply
                     ThemePickerCustomizationOptionUtil.ThemePickerLockCustomizationOption
                         .SHORTCUTS -> keyguardQuickAffordancePickerViewModel2.onApply
                     ThemePickerCustomizationOptionUtil.ThemePickerHomeCustomizationOption
                         .APP_SHAPE_AND_GRID -> shapeAndGridPickerViewModel.onApply
                     else -> flow { emit(null) }
+                }
+            }
+            .map { onApply ->
+                {
+                    if (onApply != null) {
+                        viewModelScope.launch {
+                            onApply()
+                            // We only wait until onApply() is done to execute deselectOption()
+                            deselectOption()
+                        }
+                    } else {
+                        null
+                    }
                 }
             }
             .stateIn(viewModelScope, SharingStarted.Eagerly, null)

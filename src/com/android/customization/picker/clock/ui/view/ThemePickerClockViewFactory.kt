@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 The Android Open Source Project
+ * Copyright (C) 2024 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,10 +15,10 @@
  */
 package com.android.customization.picker.clock.ui.view
 
+import android.app.Activity
 import android.app.WallpaperColors
 import android.app.WallpaperManager
 import android.content.Context
-import android.graphics.Point
 import android.graphics.Rect
 import android.view.View
 import android.widget.FrameLayout
@@ -29,21 +29,27 @@ import com.android.systemui.plugins.clocks.ClockController
 import com.android.systemui.plugins.clocks.WeatherData
 import com.android.systemui.shared.clocks.ClockRegistry
 import com.android.wallpaper.config.BaseFlags
+import com.android.wallpaper.util.ScreenSizeCalculator
 import com.android.wallpaper.util.TimeUtils.TimeTicker
 import java.util.concurrent.ConcurrentHashMap
+import javax.inject.Inject
 
 /**
  * Provide reusable clock view and related util functions.
  *
  * @property screenSize The Activity or Fragment's window size.
  */
-class ClockViewFactoryImpl(
-    private val appContext: Context,
-    val screenSize: Point,
+class ThemePickerClockViewFactory
+@Inject
+constructor(
+    activity: Activity,
     private val wallpaperManager: WallpaperManager,
     private val registry: ClockRegistry,
 ) : ClockViewFactory {
+    private val appContext = activity.applicationContext
     private val resources = appContext.resources
+    private val screenSize =
+        ScreenSizeCalculator.getInstance().getScreenSize(activity.windowManager.defaultDisplay)
     private val timeTickListeners: ConcurrentHashMap<Int, TimeTicker> = ConcurrentHashMap()
     private val clockControllers: ConcurrentHashMap<String, ClockController> = ConcurrentHashMap()
     private val smallClockFrames: HashMap<String, FrameLayout> = HashMap()
@@ -95,7 +101,7 @@ class ClockViewFactoryImpl(
                 FrameLayout.LayoutParams.WRAP_CONTENT,
                 resources.getDimensionPixelSize(
                     com.android.systemui.customization.R.dimen.small_clock_height
-                )
+                ),
             )
         layoutParams.topMargin = getSmallClockTopMargin()
         layoutParams.marginStart = getSmallClockStartPadding()
@@ -120,7 +126,7 @@ class ClockViewFactoryImpl(
     }
 
     override fun updateColor(clockId: String, @ColorInt seedColor: Int?) {
-        clockControllers[clockId]?.events?.onSeedColorChanged(seedColor)
+        getController(clockId).events.onSeedColorChanged(seedColor)
     }
 
     override fun updateRegionDarkness() {

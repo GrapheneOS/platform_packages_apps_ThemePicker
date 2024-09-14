@@ -37,7 +37,6 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 
 class ShapeAndGridPickerViewModel
 @AssistedInject
@@ -67,7 +66,7 @@ constructor(
             gridOptions.map { toOptionItemViewModel(it) }
         }
 
-    val onApply: Flow<(() -> Unit)?> =
+    val onApply: Flow<(suspend () -> Unit)?> =
         combine(selectedGridOption, _previewingGridOptionKey) {
             selectedGridOption,
             previewingGridOptionKey ->
@@ -77,11 +76,7 @@ constructor(
             ) {
                 null
             } else {
-                {
-                    viewModelScope.launch {
-                        interactor.applySelectedOption(previewingGridOptionKey)
-                    }
-                }
+                { interactor.applySelectedOption(previewingGridOptionKey) }
             }
         }
 
@@ -115,11 +110,7 @@ constructor(
         return OptionItemViewModel(
             key = MutableStateFlow(option.key),
             payload =
-                GridIconViewModel(
-                    columns = option.cols,
-                    rows = option.rows,
-                    path = iconShapePath,
-                ),
+                GridIconViewModel(columns = option.cols, rows = option.rows, path = iconShapePath),
             text = Text.Loaded(option.title),
             isSelected = isSelected,
             onClicked =

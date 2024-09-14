@@ -21,11 +21,9 @@ import android.graphics.drawable.Drawable
 import androidx.core.graphics.ColorUtils
 import com.android.customization.model.color.ColorOptionImpl
 import com.android.customization.module.logging.ThemesUserEventLogger
-import com.android.customization.module.logging.ThemesUserEventLogger.Companion.NULL_SEED_COLOR
 import com.android.customization.picker.clock.domain.interactor.ClockPickerInteractor
 import com.android.customization.picker.clock.shared.ClockSize
 import com.android.customization.picker.clock.shared.model.ClockMetadataModel
-import com.android.customization.picker.clock.shared.toClockSizeForLogging
 import com.android.customization.picker.clock.ui.viewmodel.ClockColorViewModel
 import com.android.customization.picker.color.domain.interactor.ColorPickerInteractor
 import com.android.customization.picker.color.shared.model.ColorOptionModel
@@ -45,7 +43,6 @@ import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -54,12 +51,11 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
-import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 
 /** View model for the clock customization screen. */
 class ClockPickerViewModel
@@ -82,6 +78,7 @@ constructor(
 
     private val colorMap = ClockColorViewModel.getPresetColorMap(context.resources)
 
+    // Tabs
     private val _selectedTab = MutableStateFlow(Tab.STYLE)
     val selectedTab: StateFlow<Tab> = _selectedTab.asStateFlow()
     val tabs: Flow<List<FloatingToolbarTabViewModel>> =
@@ -93,7 +90,7 @@ constructor(
                         contentDescription = Text.Resource(R.string.clock_style),
                     ),
                     context.getString(R.string.clock_style),
-                    it == Tab.STYLE
+                    it == Tab.STYLE,
                 ) {
                     _selectedTab.value = Tab.STYLE
                 },
@@ -103,7 +100,7 @@ constructor(
                         contentDescription = Text.Resource(R.string.clock_color),
                     ),
                     context.getString(R.string.clock_color),
-                    it == Tab.COLOR
+                    it == Tab.COLOR,
                 ) {
                     _selectedTab.value = Tab.COLOR
                 },
@@ -113,13 +110,21 @@ constructor(
                         contentDescription = Text.Resource(R.string.clock_size),
                     ),
                     context.getString(R.string.clock_size),
-                    it == Tab.SIZE
+                    it == Tab.SIZE,
                 ) {
                     _selectedTab.value = Tab.SIZE
                 },
             )
         }
 
+    // Clock style
+    private val overridingClock = MutableStateFlow<ClockMetadataModel?>(null)
+    val previewingClock =
+        combine(overridingClock, clockPickerInteractor.selectedClock) {
+            overridingClock,
+            selectedClock ->
+            overridingClock ?: selectedClock
+        }
     @OptIn(ExperimentalCoroutinesApi::class)
     val clockStyleOptions: StateFlow<List<OptionItemViewModel<Drawable>>> =
         clockPickerInteractor.allClocks
@@ -128,8 +133,8 @@ constructor(
                 delay(CLOCKS_EVENT_UPDATE_DELAY_MILLIS)
                 allClocks.map { clockModel ->
                     val isSelectedFlow =
-                        clockPickerInteractor.selectedClock
-                            .map { clockModel.clockId == it.clockId }
+                        previewingClock
+                            .map { it.clockId == clockModel.clockId }
                             .stateIn(viewModelScope)
                     val contentDescription =
                         resources.getString(
@@ -147,13 +152,7 @@ constructor(
                                 if (isSelected) {
                                     null
                                 } else {
-                                    {
-                                        viewModelScope.launch {
-                                            clockPickerInteractor.setSelectedClock(
-                                                clockModel.clockId
-                                            )
-                                        }
-                                    }
+                                    { overridingClock.value = clockModel }
                                 }
                             },
                     )
@@ -165,70 +164,87 @@ constructor(
             .flowOn(backgroundDispatcher.limitedParallelism(1))
             .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
-    private var setSelectedClockJob: Job? = null
-
-    fun setSelectedClock(clockId: String) {
-        setSelectedClockJob?.cancel()
-        setSelectedClockJob =
-            viewModelScope.launch(backgroundDispatcher) {
-                clockPickerInteractor.setSelectedClock(clockId)
-                logger.logClockApplied(clockId)
-            }
+    // Clock size
+    private val overridingClockSize = MutableStateFlow<ClockSize?>(null)
+    val previewingClockSize =
+        combine(overridingClockSize, clockPickerInteractor.selectedClockSize) {
+            overridingClockSize,
+            selectedClockSize ->
+            overridingClockSize ?: selectedClockSize
+        }
+    val sizeOptions = flow {
+        emit(
+            listOf(
+                ClockSizeOptionViewModel(
+                    ClockSize.DYNAMIC,
+                    previewingClockSize.map { it == ClockSize.DYNAMIC }.stateIn(viewModelScope),
+                    previewingClockSize
+                        .map {
+                            if (it == ClockSize.DYNAMIC) {
+                                null
+                            } else {
+                                { overridingClockSize.value = ClockSize.DYNAMIC }
+                            }
+                        }
+                        .stateIn(viewModelScope),
+                ),
+                ClockSizeOptionViewModel(
+                    ClockSize.SMALL,
+                    previewingClockSize.map { it == ClockSize.SMALL }.stateIn(viewModelScope),
+                    previewingClockSize
+                        .map {
+                            if (it == ClockSize.SMALL) {
+                                null
+                            } else {
+                                { overridingClockSize.value = ClockSize.SMALL }
+                            }
+                        }
+                        .stateIn(viewModelScope),
+                ),
+            )
+        )
     }
 
-    private val selectedColorId: StateFlow<String?> =
-        clockPickerInteractor.selectedColorId.stateIn(viewModelScope, SharingStarted.Eagerly, null)
+    // Clock color
+    // 0 - 100
+    private val overridingClockColorId = MutableStateFlow<String?>(null)
+    private val previewingClockColorId =
+        combine(overridingClockColorId, clockPickerInteractor.selectedColorId) {
+            overridingClockColorId,
+            selectedColorId ->
+            overridingClockColorId ?: selectedColorId
+        }
 
-    private val sliderColorToneProgress =
-        MutableStateFlow(ClockMetadataModel.DEFAULT_COLOR_TONE_PROGRESS)
+    private val overridingSliderProgress = MutableStateFlow<Int?>(null)
+    val previewingSliderProgress: Flow<Int> =
+        combine(overridingSliderProgress, clockPickerInteractor.colorToneProgress) {
+            overridingSliderProgress,
+            colorToneProgress ->
+            overridingSliderProgress ?: colorToneProgress
+        }
     val isSliderEnabled: Flow<Boolean> =
-        combine(clockPickerInteractor.selectedClock, clockPickerInteractor.selectedColorId) {
-                clock,
-                colorId ->
-                if (colorId == null) {
-                    false
-                } else {
-                    clock.isReactiveToTone
-                }
+        combine(previewingClock, previewingClockColorId) { clock, clockColorId ->
+                // clockColorId null means clock color is the system theme color, thus no slider
+                clock.isReactiveToTone && clockColorId != null
             }
             .distinctUntilChanged()
-    val sliderProgress: Flow<Int> =
-        merge(clockPickerInteractor.colorToneProgress, sliderColorToneProgress)
 
-    private val _seedColor: MutableStateFlow<Int?> = MutableStateFlow(null)
-    val seedColor: Flow<Int?> = merge(clockPickerInteractor.seedColor, _seedColor)
-
-    /**
-     * The slider color tone updates are quick. Do not set color tone and the blended color to the
-     * settings until [onSliderProgressStop] is called. Update to a locally cached temporary
-     * [sliderColorToneProgress] and [_seedColor] instead.
-     */
     fun onSliderProgressChanged(progress: Int) {
-        sliderColorToneProgress.value = progress
-        val selectedColorId = selectedColorId.value ?: return
-        val clockColorViewModel = colorMap[selectedColorId] ?: return
-        _seedColor.value =
-            blendColorWithTone(
-                color = clockColorViewModel.color,
-                colorTone = clockColorViewModel.getColorTone(progress),
-            )
+        overridingSliderProgress.value = progress
     }
 
-    suspend fun onSliderProgressStop(progress: Int) {
-        val selectedColorId = selectedColorId.value ?: return
-        val clockColorViewModel = colorMap[selectedColorId] ?: return
-        val seedColor =
-            blendColorWithTone(
-                color = clockColorViewModel.color,
-                colorTone = clockColorViewModel.getColorTone(progress),
-            )
-        clockPickerInteractor.setClockColor(
-            selectedColorId = selectedColorId,
-            colorToneProgress = progress,
-            seedColor = seedColor,
-        )
-        logger.logClockColorApplied(seedColor)
-    }
+    val previewingSeedColor: Flow<Int?> =
+        combine(previewingClockColorId, previewingSliderProgress) { clockColorId, sliderProgress ->
+            val clockColorViewModel = if (clockColorId == null) null else colorMap[clockColorId]
+            if (clockColorViewModel == null) {
+                null
+            } else {
+                blendColorWithTone(
+                    color = clockColorViewModel.color,
+                    colorTone = clockColorViewModel.getColorTone(sliderProgress),
+                )
+            }
+        }
 
     val clockColorOptions: Flow<List<OptionItemViewModel<ColorOptionIconViewModel>>> =
         colorPickerInteractor.colorOptions.map { colorOptions ->
@@ -247,10 +263,9 @@ constructor(
 
                 colorMap.values.forEachIndexed { index, colorModel ->
                     val isSelectedFlow =
-                        selectedColorId
+                        previewingClockColorId
                             .map { colorMap.keys.indexOf(it) == index }
                             .stateIn(viewModelScope)
-                    val colorToneProgress = ClockMetadataModel.DEFAULT_COLOR_TONE_PROGRESS
                     add(
                         OptionItemViewModel<ColorOptionIconViewModel>(
                             key = MutableStateFlow(colorModel.colorId) as StateFlow<String>,
@@ -280,22 +295,9 @@ constructor(
                                         null
                                     } else {
                                         {
-                                            viewModelScope.launch {
-                                                val seedColor =
-                                                    blendColorWithTone(
-                                                        color = colorModel.color,
-                                                        colorTone =
-                                                            colorModel.getColorTone(
-                                                                colorToneProgress,
-                                                            ),
-                                                    )
-                                                clockPickerInteractor.setClockColor(
-                                                    selectedColorId = colorModel.colorId,
-                                                    colorToneProgress = colorToneProgress,
-                                                    seedColor = seedColor,
-                                                )
-                                                logger.logClockColorApplied(seedColor)
-                                            }
+                                            overridingClockColorId.value = colorModel.colorId
+                                            overridingSliderProgress.value =
+                                                ClockMetadataModel.DEFAULT_COLOR_TONE_PROGRESS
                                         }
                                     }
                                 },
@@ -320,7 +322,7 @@ constructor(
                 /** darkTheme= */
                 true
             )
-        val isSelectedFlow = selectedColorId.map { it == null }.stateIn(viewModelScope)
+        val isSelectedFlow = previewingClockColorId.map { it == null }.stateIn(viewModelScope)
         return OptionItemViewModel<ColorOptionIconViewModel>(
             key = MutableStateFlow(key) as StateFlow<String>,
             payload =
@@ -343,28 +345,49 @@ constructor(
                         null
                     } else {
                         {
-                            viewModelScope.launch {
-                                clockPickerInteractor.setClockColor(
-                                    selectedColorId = null,
-                                    colorToneProgress =
-                                        ClockMetadataModel.DEFAULT_COLOR_TONE_PROGRESS,
-                                    seedColor = null,
-                                )
-                                logger.logClockColorApplied(NULL_SEED_COLOR)
-                            }
+                            overridingClockColorId.value = null
+                            overridingSliderProgress.value =
+                                ClockMetadataModel.DEFAULT_COLOR_TONE_PROGRESS
                         }
                     }
                 },
         )
     }
 
-    val selectedClockSize: Flow<ClockSize> = clockPickerInteractor.selectedClockSize
-
-    fun setClockSize(size: ClockSize) {
-        viewModelScope.launch {
-            clockPickerInteractor.setClockSize(size)
-            logger.logClockSizeApplied(size.toClockSizeForLogging())
+    val onApply: Flow<(suspend () -> Unit)?> =
+        combine(
+            previewingClock,
+            previewingClockSize,
+            previewingClockColorId,
+            previewingSliderProgress,
+        ) { clock, size, colorId, progress ->
+            {
+                val clockColorViewModel = colorMap[colorId]
+                val seedColor =
+                    if (clockColorViewModel != null) {
+                        blendColorWithTone(
+                            color = clockColorViewModel.color,
+                            colorTone = clockColorViewModel.getColorTone(progress),
+                        )
+                    } else {
+                        null
+                    }
+                clockPickerInteractor.applyClock(
+                    clockId = clock.clockId,
+                    size = size,
+                    selectedColorId = colorId,
+                    colorToneProgress = progress,
+                    seedColor = seedColor,
+                )
+            }
         }
+
+    fun resetPreview() {
+        overridingClock.value = null
+        overridingClockSize.value = null
+        overridingClockColorId.value = null
+        overridingSliderProgress.value = null
+        _selectedTab.value = Tab.STYLE
     }
 
     companion object {
@@ -372,11 +395,7 @@ constructor(
 
         fun blendColorWithTone(color: Int, colorTone: Double): Int {
             ColorUtils.colorToLAB(color, helperColorLab)
-            return ColorUtils.LABToColor(
-                colorTone,
-                helperColorLab[1],
-                helperColorLab[2],
-            )
+            return ColorUtils.LABToColor(colorTone, helperColorLab[1], helperColorLab[2])
         }
 
         const val COLOR_OPTIONS_EVENT_UPDATE_DELAY_MILLIS: Long = 100

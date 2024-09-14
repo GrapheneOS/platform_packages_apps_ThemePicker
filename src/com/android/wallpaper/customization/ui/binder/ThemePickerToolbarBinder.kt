@@ -56,9 +56,7 @@ constructor(private val defaultToolbarBinder: DefaultToolbarBinder) : ToolbarBin
             lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     viewModel.onApplyButtonClicked.collect { onApplyButtonClicked ->
-                        applyButton.setOnClickListener {
-                            onApplyButtonClicked?.invoke()?.let { viewModel.deselectOption() }
-                        }
+                        applyButton.setOnClickListener { onApplyButtonClicked?.invoke() }
                     }
                 }
 

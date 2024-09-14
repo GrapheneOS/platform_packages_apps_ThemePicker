@@ -125,6 +125,7 @@
             android:paddingHorizontal="@dimen/floating_sheet_content_horizontal_padding">
 
             <LinearLayout
+                android:id="@+id/clock_size_option_dynamic"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -150,6 +151,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/clock_size_option_small"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

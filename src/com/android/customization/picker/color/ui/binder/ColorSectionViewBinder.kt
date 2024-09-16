@@ -20,6 +20,7 @@ package com.android.customization.picker.color.ui.binder
 import android.content.res.Configuration
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.core.view.isVisible
@@ -50,12 +51,34 @@ object ColorSectionViewBinder {
     ) {
         val optionContainer: LinearLayout =
             view.requireViewById(R.id.color_section_option_container)
+        val optionContainerLayoutParams = optionContainer.layoutParams
         val moreColorsButton: View = view.requireViewById(R.id.more_colors)
         if (isConnectedHorizontallyToOtherSections) {
             moreColorsButton.isVisible = true
             moreColorsButton.setOnClickListener(navigationOnClick)
+
+            // Match the height of option container and the other sections when connected
+            // horizontally.
+            optionContainerLayoutParams.height =
+                view.resources.getDimensionPixelSize(R.dimen.color_options_selected_option_height)
+            optionContainer.layoutParams = optionContainerLayoutParams
+            optionContainer.setPadding(
+                optionContainer.paddingLeft,
+                16,
+                optionContainer.paddingRight,
+                16
+            )
         } else {
             moreColorsButton.isVisible = false
+
+            optionContainerLayoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
+            optionContainer.layoutParams = optionContainerLayoutParams
+            optionContainer.setPadding(
+                optionContainer.paddingLeft,
+                20,
+                optionContainer.paddingRight,
+                20
+            )
         }
         lifecycleOwner.lifecycleScope.launch {
             lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {

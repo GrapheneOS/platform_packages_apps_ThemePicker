@@ -23,7 +23,7 @@
         <shape
             android:shape="ring"
             android:innerRadius="@dimen/component_color_overflow_small_radius_default"
-            android:thickness="-1dp"
+            android:thickness="-2dp"
             android:useLevel="false">
             <solid android:color="@color/system_outline"/>
         </shape>

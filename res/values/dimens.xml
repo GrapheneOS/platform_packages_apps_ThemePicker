@@ -53,6 +53,9 @@
     <dimen name="theme_option_font_sample_width">52dp</dimen>
     <dimen name="theme_option_sample_margin">10dp</dimen>
 
+    <!-- Dimensions for the color options -->
+    <dimen name="color_options_selected_option_height">102dp</dimen>
+
     <!-- Note, using dp instead of sp as this text is more like a "snapshot" of the font -->
     <dimen name="theme_option_font_text_size">20dp</dimen>
     <dimen name="theme_option_font_min_text_size">15dp</dimen>

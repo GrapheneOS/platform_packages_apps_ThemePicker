@@ -56,7 +56,6 @@ import com.android.wallpaper.module.WallpaperPreferences
 import com.android.wallpaper.module.logging.UserEventLogger.EffectStatus
 import com.android.wallpaper.module.logging.UserEventLogger.SetWallpaperEntryPoint
 import com.android.wallpaper.module.logging.UserEventLogger.WallpaperDestination
-import com.android.wallpaper.util.ActivityUtils
 import com.android.wallpaper.util.LaunchSourceUtils
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -124,7 +123,7 @@ constructor(
         effect: String,
         @EffectStatus status: Int,
         timeElapsedMillis: Long,
-        resultCode: Int
+        resultCode: Int,
     ) {
         SysUiStatsLogger(WALLPAPER_EFFECT_APPLIED)
             .setAppSessionId(appSessionId.getId())
@@ -146,7 +145,7 @@ constructor(
     override fun logEffectForegroundDownload(
         effect: String,
         @EffectStatus status: Int,
-        timeElapsedMillis: Long
+        timeElapsedMillis: Long,
     ) {
         SysUiStatsLogger(WALLPAPER_EFFECT_FG_DOWNLOAD)
             .setAppSessionId(appSessionId.getId())
@@ -164,11 +163,7 @@ constructor(
         SysUiStatsLogger(WALLPAPER_EXPLORE).setAppSessionId(appSessionId.getId()).log()
     }
 
-    override fun logThemeColorApplied(
-        @ColorSource source: Int,
-        style: Int,
-        seedColor: Int,
-    ) {
+    override fun logThemeColorApplied(@ColorSource source: Int, style: Int, seedColor: Int) {
         SysUiStatsLogger(THEME_COLOR_APPLIED)
             .setAppSessionId(appSessionId.getId())
             .setColorSource(source)
@@ -251,10 +246,9 @@ constructor(
                 LaunchSourceUtils.LAUNCH_SOURCE_TIPS -> LAUNCHED_TIPS
                 LaunchSourceUtils.LAUNCH_SOURCE_DEEP_LINK -> LAUNCHED_DEEP_LINK
                 LaunchSourceUtils.LAUNCH_SOURCE_KEYGUARD -> LAUNCHED_KEYGUARD
+                LaunchSourceUtils.LAUNCH_SOURCE_SETTINGS_SEARCH -> LAUNCHED_SETTINGS_SEARCH
                 else -> LAUNCHED_PREFERENCE_UNSPECIFIED
             }
-        } else if (ActivityUtils.isLaunchedFromSettingsSearch(this)) {
-            LAUNCHED_SETTINGS_SEARCH
         } else if (action != null && action == WallpaperManager.ACTION_CROP_AND_SET_WALLPAPER) {
             LAUNCHED_CROP_AND_SET_ACTION
         } else if (categories != null && categories.contains(Intent.CATEGORY_LAUNCHER)) {

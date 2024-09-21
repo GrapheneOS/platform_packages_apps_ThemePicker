@@ -16,6 +16,10 @@
 
 package com.android.customization.picker.settings.ui.viewmodel
 
+import android.app.UiModeManager.ContrastUtils.CONTRAST_LEVEL_HIGH
+import android.app.UiModeManager.ContrastUtils.CONTRAST_LEVEL_MEDIUM
+import android.app.UiModeManager.ContrastUtils.CONTRAST_LEVEL_STANDARD
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.android.customization.picker.settings.domain.interactor.ColorContrastSectionInteractor
@@ -28,62 +32,54 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class ColorContrastSectionViewModel
-private constructor(
-    colorContrastSectionInteractor: ColorContrastSectionInteractor,
-) : ViewModel() {
+private constructor(colorContrastSectionInteractor: ColorContrastSectionInteractor) : ViewModel() {
 
     val summary: Flow<ColorContrastSectionDataViewModel> =
         colorContrastSectionInteractor.contrast.map { contrastValue ->
             when (contrastValue) {
-                ContrastValue.STANDARD.value ->
+                CONTRAST_LEVEL_STANDARD ->
                     ColorContrastSectionDataViewModel(
                         Text.Resource(R.string.color_contrast_default_title),
                         Icon.Resource(
                             res = R.drawable.ic_contrast_standard,
                             contentDescription = null,
-                        )
+                        ),
                     )
-                ContrastValue.MEDIUM.value ->
+                CONTRAST_LEVEL_MEDIUM ->
                     ColorContrastSectionDataViewModel(
                         Text.Resource(R.string.color_contrast_medium_title),
                         Icon.Resource(
                             res = R.drawable.ic_contrast_medium,
                             contentDescription = null,
-                        )
+                        ),
                     )
-                ContrastValue.HIGH.value ->
+                CONTRAST_LEVEL_HIGH ->
                     ColorContrastSectionDataViewModel(
                         Text.Resource(R.string.color_contrast_high_title),
-                        Icon.Resource(
-                            res = R.drawable.ic_contrast_high,
-                            contentDescription = null,
-                        )
+                        Icon.Resource(res = R.drawable.ic_contrast_high, contentDescription = null),
                     )
                 else -> {
-                    println("Invalid contrast value: $contrastValue")
-                    throw IllegalArgumentException("Invalid contrast value")
+                    Log.e(TAG, "Invalid contrast value: $contrastValue")
+                    throw IllegalArgumentException("Invalid contrast value: $contrastValue")
                 }
             }
         }
 
-    enum class ContrastValue(val value: Float) {
-        STANDARD(0f),
-        MEDIUM(0.5f),
-        HIGH(1f)
-    }
-
     @Singleton
     class Factory
     @Inject
-    constructor(
-        private val colorContrastSectionInteractor: ColorContrastSectionInteractor,
-    ) : ViewModelProvider.Factory {
+    constructor(private val colorContrastSectionInteractor: ColorContrastSectionInteractor) :
+        ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             @Suppress("UNCHECKED_CAST")
             return ColorContrastSectionViewModel(
-                colorContrastSectionInteractor = colorContrastSectionInteractor,
+                colorContrastSectionInteractor = colorContrastSectionInteractor
             )
                 as T
         }
+    }
+
+    companion object {
+        private const val TAG = "ColorContrastSectionViewModel"
     }
 }

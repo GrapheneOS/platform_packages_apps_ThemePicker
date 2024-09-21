@@ -25,5 +25,5 @@ import kotlinx.coroutines.flow.Flow
 class ColorContrastSectionInteractor
 @Inject
 constructor(colorContrastSectionRepository: ColorContrastSectionRepository) {
-    val contrast: Flow<Float> = colorContrastSectionRepository.contrast
+    val contrast: Flow<Int> = colorContrastSectionRepository.contrast
 }

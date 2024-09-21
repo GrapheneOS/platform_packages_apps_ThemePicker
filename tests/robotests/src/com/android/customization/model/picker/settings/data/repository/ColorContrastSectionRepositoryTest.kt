@@ -16,6 +16,7 @@
 
 package com.android.customization.model.picker.settings.data.repository
 
+import android.app.UiModeManager.ContrastUtils
 import androidx.test.filters.SmallTest
 import com.android.customization.picker.settings.data.repository.ColorContrastSectionRepository
 import com.android.wallpaper.testing.FakeUiModeManager
@@ -61,8 +62,10 @@ class ColorContrastSectionRepositoryTest {
     fun contrastFlowEmitsValues() =
         testScope.runTest {
             val nextContrastValues = listOf(0.5f, 0.7f, 0.8f)
+            val expectedContrastValues =
+                nextContrastValues.map { ContrastUtils.toContrastLevel(it) }
             // Set up a flow to collect all contrast values
-            val flowCollector = mutableListOf<Float>()
+            val flowCollector = mutableListOf<Int>()
             // Start collecting values from the flow, using an unconfined dispatcher to start
             // collecting from the flow right away (rather than explicitly calling `runCurrent`)
             // See https://developer.android.com/kotlin/flow/test#continuous-collection
@@ -74,6 +77,6 @@ class ColorContrastSectionRepositoryTest {
 
             // Ignore the first contrast value from constructing the repository
             val collectedValues = flowCollector.drop(1)
-            assertThat(collectedValues).containsExactlyElementsIn(nextContrastValues)
+            assertThat(collectedValues).containsExactlyElementsIn(expectedContrastValues)
         }
 }

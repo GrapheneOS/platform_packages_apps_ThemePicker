@@ -17,6 +17,7 @@
 package com.android.customization.picker.settings.data.repository
 
 import android.app.UiModeManager
+import android.app.UiModeManager.ContrastUtils
 import com.android.wallpaper.picker.di.modules.BackgroundDispatcher
 import com.android.wallpaper.system.UiModeManagerWrapper
 import java.util.concurrent.Executor
@@ -35,16 +36,18 @@ constructor(
     uiModeManager: UiModeManagerWrapper,
     @BackgroundDispatcher bgDispatcher: CoroutineDispatcher,
 ) {
-    var contrast: Flow<Float> = callbackFlow {
+    var contrast: Flow<Int> = callbackFlow {
         val executor: Executor = bgDispatcher.asExecutor()
         val listener =
             UiModeManager.ContrastChangeListener { contrast ->
                 // Emit the new contrast value whenever it changes
-                trySend(contrast)
+                trySend(ContrastUtils.toContrastLevel(contrast))
             }
 
         // Emit the current contrast value immediately
-        uiModeManager.getContrast()?.let { currentContrast -> trySend(currentContrast) }
+        uiModeManager.getContrast()?.let { currentContrast ->
+            trySend(ContrastUtils.toContrastLevel(currentContrast))
+        }
 
         uiModeManager.addContrastChangeListener(executor, listener)
 

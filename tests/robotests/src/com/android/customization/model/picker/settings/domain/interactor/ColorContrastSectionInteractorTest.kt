@@ -16,6 +16,7 @@
 
 package com.android.customization.model.picker.settings.domain.interactor
 
+import android.app.UiModeManager.ContrastUtils
 import androidx.test.filters.SmallTest
 import com.android.customization.picker.settings.domain.interactor.ColorContrastSectionInteractor
 import com.android.wallpaper.testing.FakeUiModeManager
@@ -47,11 +48,12 @@ class ColorContrastSectionInteractorTest {
 
     @Test
     fun contrastEmitCorrectValuesFromRepository() = runTest {
-        val expectedContrast = 1.5f
-        uiModeManager.setContrast(expectedContrast)
+        val contrastVal = 0.5f
+        val expectedContrastVal = ContrastUtils.toContrastLevel(contrastVal)
+        uiModeManager.setContrast(contrastVal)
 
         val result = interactor.contrast.first()
 
-        assertThat(result).isEqualTo(expectedContrast)
+        assertThat(result).isEqualTo(expectedContrastVal)
     }
 }

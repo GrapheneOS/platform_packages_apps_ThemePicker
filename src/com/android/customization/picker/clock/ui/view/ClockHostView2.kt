@@ -63,8 +63,7 @@ class ClockHostView2(context: Context, attrs: AttributeSet?) : FrameLayout(conte
     private fun updatePivotAndScale() {
         when (clockSize) {
             ClockSize.DYNAMIC -> {
-                pivotX = (width / 2).toFloat()
-                pivotY = (height / 2).toFloat()
+                resetPivot()
             }
             ClockSize.SMALL -> {
                 pivotX = getCenteredHostViewPivotX(this)

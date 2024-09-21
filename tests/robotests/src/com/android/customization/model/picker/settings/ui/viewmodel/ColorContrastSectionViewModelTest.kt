@@ -16,6 +16,7 @@
 
 package com.android.customization.model.picker.settings.ui.viewmodel
 
+import android.app.UiModeManager.ContrastUtils
 import com.android.customization.picker.settings.ui.viewmodel.ColorContrastSectionDataViewModel
 import com.android.customization.picker.settings.ui.viewmodel.ColorContrastSectionViewModel
 import com.android.themepicker.R
@@ -60,11 +61,13 @@ class ColorContrastSectionViewModelTest {
 
     @Test
     fun summaryEmitsCorrectDataValueForStandard() = runTest {
-        uiModeManager.setContrast(ColorContrastSectionViewModel.ContrastValue.STANDARD.value)
+        uiModeManager.setContrast(
+            ContrastUtils.fromContrastLevel(ContrastUtils.CONTRAST_LEVEL_STANDARD)
+        )
         val expected =
             ColorContrastSectionDataViewModel(
                 Text.Resource(R.string.color_contrast_default_title),
-                Icon.Resource(res = R.drawable.ic_contrast_standard, contentDescription = null)
+                Icon.Resource(res = R.drawable.ic_contrast_standard, contentDescription = null),
             )
 
         val result = viewModel.summary.first()
@@ -74,11 +77,13 @@ class ColorContrastSectionViewModelTest {
 
     @Test
     fun summaryEmitsCorrectDataValueForMedium() = runTest {
-        uiModeManager.setContrast(ColorContrastSectionViewModel.ContrastValue.MEDIUM.value)
+        uiModeManager.setContrast(
+            ContrastUtils.fromContrastLevel(ContrastUtils.CONTRAST_LEVEL_MEDIUM)
+        )
         val expected =
             ColorContrastSectionDataViewModel(
                 Text.Resource(R.string.color_contrast_medium_title),
-                Icon.Resource(res = R.drawable.ic_contrast_medium, contentDescription = null)
+                Icon.Resource(res = R.drawable.ic_contrast_medium, contentDescription = null),
             )
 
         val result = viewModel.summary.first()
@@ -88,11 +93,13 @@ class ColorContrastSectionViewModelTest {
 
     @Test
     fun summaryEmitsCorrectDataValueForHigh() = runTest {
-        uiModeManager.setContrast(ColorContrastSectionViewModel.ContrastValue.HIGH.value)
+        uiModeManager.setContrast(
+            ContrastUtils.fromContrastLevel(ContrastUtils.CONTRAST_LEVEL_HIGH)
+        )
         val expected =
             ColorContrastSectionDataViewModel(
                 Text.Resource(R.string.color_contrast_high_title),
-                Icon.Resource(res = R.drawable.ic_contrast_high, contentDescription = null)
+                Icon.Resource(res = R.drawable.ic_contrast_high, contentDescription = null),
             )
 
         val result = viewModel.summary.first()

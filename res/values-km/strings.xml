@@ -17,7 +17,7 @@
 
 <resources xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="app_name" msgid="1647136562008520313">"ផ្ទាំងរូបភាព និងរចនាប័ទ្ម"</string>
+    <string name="app_name" msgid="1647136562008520313">"ផ្ទាំងរូបភាព និងរចនាបថ"</string>
     <string name="theme_title" msgid="2144932106319405101">"រចនាប័ទ្ម"</string>
     <string name="clock_title" msgid="1974314575211361352">"នាឡិកាផ្ទាល់ខ្លួន"</string>
     <string name="clock_description" msgid="3563839327378948">"ជ្រើសរើសនាឡិកាផ្ទាល់ខ្លួន"</string>

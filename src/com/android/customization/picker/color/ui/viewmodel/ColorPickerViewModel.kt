@@ -202,6 +202,6 @@ private constructor(
     }
 
     companion object {
-        private const val COLOR_SECTION_OPTION_SIZE = 5
+        private const val COLOR_SECTION_OPTION_SIZE = 6
     }
 }

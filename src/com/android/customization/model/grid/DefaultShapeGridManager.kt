@@ -193,6 +193,6 @@ constructor(
         const val COL_PATH: String = "path"
         const val KEY_GRID_ICON_ID: String = "grid_icon_id"
         private const val APP_RESOURCES_PACKAGE_NAME: String =
-            "com.google.android.apps.nexuslauncher"
+            "com.android.launcher3"
     }
 }

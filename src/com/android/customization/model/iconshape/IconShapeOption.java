@@ -135,4 +135,8 @@ public class IconShapeOption implements CustomizationOption<IconShapeOption> {
             iconView.setBackground(mAppIcons.get(i).getDrawableCopy());
         }
     }
+    
+    public Drawable getShapeDrawable() {
+        return mShape;
+    }
 }

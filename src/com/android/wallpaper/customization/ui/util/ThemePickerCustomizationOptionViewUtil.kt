@@ -48,6 +48,7 @@ import com.android.wallpaper.picker.customization.ui.viewmodel.CustomizationOpti
 import dagger.hilt.android.qualifiers.ActivityContext
 import dagger.hilt.android.scopes.ActivityScoped
 import javax.inject.Inject
+import com.android.wallpaper.customization.ui.util.ThemePickerCustomizationOptionUtil.ThemePickerHomeCustomizationOption.ICON_SHAPE
 
 @ActivityScoped
 class ThemePickerCustomizationOptionViewUtil
@@ -134,6 +135,7 @@ constructor(
             HOME_SCREEN ->
                 buildList {
                     addAll(defaultOptionEntries)
+
                     if (BaseFlags.get().isPackThemeEnabled() && showPackEntry) {
                         add(
                             PACK_THEME to
@@ -182,6 +184,19 @@ constructor(
                                 )
                         )
                     }
+                    // [ADD THIS BLOCK] ----------------------------------------
+                    // Manually create the Icon Shape button view
+                    // We assume ICON_SHAPE is available (or you can check a flag if you have one)
+                    add(
+                        ICON_SHAPE to
+                            layoutInflater.inflate(
+                                // We reuse the Grid layout because it's just a standard "Icon + Text" button
+                                R.layout.customization_option_entry_grid, 
+                                optionContainer,
+                                false,
+                            )
+                    )
+                    // ---------------------------------------------------------
                 }
         }
     }

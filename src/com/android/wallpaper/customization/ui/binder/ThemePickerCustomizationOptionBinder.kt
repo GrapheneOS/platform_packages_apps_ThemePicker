@@ -66,7 +66,6 @@ import com.android.wallpaper.picker.customization.ui.viewmodel.CustomizationOpti
 import com.android.wallpaper.picker.customization.ui.viewmodel.CustomizationPickerViewModel2
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.google.android.material.snackbar.Snackbar
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlinx.coroutines.Dispatchers
@@ -74,6 +73,10 @@ import kotlinx.coroutines.DisposableHandle
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
+import com.android.customization.model.CustomizationManager
+import com.android.customization.model.iconshape.IconShapeManager
+import com.android.customization.model.iconshape.IconShapeOption
+import com.android.customization.model.theme.OverlayManagerCompat
 
 @Singleton
 class ThemePickerCustomizationOptionsBinder
@@ -253,6 +256,99 @@ constructor(private val defaultCustomizationOptionsBinder: DefaultCustomizationO
             optionGridDescription = optionGrid.requireViewById(R.id.option_entry_description)
             optionGridIcon = optionGrid.requireViewById(R.id.option_entry_icon)
         }
+
+// [START CUSTOM CODE] ----------------------------------------------------
+        val shapeEntry = homeScreenCustomizationOptionEntries.firstOrNull {
+            it.first.toString() == "ICON_SHAPE"
+        }
+
+        if (shapeEntry != null) {
+            val optionShape = shapeEntry.second
+            
+            val title = optionShape.findViewById<TextView>(R.id.option_entry_title)
+            val desc = optionShape.findViewById<TextView>(R.id.option_entry_description)
+            val icon = optionShape.findViewById<ImageView>(R.id.option_entry_icon)
+
+            // 1. Set static Title
+            title?.text = "Icon shape" // Capitalization to match "Color contrast"
+
+            // 2. Async Fetch for Title & Icon
+            val context = view.context
+            val manager = IconShapeManager.getInstance(context, OverlayManagerCompat(context))
+
+            manager.fetchOptions(object : CustomizationManager.OptionsFetchedListener<IconShapeOption> {
+                override fun onOptionsLoaded(options: MutableList<IconShapeOption>?) {
+                    val activeOption = options?.firstOrNull { it.isActive(manager) }
+                    
+                    if (activeOption != null) {
+                        desc?.text = activeOption.title
+                        icon?.setImageDrawable(activeOption.shapeDrawable)
+                    } else {
+                        desc?.text = "Default"
+                    }
+                }
+
+                override fun onError(t: Throwable?) {
+                   desc?.text = "Tap to edit"
+                }
+            }, false)
+
+            // 3. Click Listener - Launch Fragment
+            optionShape.setOnClickListener {
+                 try {
+                    // Unwrap context to find the hosting FragmentActivity
+                    var ctx = view.context
+                    while (ctx is android.content.ContextWrapper) {
+                        if (ctx is androidx.fragment.app.FragmentActivity) break
+                        ctx = ctx.baseContext
+                    }
+                    val activity = ctx as? androidx.fragment.app.FragmentActivity
+
+                    if (activity != null) {
+                         // Instantiate the Legacy Fragment via Reflection
+                         val fragmentClass = Class.forName("com.android.customization.picker.iconshape.IconShapeFragment")
+                         val fragment = fragmentClass.newInstance() as androidx.fragment.app.Fragment
+
+                         // Robust Container Search strategy
+                         val res = view.resources
+                         val pkg = view.context.packageName
+                         val wallpaperPkg = "com.android.wallpaper"
+                         
+                         var containerId = res.getIdentifier("fragment_container", "id", pkg)
+                         if (containerId == 0) containerId = res.getIdentifier("nav_host_fragment", "id", pkg)
+                         if (containerId == 0) containerId = res.getIdentifier("fragment_container", "id", wallpaperPkg)
+                         if (containerId == 0) containerId = android.R.id.content
+
+                         // Launch
+                         activity.supportFragmentManager.beginTransaction()
+                            .replace(containerId, fragment)
+                            .addToBackStack("IconShape")
+                            .commit()
+                    }
+                 } catch (e: Exception) {
+                    android.util.Log.e("ThemePicker", "Failed to launch IconShapeFragment", e)
+                 }
+            }
+
+            // 4. Inject View into Parent Container
+            val res = view.resources
+            var containerId = res.getIdentifier("customization_option_container", "id", view.context.packageName)
+            if (containerId == 0) containerId = res.getIdentifier("customization_option_container", "id", "com.android.wallpaper")
+
+            var container: ViewGroup? = null
+            if (containerId != 0) container = view.findViewById(containerId)
+            
+            // Fallback: Attempt to find container via sibling (COLORS)
+            if (container == null) {
+                 val colorsEntry = homeScreenCustomizationOptionEntries.firstOrNull { it.first.toString() == "COLORS" }
+                 if (colorsEntry?.second?.parent != null) container = colorsEntry.second.parent as? ViewGroup
+            }
+
+            if (container != null && optionShape.parent == null) {
+                 container.addView(optionShape)
+            }
+        }
+// [END CUSTOM CODE] ------------------------------------------------------
 
         val optionColorContrast: View =
             homeScreenCustomizationOptionEntries
@@ -681,7 +777,7 @@ constructor(private val defaultCustomizationOptionsBinder: DefaultCustomizationO
                                 R.string.clock_style_update_toast,
                                 clockStyle,
                             )
-                        Snackbar.make(rootView, toastMessage, Snackbar.LENGTH_SHORT).show()
+                        android.widget.Toast.makeText(rootView.context, toastMessage, android.widget.Toast.LENGTH_SHORT).show()
                     }
                 }
             }

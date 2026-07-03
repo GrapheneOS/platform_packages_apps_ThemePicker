@@ -37,11 +37,11 @@
         <item>com.android.deskclock</item>
         <item>com.android.messaging</item>
         <item>com.android.settings</item>
-        <item>org.chromium.chrome</item>
-        <item>com.android.camera2</item>
+        <item>app.vanadium.browser</item>
+        <item>app.grapheneos.camera</item>
         <item>com.android.contacts</item>
     </array>
 
     <!-- Package name of the Camera app to be used when previewing icon shape and theme -->
-    <string name="camera_package" translatable="false">com.android.camera2</string>
+    <string name="camera_package" translatable="false">app.grapheneos.camera</string>
 </resources>
